@@ -1,0 +1,1 @@
+# Swagger definitions for Sms77.io API
