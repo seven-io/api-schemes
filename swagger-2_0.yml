@@ -56,12 +56,6 @@ paths:
         - balance
       produces:
         - text/plain
-      parameters:
-        - in: query
-          name: p
-          description: Your sms77 API-Key.
-          required: true
-          type: string
       responses: &responses
         '100': &res100
           description: OK
@@ -120,11 +114,6 @@ paths:
         - application/json
       parameters:
         - in: query
-          name: p
-          description: Your sms77 API-Key.
-          required: true
-          type: string
-        - in: query
           name: action
           description: Determines the action to execute.
           required: true
@@ -145,11 +134,6 @@ paths:
         - lookup
       produces: [application/json, text/plain]
       parameters:
-        - in: query
-          name: p
-          description: Your sms77 API-Key.
-          required: true
-          type: string
         - in: query
           name: type
           description: Allowed values are "cnam", "format", "hlr" and "mnp".
@@ -259,11 +243,6 @@ paths:
         - text/csv
       parameters:
         - in: query
-          name: p
-          description: Your sms77 API-Key.
-          required: true
-          type: string
-        - in: query
           name: country
           description: The countries ISO code to get pricings for. Allowed values are de, fr, at. Omit to show pricings for all channels.
           type: string
@@ -341,11 +320,6 @@ paths:
         - sms
       produces: [text/plain; charset=utf-8, application/json]
       parameters:
-        - in: query
-          name: p
-          description: Your sms77 API-Key.
-          required: true
-          type: string
         - in: query
           name: text
           description: The actual text message to send.
@@ -448,11 +422,6 @@ paths:
           description: The ID from the SMS.
           required: true
           type: string
-        - in: query
-          name: p
-          description: Your sms77 API-Key.
-          required: true
-          type: string
       responses:
         <<: *responses
     post:
@@ -464,11 +433,6 @@ paths:
       produces:
         - text/plain
       parameters:
-        - in: query
-          name: p
-          description: Your sms77 API-Key.
-          required: true
-          type: string
         - in: query
           name: number
           description: Determines the recipient. Can only be a number, not a contact from your address book.
@@ -490,11 +454,6 @@ paths:
       produces:
         - text/plain
       parameters:
-        - in: query
-          name: p
-          description: Your sms77 API-Key.
-          required: true
-          type: string
         - in: query
           name: to
           description: Determines the receiver. Must be a valid phone number or contact from the address book.
@@ -524,9 +483,11 @@ securityDefinitions:
     type: apiKey
     name: p
     in: query
+security:
+  - api_key: []
 externalDocs:
-  description: Find out more about sms77io.
-  url: http://sms77.io/en/developer
+  description: Find out more about the Sms77.io SMS gateway.
+  url: http://sms77.io/en/docs/gateway/http-api
 definitions:
   Carrier:
     type: "object"
