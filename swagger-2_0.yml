@@ -18,6 +18,34 @@ tags:
     externalDocs:
       description: Send one/multiple SMS
       url: http://sms77.io/en/docs/gateway/http-api/sms-disptach
+  - name: balance
+    externalDocs:
+      description: Retrieve account balance
+      url: http://sms77.io/en/docs/gateway/http-api/credit-balance
+  - name: contacts
+    externalDocs:
+      description: Retrieve/edit/delete contact(s)
+      url: http://sms77.io/en/docs/gateway/http-api/contacts
+  - name: pricing
+    externalDocs:
+      description: Retrieve pricing information
+      url: http://sms77.io/en/docs/gateway/http-api/pricing
+  - name: status
+    externalDocs:
+      description: Retrieve the status for a sent SMS with the given ID
+      url: http://sms77.io/en/docs/gateway/http-api/status-reports
+  - name: validate_for_voice
+    externalDocs:
+      description: Validate caller ID for voice Voice API
+      url: http://sms77.io/en/docs/gateway/http-api/caller-ids
+  - name: voice
+    externalDocs:
+      description: Issue voice call to phone number
+      url: http://sms77.io/en/docs/gateway/http-api/voice
+  - name: lookup
+    externalDocs:
+      description: Get number format, CNAM,- HLR- or MNP information for given phone number
+      url: http://sms77.io/en/docs/gateway/http-api
 schemes:
   - https
   - http
@@ -26,8 +54,6 @@ paths:
     get: &balance
       tags:
         - balance
-      summary: Get account balance.
-      description: Retrieves the account balance associated with the given API-Key.
       produces:
         - text/plain
       parameters:
@@ -89,8 +115,6 @@ paths:
     get: &contacts
       tags:
         - contacts
-      summary: Get your contacts.
-      description: Retrieves/edits/deletes (the) contact(s) associated with the given API-Key.
       produces:
         - text/csv
         - application/json
@@ -119,11 +143,7 @@ paths:
     get: &lookup
       tags:
         - lookup
-      summary: Look up phone number.
-      description: Looks up the given mobile phone number and returns all publicly available information about it.
-      produces:
-        - application/json
-        - text/plain
+      produces: [application/json, text/plain]
       parameters:
         - in: query
           name: p
@@ -234,8 +254,6 @@ paths:
     get: &pricing
       tags:
         - pricing
-      summary: Get pricing information.
-      description: Retrieves all pricing related information for the given options.
       produces:
         - application/json
         - text/csv
@@ -422,8 +440,6 @@ paths:
     get: &status
       tags:
         - status
-      summary: Retrieve the status for a sent SMS with the given ID.
-      description: Retrieve SMS status.
       produces:
         - text/plain
       parameters:
@@ -445,8 +461,6 @@ paths:
     get: &validate_for_voice
       tags:
         - validate_for_voice
-      summary: Validate sender number.
-      description: Validates the given sender number. On success a code gets returned. The given number will get called an the received code has to be confirmed through the telephones keypad through DTMF.
       produces:
         - text/plain
       parameters:
@@ -473,8 +487,6 @@ paths:
     get: &voice
       tags:
         - voice
-      summary: Get your contacts.
-      description: Retrieves/edits/deletes (the) contact(s) associated with the given API-Key.
       produces:
         - text/plain
       parameters:
