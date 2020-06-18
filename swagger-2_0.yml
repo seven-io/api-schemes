@@ -3,22 +3,21 @@ info:
   description: sms77.io Swagger API. Get your API-Key now at sms77.io.
   version: 1.0.0
   title: sms77.io API
-  termsOfService: 'http://sms77.io/de/unternehmen/agb/'
+  termsOfService: http://sms77.io/en/company/terms/
   contact:
     email: support@sms77.io
-    url: 'https://www.sms77.io/de/unternehmen/kontakt/'
+    url: http://sms77.io/en/company/contact
     name: Support
   license:
     name: Licensed by Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
 host: gateway.sms77.io
 basePath: /api
 tags:
   - name: sms
-    description: Text messages
     externalDocs:
-      description: Learn more
-      url: 'http://sms77.io'
+      description: Send one/multiple SMS
+      url: http://sms77.io/en/docs/gateway/http-api/sms-disptach
 schemes:
   - https
   - http
@@ -27,8 +26,8 @@ paths:
     get: &balance
       tags:
         - balance
-      summary: 'Get account balance.'
-      description: 'Retrieves the account balance associated with the given API-Key.'
+      summary: Get account balance.
+      description: Retrieves the account balance associated with the given API-Key.
       produces:
         - text/plain
       parameters:
@@ -106,17 +105,12 @@ paths:
           description: Determines the action to execute.
           required: true
           type: string
-          enum:
-            - read
-            - write
-            - del
+          enum: [read, write, del]
         - in: query
           name: json
           description: Defines whether to return the response as JSON or plain text (CSV).
           type: number
-          enum:
-            - 1
-            - 0
+          enum: [1, 0]
       responses:
         <<: *responses
     post:
@@ -162,11 +156,7 @@ paths:
                 properties:
                   code:
                     type: number
-                    enum:
-                      - 100
-                      - 202
-                      - 500
-                      - 600
+                    enum: [100, 202, 500, 600]
                   success:
                     type: boolean
                     description: Determines if the request was successful.,
@@ -331,10 +321,7 @@ paths:
     get: &sms
       tags:
         - sms
-      summary: Send a new sms
-      description: Sends a SMS.
-      produces:
-        - text/plain
+      produces: [text/plain; charset=utf-8, application/json]
       parameters:
         - in: query
           name: p
@@ -351,6 +338,82 @@ paths:
           description: The recipient number or group name.
           required: true
           type: string
+        - in: query
+          name: from
+          description: Set a cusotm sender name.
+          type: string
+        - in: query
+          name: foreign_id
+          description: Identifer to return in callbacks.
+          pattern: ^[A-Z|a-z|0-9|.|\-|_|@]+
+          type: string
+        - in: query
+          name: label
+          description: A custom label.
+          pattern: ^[A-Z|a-z|0-9|.|\-|_|@]+
+          type: string
+        - in: query
+          name: udh
+          description: A custom User Data Header.
+          type: string
+        - in: query
+          name: delay
+          description: Date/Time for delayed dispatch.
+          type: string
+        - in: query
+          name: debug
+          description: Disable message sending.
+          type: number
+          enum: [1, 0]
+          default: 0
+        - in: query
+          name: no_reload
+          description: Enable sending of duplicated messages within 180 seconds.
+          type: number
+          enum: [1, 0]
+          default: 0
+        - in: query
+          name: unicode
+          description: Force unicode encoding. Reduces sms length to 70 chars.
+          type: number
+          enum: [1, 0]
+          default: 0
+        - in: query
+          name: flash
+          description: Send as flash.
+          type: number
+          enum: [1, 0]
+          default: 0
+        - in: query
+          name: utf8
+          description: Force UTF8 encoding.
+          type: number
+          enum: [1, 0]
+          default: 0
+        - in: query
+          name: details
+          description: Attach message details to response.
+          type: number
+          enum: [1, 0]
+          default: 0
+        - in: query
+          name: return_msg_id
+          description: Attach message ID to second row in a text response.
+          type: number
+          enum: [1, 0]
+          default: 0
+        - in: query
+          name: json
+          description: Return a detailed JSON response.
+          type: number
+          enum: [1, 0]
+          default: 0
+        - in: query
+          name: performance_tracking
+          description: Enable performance tracking for found URLs.
+          type: number
+          enum: [1, 0]
+          default: 0
       responses:
         <<: *responses
     post:
@@ -435,9 +498,7 @@ paths:
           name: xml
           description: Decides whetherthe parameter "text" is plain text or XML. The default value is 0.
           type: number
-          enum:
-            - 1
-            - 0
+          enum: [1, 0]
         - in: query
           name: from
           description: Sets the sender. Must be a verificated sender. Use an inbound number of yours or one of ours.
@@ -453,7 +514,7 @@ securityDefinitions:
     in: query
 externalDocs:
   description: Find out more about sms77io.
-  url: 'http://sms77.io/de/entwickler/'
+  url: http://sms77.io/en/developer
 definitions:
   Carrier:
     type: "object"
@@ -484,10 +545,7 @@ definitions:
     properties:
       status:
         type: "string"
-        enum:
-          - unknown
-          - roaming
-          - not_roaming
+        enum: [unknown, roaming, not_roaming]
       roaming_country_code:
         type: "string"
       roaming_network_code:
