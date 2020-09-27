@@ -14,6 +14,10 @@ info:
 host: gateway.sms77.io
 basePath: /api
 tags:
+  - name: analytics
+    externalDocs:
+      description: Retrieve analytics
+      url: https://www.sms77.io/en/docs/gateway/http-api/analytics
   - name: sms
     externalDocs:
       description: Send one/multiple SMS
@@ -46,133 +50,143 @@ tags:
     externalDocs:
       description: Get number format, CNAM,- HLR- or MNP information for given phone number
       url: http://sms77.io/en/docs/gateway/http-api
-schemes:
-  - https
-  - http
+schemes: [ https, http ]
 paths:
+  /analytics:
+    get: &analytics
+      tags: [ analytics ]
+      parameters:
+        - in: query
+          name: start
+          description: Start date of the statistics in the format YYYY-MM-DD. By default, the date of 30 days ago is set.
+          type: string
+        - in: query
+          name: end
+          description: End date of the statistics in the format YYYY-MM-DD. By default, the current day.
+          type: string
+        - in: query
+          name: label
+          description: Shows only data of a specific label.
+          type: string
+        - in: query
+          name: subaccounts
+          description: Receive the data only for the main account, all your (sub-)accounts or only for specific subaccounts.
+          type: string
+        - in: query
+          name: group_by
+          description: Defines the grouping of the data.
+          type: string
+          enum: [ date, label, subaccount, country ]
+      produces: [ application/json ]
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              date:
+                type: string
+              economy:
+                type: integer
+              direct:
+                type: integer
+              voice:
+                type: integer
+              hlr:
+                type: integer
+              mnp:
+                type: integer
+              inbound:
+                type: integer
+              usage_eur:
+                type: number
+                format: float
+    post:
+      <<: *analytics
   /balance:
     get: &balance
-      tags:
-        - balance
-      produces:
-        - text/plain
-      responses: &responses
-        '100': &res100
+      tags: [ balance ]
+      produces: [ text/plain ]
+      responses:
+        '200':
           description: OK
-        '101': &res101
-          description: Some recipients failed.
-        '201': &res201
-          description: Country code invalid.
-        '202': &res202
-          description: Recipient number invalid.
-        '300': &res300
-          description: Authentification missing.
-        '301': &res301
-          description: Parameter to missing.
-        '304': &res304
-          description: Parameter type missing.
-        '305': &res305
-          description: Parameter text missing.
-        '306': &res306
-          description: Sender invalid.
-        '307': &res307
-          description: Parameter url missing.
-        '400': &res400
-          description: Invalid type.
-        '401': &res401
-          description: Parameter text too long.
-        '402': &res402
-          description: Reload lock.
-        '500': &res500
-          description: Not enough credits.
-        '600': &res600
-          description: Carrier failed.
-        '700': &res700
-          description: Unknown error.
-        '801': &res801
-          description: Logo file missing.
-        '802': &res802
-          description: Logo file not existent.
-        '803': &res803
-          description: Ring tone missing.
-        '900': &res900
-          description: Wrong authentification.
-        '901': &res901
-          description: Wrong message ID.
-        '902': &res902
-          description: API deactivated.
-        '903': &res903
-          description: IP not allowed.
+          schema:
+            type: number
+            format: float
+            example: 12.34
+
     post:
       <<: *balance
   /contacts:
     get: &contacts
-      tags:
-        - contacts
-      produces:
-        - text/csv
-        - application/json
       parameters:
         - in: query
-          name: action
           description: Determines the action to execute.
+          enum: [ read, write, del ]
+          name: action
           required: true
           type: string
-          enum: [read, write, del]
         - in: query
-          name: json
           description: Defines whether to return the response as JSON or plain text (CSV).
+          enum: [ 1, 0 ]
+          name: json
           type: number
-          enum: [1, 0]
+      produces: [ text/csv, application/json ]
       responses:
-        <<: *responses
+        '200':
+          description: OK
+          schema:
+            type: number
+            format: float
+            example: 12.34
+      tags: [ contacts ]
     post:
       <<: *contacts
   /lookup:
     get: &lookup
-      tags:
-        - lookup
-      produces: [application/json, text/plain]
+      tags: [ lookup ]
+      produces: [ application/json, text/plain ]
       parameters:
         - in: query
-          name: type
           description: Allowed values are "cnam", "format", "hlr" and "mnp".
+          name: type
           required: true
           type: string
         - in: query
-          name: number
           description: The phone number to look up.
-          required: true
-          type: array
           items:
             type: string
+          name: number
+          required: true
+          type: array
         - in: query
-          name: json
           description: Determines whether the response shall be returned in JSON format. Does not work with type "format".
+          name: json
           type: string
       responses:
-        '100':
-          <<: *res100
+        '200':
+          description: OK
           examples:
             application/json:
               schema:
                 type: object
                 properties:
                   code:
+                    enum: [ 100, 202, 500, 600 ]
                     type: number
-                    enum: [100, 202, 500, 600]
                   success:
-                    type: boolean
                     description: Determines if the request was successful.,
+                    type: boolean
                   international:
-                    type: string
                     description: The number formatted accordingly to the E.164 standard.
+                    type: string
                   international_formatted:
-                    type: string
                     description: The number formatted accordingly to the E.164 standard in a human readable format.
-                  name:
                     type: string
-                  Number:
+                  name:
+                    description: The carrier name
+                    type: string
+                  number:
                     type: string
                     description: The number formatted accordingly to the E.164 standard in a human readable format.
                   national:
@@ -236,11 +250,8 @@ paths:
       <<: *lookup
   /pricing:
     get: &pricing
-      tags:
-        - pricing
-      produces:
-        - application/json
-        - text/csv
+      tags: [ pricing ]
+      produces: [ application/json, text/csv ]
       parameters:
         - in: query
           name: country
@@ -255,8 +266,8 @@ paths:
           description: Sets the SMS type to get pricings for. Allowed values are "direct" and "economy". The default value is "direct".
           type: string
       responses:
-        '100':
-          <<: *res100
+        '200':
+          description: OK
           examples:
             text/csv: >
               countryCode,countryName,countryPrefix,mcc,mncs,networkName,price,features,comment
@@ -316,9 +327,8 @@ paths:
       <<: *pricing
   /sms:
     get: &sms
-      tags:
-        - sms
-      produces: [text/plain; charset=utf-8, application/json]
+      tags: [ sms ]
+      produces: [ text/plain, application/json ]
       parameters:
         - in: query
           name: text
@@ -356,66 +366,110 @@ paths:
           name: debug
           description: Disable message sending.
           type: number
-          enum: [1, 0]
+          enum: [ 1, 0 ]
           default: 0
         - in: query
           name: no_reload
           description: Enable sending of duplicated messages within 180 seconds.
           type: number
-          enum: [1, 0]
+          enum: [ 1, 0 ]
           default: 0
         - in: query
           name: unicode
           description: Force unicode encoding. Reduces sms length to 70 chars.
           type: number
-          enum: [1, 0]
+          enum: [ 1, 0 ]
           default: 0
         - in: query
           name: flash
           description: Send as flash.
           type: number
-          enum: [1, 0]
+          enum: [ 1, 0 ]
           default: 0
         - in: query
           name: utf8
           description: Force UTF8 encoding.
           type: number
-          enum: [1, 0]
+          enum: [ 1, 0 ]
           default: 0
         - in: query
           name: details
           description: Attach message details to response.
           type: number
-          enum: [1, 0]
+          enum: [ 1, 0 ]
           default: 0
         - in: query
           name: return_msg_id
           description: Attach message ID to second row in a text response.
           type: number
-          enum: [1, 0]
+          enum: [ 1, 0 ]
           default: 0
         - in: query
           name: json
           description: Return a detailed JSON response.
           type: number
-          enum: [1, 0]
+          enum: [ 1, 0 ]
           default: 0
         - in: query
           name: performance_tracking
           description: Enable performance tracking for found URLs.
           type: number
-          enum: [1, 0]
+          enum: [ 1, 0 ]
           default: 0
       responses:
-        <<: *responses
+        '200':
+          description: OK
+          schema:
+            properties:
+              debug:
+                type: string
+              balance:
+                type: number
+                format: float
+              messages:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    encoding:
+                      type: string
+                    error:
+                      type: string
+                    error_text:
+                      type: string
+                    id:
+                      type: string
+                    messages:
+                      type: array
+                      items:
+                        type: string
+                    parts:
+                      type: integer
+                    price:
+                      type: integer
+                    recipient:
+                      type: string
+                    sender:
+                      type: string
+                    success:
+                      type: boolean
+                    text:
+                      type: string
+              sms_type:
+                type: string
+                enum: [ economy, direct ]
+              success:
+                type: string
+              total_price:
+                type: number
+                format: float
+            type: object
     post:
       <<: *sms
   /status:
     get: &status
-      tags:
-        - status
-      produces:
-        - text/plain
+      tags: [ status ]
+      produces: [ text/plain ]
       parameters:
         - in: query
           name: msg_id
@@ -423,83 +477,102 @@ paths:
           required: true
           type: string
       responses:
-        <<: *responses
+        '200':
+          description: OK
+          schema:
+            type: string
+            example: |
+              DELIVERED
+              2020-01-09 15:41:30.656
     post:
       <<: *status
   /validate_for_voice:
     get: &validate_for_voice
-      tags:
-        - validate_for_voice
-      produces:
-        - text/plain
       parameters:
         - in: query
-          name: number
           description: Determines the recipient. Can only be a number, not a contact from your address book.
+          name: number
           required: true
           type: string
         - in: query
-          name: callback
           description: The callback URL which gets queried right after validation.
-          type: string
           format: uri
+          name: callback
+          type: string
+      produces: [ application/json ]
       responses:
-        <<: *responses
+        '200':
+          description: OK
+          schema:
+            properties:
+              code:
+                type: string
+              error:
+                type: string
+              success:
+                type: boolean
+            type: object
+      tags: [ validate_for_voice ]
     post:
       <<: *validate_for_voice
   /voice:
     get: &voice
-      tags:
-        - voice
-      produces:
-        - text/plain
+      tags: [ voice ]
+      produces: [ text/plain ]
       parameters:
         - in: query
-          name: to
           description: Determines the receiver. Must be a valid phone number or contact from the address book.
+          name: to
           required: true
           type: string
         - in: query
-          name: text
           description: The text to convert to a voice message. Accepts valid XML too.
+          maxLength: 10000
+          name: text
           type: string
           required: true
-          maxLength: 10000
         - in: query
-          name: xml
           description: Decides whetherthe parameter "text" is plain text or XML. The default value is 0.
+          enum: [ 1, 0 ]
+          name: xml
           type: number
-          enum: [1, 0]
         - in: query
-          name: from
           description: Sets the sender. Must be a verificated sender. Use an inbound number of yours or one of ours.
+          name: from
           type: string
       responses:
-        <<: *responses
+        '200':
+          description: OK
+          schema:
+            type: string
+            example: |
+              100
+              123456789
+              0
     post:
       <<: *voice
 securityDefinitions:
   api_key:
-    type: apiKey
-    name: p
     in: query
+    name: p
+    type: apiKey
 security:
-  - api_key: []
+  - api_key: [ ]
 externalDocs:
   description: Find out more about the Sms77.io SMS gateway.
   url: http://sms77.io/en/docs/gateway/http-api
 definitions:
   Carrier:
-    type: "object"
+    type: object
     properties:
       network_code:
-        type: "string"
+        type: string
       name:
-        type: "string"
+        type: string
       country:
-        type: "string"
+        type: string
       network_type:
-        type: "string"
+        type: string
         enum:
           - fixed_line
           - fixed_line_or_mobile
@@ -514,14 +587,14 @@ definitions:
           - voicemail
           - voip
   Roaming:
-    type: "object"
+    type: object
     properties:
       status:
-        type: "string"
-        enum: [unknown, roaming, not_roaming]
+        type: string
+        enum: [ unknown, roaming, not_roaming ]
       roaming_country_code:
-        type: "string"
+        type: string
       roaming_network_code:
-        type: "string"
+        type: string
       roaming_network_name:
-        type: "string"
+        type: string
