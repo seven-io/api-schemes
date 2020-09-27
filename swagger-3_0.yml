@@ -1,0 +1,753 @@
+openapi: 3.0.1
+info:
+  title: sms77.io API
+  description: sms77.io Swagger API. Get your API-Key now at sms77.io.
+  termsOfService: http://sms77.io/en/company/terms/
+  contact:
+    name: Support
+    url: http://sms77.io/en/company/contact
+    email: support@sms77.io
+  license:
+    name: Licensed by Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about the Sms77.io SMS gateway.
+  url: http://sms77.io/en/docs/gateway/http-api
+servers:
+  - url: https://gateway.sms77.io/api
+  - url: http://gateway.sms77.io/api
+security:
+  - api_key: [ ]
+tags:
+  - name: analytics
+    externalDocs:
+      description: Retrieve analytics
+      url: https://www.sms77.io/en/docs/gateway/http-api/analytics
+  - name: sms
+    externalDocs:
+      description: Send one/multiple SMS
+      url: http://sms77.io/en/docs/gateway/http-api/sms-disptach
+  - name: balance
+    externalDocs:
+      description: Retrieve account balance
+      url: http://sms77.io/en/docs/gateway/http-api/credit-balance
+  - name: contacts
+    externalDocs:
+      description: Retrieve/edit/delete contact(s)
+      url: http://sms77.io/en/docs/gateway/http-api/contacts
+  - name: pricing
+    externalDocs:
+      description: Retrieve pricing information
+      url: http://sms77.io/en/docs/gateway/http-api/pricing
+  - name: status
+    externalDocs:
+      description: Retrieve the status for a sent SMS with the given ID
+      url: http://sms77.io/en/docs/gateway/http-api/status-reports
+  - name: validate_for_voice
+    externalDocs:
+      description: Validate caller ID for voice Voice API
+      url: http://sms77.io/en/docs/gateway/http-api/caller-ids
+  - name: voice
+    externalDocs:
+      description: Issue voice call to phone number
+      url: http://sms77.io/en/docs/gateway/http-api/voice
+  - name: lookup
+    externalDocs:
+      description: Get number format, CNAM,- HLR- or MNP information for given phone
+        number
+      url: http://sms77.io/en/docs/gateway/http-api
+paths:
+  /analytics:
+    get: &analytics
+      tags: [analytics]
+      parameters:
+        - name: start
+          in: query
+          description: Start date of the statistics in the format YYYY-MM-DD. By default,
+            the date of 30 days ago is set.
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: End date of the statistics in the format YYYY-MM-DD. By default,
+            the current day.
+          schema:
+            type: string
+        - name: label
+          in: query
+          description: Shows only data of a specific label.
+          schema:
+            type: string
+        - name: subaccounts
+          in: query
+          description: Receive the data only for the main account, all your (sub-)accounts
+            or only for specific subaccounts.
+          schema:
+            type: string
+        - name: group_by
+          in: query
+          description: Defines the grouping of the data.
+          schema:
+            type: string
+            enum:
+              - date
+              - label
+              - subaccount
+              - country
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  date:
+                    type: string
+                  economy:
+                    type: integer
+                  direct:
+                    type: integer
+                  voice:
+                    type: integer
+                  hlr:
+                    type: integer
+                  mnp:
+                    type: integer
+                  inbound:
+                    type: integer
+                  usage_eur:
+                    type: number
+                    format: float
+    post:
+      <<: *analytics
+  /balance:
+    get: &balance
+      tags: [balance]
+      responses:
+        200:
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: number
+                format: float
+                example: 12.34
+    post:
+      <<: *balance
+  /contacts:
+    get: &contacts
+      tags: [contacts]
+      parameters:
+        - name: action
+          in: query
+          description: Determines the action to execute.
+          required: true
+          schema:
+            type: string
+            enum:
+              - read
+              - write
+              - del
+        - name: json
+          in: query
+          description: Defines whether to return the response as JSON or plain text
+            (CSV).
+          schema:
+            type: number
+            enum:
+              - 1
+              - 0
+      responses:
+        200:
+          description: OK
+          content:
+            text/csv:
+              schema:
+                type: number
+                format: float
+                example: 12.34
+            application/json:
+              schema:
+                type: number
+                format: float
+                example: 12.34
+    post:
+      <<: *contacts
+  /lookup:
+    get: &lookup
+      tags: [lookup]
+      parameters:
+        - name: type
+          in: query
+          description: Allowed values are "cnam", "format", "hlr" and "mnp".
+          required: true
+          schema:
+            type: string
+        - name: number
+          in: query
+          description: The phone number to look up.
+          required: true
+          style: form
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: json
+          in: query
+          description: Determines whether the response shall be returned in JSON format.
+            Does not work with type "format".
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              example:
+                schema:
+                  type: object
+                  properties:
+                    code:
+                      enum:
+                        - 100
+                        - 202
+                        - 500
+                        - 600
+                      type: number
+                    success:
+                      description: Determines if the request was successful.,
+                      type: boolean
+                    international:
+                      description: The number formatted accordingly to the E.164 standard.
+                      type: string
+                    international_formatted:
+                      description: The number formatted accordingly to the E.164 standard
+                        in a human readable format.
+                      type: string
+                    name:
+                      description: The carrier name
+                      type: string
+                    number:
+                      type: string
+                      description: The number formatted accordingly to the E.164 standard
+                        in a human readable format.
+                    national:
+                      type: string
+                      description: The number in a domestic number format.
+                    country_iso:
+                      type: string
+                      description: The two digit ISO 3166-1 alpha-2 country code.
+                    country_name:
+                      type: string
+                      description: The full english name if the number belonging country.
+                    country_code:
+                      type: string
+                      description: The area code of the number belonging country.
+                        This value is numeric.
+                    carrier:
+                      type: string
+                      description: The (former) mobile carrier the number got issued
+                        to on initial number release.
+                    status:
+                      type: string
+                    international_format_number:
+                      type: string
+                    national_format_number:
+                      type: string
+                    country_code_iso3:
+                      type: string
+                    country_prefix:
+                      type: string
+                    ported:
+                      type: string
+                      enum:
+                        - unknown
+                        - ported
+                        - not_ported
+                        - assumed_not_ported
+                        - assumed_ported
+                    current_carrier:
+                      schema:
+                        $ref: '#/components/schemas/Carrier'
+                    original_carrier:
+                      schema:
+                        $ref: '#/components/schemas/Carrier'
+                    lookup_outcome:
+                      type: string
+                    lookup_outcome_message:
+                      type: string
+                    valid_number:
+                      type: string
+                    reachable:
+                      type: string
+                      enum:
+                        - unknown
+                        - reachable
+                        - undeliverable
+                        - absent
+                        - bad_number
+                        - blacklisted
+                    roaming:
+                      schema:
+                        $ref: '#/components/schemas/Roaming'
+    post:
+      <<: *lookup
+  /pricing:
+    get: &pricing
+      tags: [pricing]
+      parameters:
+        - name: country
+          in: query
+          description: The countries ISO code to get pricings for. Allowed values are
+            de, fr, at. Omit to show pricings for all channels.
+          schema:
+            type: string
+        - name: format
+          in: query
+          description: Determines the response format. Allowed values are json and csv.
+            The default value is json.
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: Sets the SMS type to get pricings for. Allowed values are "direct"
+            and "economy". The default value is "direct".
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            text/csv:
+              example: |
+                countryCode,countryName,countryPrefix,mcc,mncs,networkName,price,features,comment "DE";"Germany";"49";"262";"15";" (Airdata)";"0.075";"";""
+            application/json:
+              example:
+                schema:
+                  type: object
+                  properties:
+                    countCountries:
+                      type: integer
+                      description: The number if countries in total.
+                    countNetworks:
+                      type: integer
+                      description: The number of total networks.
+                    countries:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          countryCode:
+                            type: string
+                            description: The countries ISO code.
+                          countryName:
+                            type: string
+                            description: The countries full name.
+                          countryPrefix:
+                            type: string
+                            description: The countries number prefix.
+                          networks:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                comment:
+                                  description: Any information which might be of interest.
+                                  type: string
+                                features:
+                                  description: The features supported by this network.
+                                  type: array
+                                  items:
+                                    type: string
+                                networkName:
+                                  type: string
+                                  description: The full name of the carrier.
+                                mcc:
+                                  type: string
+                                  description: The mobile country code.
+                                mncs:
+                                  description: The mobile network code(s).
+                                  type: array
+                                  items:
+                                    type: string
+                                price:
+                                  type: number
+                                  format: float
+    post:
+      <<: *pricing
+  /sms:
+    get: &sms
+      tags: [sms]
+      parameters:
+        - name: text
+          in: query
+          description: The actual text message to send.
+          required: true
+          schema:
+            type: string
+        - name: to
+          in: query
+          description: The recipient number or group name.
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          description: Set a cusotm sender name.
+          schema:
+            type: string
+        - name: foreign_id
+          in: query
+          description: Identifer to return in callbacks.
+          schema:
+            pattern: ^[A-Z|a-z|0-9|.|\-|_|@]+
+            type: string
+        - name: label
+          in: query
+          description: A custom label.
+          schema:
+            pattern: ^[A-Z|a-z|0-9|.|\-|_|@]+
+            type: string
+        - name: udh
+          in: query
+          description: A custom User Data Header.
+          schema:
+            type: string
+        - name: delay
+          in: query
+          description: Date/Time for delayed dispatch.
+          schema:
+            type: string
+        - name: debug
+          in: query
+          description: Disable message sending.
+          schema:
+            type: number
+            default: 0.0
+            enum:
+              - 1
+              - 0
+        - name: no_reload
+          in: query
+          description: Enable sending of duplicated messages within 180 seconds.
+          schema:
+            type: number
+            default: 0.0
+            enum:
+              - 1
+              - 0
+        - name: unicode
+          in: query
+          description: Force unicode encoding. Reduces sms length to 70 chars.
+          schema:
+            type: number
+            default: 0.0
+            enum:
+              - 1
+              - 0
+        - name: flash
+          in: query
+          description: Send as flash.
+          schema:
+            type: number
+            default: 0.0
+            enum:
+              - 1
+              - 0
+        - name: utf8
+          in: query
+          description: Force UTF8 encoding.
+          schema:
+            type: number
+            default: 0.0
+            enum:
+              - 1
+              - 0
+        - name: details
+          in: query
+          description: Attach message details to response.
+          schema:
+            type: number
+            default: 0.0
+            enum:
+              - 1
+              - 0
+        - name: return_msg_id
+          in: query
+          description: Attach message ID to second row in a text response.
+          schema:
+            type: number
+            default: 0.0
+            enum:
+              - 1
+              - 0
+        - name: json
+          in: query
+          description: Return a detailed JSON response.
+          schema:
+            type: number
+            default: 0.0
+            enum:
+              - 1
+              - 0
+        - name: performance_tracking
+          in: query
+          description: Enable performance tracking for found URLs.
+          schema:
+            type: number
+            default: 0.0
+            enum:
+              - 1
+              - 0
+      responses:
+        200:
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: object
+                properties:
+                  debug:
+                    type: string
+                  balance:
+                    type: number
+                    format: float
+                  messages:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        encoding:
+                          type: string
+                        error:
+                          type: string
+                        error_text:
+                          type: string
+                        id:
+                          type: string
+                        messages:
+                          type: array
+                          items:
+                            type: string
+                        parts:
+                          type: integer
+                        price:
+                          type: integer
+                        recipient:
+                          type: string
+                        sender:
+                          type: string
+                        success:
+                          type: boolean
+                        text:
+                          type: string
+                  sms_type:
+                    type: string
+                    enum:
+                      - economy
+                      - direct
+                  success:
+                    type: string
+                  total_price:
+                    type: number
+                    format: float
+            application/json:
+              schema:
+                type: object
+                properties:
+                  debug:
+                    type: string
+                  balance:
+                    type: number
+                    format: float
+                  messages:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        encoding:
+                          type: string
+                        error:
+                          type: string
+                        error_text:
+                          type: string
+                        id:
+                          type: string
+                        messages:
+                          type: array
+                          items:
+                            type: string
+                        parts:
+                          type: integer
+                        price:
+                          type: integer
+                        recipient:
+                          type: string
+                        sender:
+                          type: string
+                        success:
+                          type: boolean
+                        text:
+                          type: string
+                  sms_type:
+                    type: string
+                    enum:
+                      - economy
+                      - direct
+                  success:
+                    type: string
+                  total_price:
+                    type: number
+                    format: float
+    post:
+      <<: *sms
+  /status:
+    get: &status
+      tags: [status]
+      parameters:
+        - name: msg_id
+          in: query
+          description: The ID from the SMS.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: |
+                  DELIVERED
+                  2020-01-09 15:41:30.656
+    post:
+      <<: *status
+  /validate_for_voice:
+    get: &validate_for_voice
+      tags: [validate_for_voice]
+      parameters:
+        - name: number
+          in: query
+          description: Determines the recipient. Can only be a number, not a contact
+            from your address book.
+          required: true
+          schema:
+            type: string
+        - name: callback
+          in: query
+          description: The callback URL which gets queried right after validation.
+          schema:
+            type: string
+            format: uri
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  error:
+                    type: string
+                  success:
+                    type: boolean
+    post:
+      <<: *validate_for_voice
+  /voice:
+    get: &voice
+      tags: [voice]
+      parameters:
+        - name: to
+          in: query
+          description: Determines the receiver. Must be a valid phone number or contact
+            from the address book.
+          required: true
+          schema:
+            type: string
+        - name: text
+          in: query
+          description: The text to convert to a voice message. Accepts valid XML too.
+          required: true
+          schema:
+            maxLength: 10000
+            type: string
+        - name: xml
+          in: query
+          description: Decides whetherthe parameter "text" is plain text or XML. The
+            default value is 0.
+          schema:
+            type: number
+            enum:
+              - 1
+              - 0
+        - name: from
+          in: query
+          description: Sets the sender. Must be a verificated sender. Use an inbound
+            number of yours or one of ours.
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: |
+                  100
+                  123456789
+                  0
+    post:
+      <<: *voice
+components:
+  schemas:
+    Carrier:
+      type: object
+      properties:
+        network_code:
+          type: string
+        name:
+          type: string
+        country:
+          type: string
+        network_type:
+          type: string
+          enum:
+            - fixed_line
+            - fixed_line_or_mobile
+            - mobile
+            - pager
+            - personal_number
+            - premium_rate
+            - shared_cost
+            - toll_free
+            - uan
+            - unknown
+            - voicemail
+            - voip
+    Roaming:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - unknown
+            - roaming
+            - not_roaming
+        roaming_country_code:
+          type: string
+        roaming_network_code:
+          type: string
+        roaming_network_name:
+          type: string
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: p
+      in: query
