@@ -474,7 +474,7 @@ paths:
               DELIVERED
               2020-01-09 15:41:30.656
   /validate_for_voice:
-    get: &validate_for_voice
+    post:
       parameters:
         - in: query
           description: Determines the recipient. Can only be a number, not a contact from your address book.
@@ -500,8 +500,6 @@ paths:
                 type: boolean
             type: object
       tags: [ validate_for_voice ]
-    post:
-      <<: *validate_for_voice
   /voice:
     get: &voice
       tags: [ voice ]

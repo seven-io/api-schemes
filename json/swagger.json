@@ -1042,49 +1042,6 @@
       }
     },
     "/validate_for_voice": {
-      "get": {
-        "parameters": [
-          {
-            "in": "query",
-            "description": "Determines the recipient. Can only be a number, not a contact from your address book.",
-            "name": "number",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "description": "The callback URL which gets queried right after validation.",
-            "format": "uri",
-            "name": "callback",
-            "type": "string"
-          }
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "properties": {
-                "code": {
-                  "type": "string"
-                },
-                "error": {
-                  "type": "string"
-                },
-                "success": {
-                  "type": "boolean"
-                }
-              },
-              "type": "object"
-            }
-          }
-        },
-        "tags": [
-          "validate_for_voice"
-        ]
-      },
       "post": {
         "parameters": [
           {

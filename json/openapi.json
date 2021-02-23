@@ -1219,54 +1219,6 @@
       }
     },
     "/validate_for_voice": {
-      "get": {
-        "tags": [
-          "validate_for_voice"
-        ],
-        "parameters": [
-          {
-            "name": "number",
-            "in": "query",
-            "description": "Determines the recipient. Can only be a number, not a contact from your address book.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "callback",
-            "in": "query",
-            "description": "The callback URL which gets queried right after validation.",
-            "schema": {
-              "type": "string",
-              "format": "uri"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "post": {
         "tags": [
           "validate_for_voice"

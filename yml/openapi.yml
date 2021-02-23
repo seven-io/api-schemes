@@ -612,7 +612,7 @@ paths:
                   DELIVERED
                   2020-01-09 15:41:30.656
   /validate_for_voice:
-    get: &validate_for_voice
+    post:
       tags: [validate_for_voice]
       parameters:
         - name: number
@@ -642,8 +642,6 @@ paths:
                     type: string
                   success:
                     type: boolean
-    post:
-      <<: *validate_for_voice
   /voice:
     get: &voice
       tags: [voice]
