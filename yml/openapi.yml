@@ -171,7 +171,7 @@ paths:
     post:
       <<: *contacts
   /lookup:
-    get: &lookup
+    post:
       tags: [lookup]
       parameters:
         - name: type
@@ -288,8 +288,6 @@ paths:
                     roaming:
                       schema:
                         $ref: '#/components/schemas/Roaming'
-    post:
-      <<: *lookup
   /pricing:
     get:
       tags: [pricing]

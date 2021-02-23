@@ -138,7 +138,7 @@ paths:
     post:
       <<: *contacts
   /lookup:
-    get: &lookup
+    post:
       tags: [ lookup ]
       produces: [ application/json, text/plain ]
       parameters:
@@ -241,8 +241,6 @@ paths:
                   roaming:
                     schema:
                       $ref: '#/definitions/Roaming'
-    post:
-      <<: *lookup
   /pricing:
     get:
       tags: [ pricing ]
