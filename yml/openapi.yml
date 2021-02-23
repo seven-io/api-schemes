@@ -58,7 +58,7 @@ tags:
       url: http://sms77.io/en/docs/gateway/http-api
 paths:
   /analytics:
-    get: &analytics
+    get:
       tags: [analytics]
       parameters:
         - name: start
@@ -119,8 +119,6 @@ paths:
                   usage_eur:
                     type: number
                     format: float
-    post:
-      <<: *analytics
   /balance:
     get:
       tags: [balance]
