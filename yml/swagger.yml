@@ -246,7 +246,7 @@ paths:
     post:
       <<: *lookup
   /pricing:
-    get: &pricing
+    get:
       tags: [ pricing ]
       produces: [ application/json, text/csv ]
       parameters:
@@ -316,8 +316,6 @@ paths:
                               price:
                                 type: number
                                 format: float
-    post:
-      <<: *pricing
   /sms:
     get: &sms
       tags: [ sms ]
