@@ -1551,35 +1551,6 @@
             }
           }
         }
-      },
-      "post": {
-        "tags": [
-          "status"
-        ],
-        "parameters": [
-          {
-            "name": "msg_id",
-            "in": "query",
-            "description": "The ID from the SMS.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "example": "DELIVERED\n2020-01-09 15:41:30.656\n"
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/validate_for_voice": {

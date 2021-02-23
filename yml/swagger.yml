@@ -458,7 +458,7 @@ paths:
     post:
       <<: *sms
   /status:
-    get: &status
+    get:
       tags: [ status ]
       produces: [ text/plain ]
       parameters:
@@ -475,8 +475,6 @@ paths:
             example: |
               DELIVERED
               2020-01-09 15:41:30.656
-    post:
-      <<: *status
   /validate_for_voice:
     get: &validate_for_voice
       parameters:
