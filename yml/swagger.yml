@@ -317,7 +317,7 @@ paths:
                                 type: number
                                 format: float
   /sms:
-    get: &sms
+    post:
       tags: [ sms ]
       produces: [ text/plain, application/json ]
       parameters:
@@ -455,8 +455,6 @@ paths:
                 type: number
                 format: float
             type: object
-    post:
-      <<: *sms
   /status:
     get:
       tags: [ status ]

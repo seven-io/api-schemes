@@ -368,7 +368,7 @@ paths:
                                   type: number
                                   format: float
   /sms:
-    get: &sms
+    post:
       tags: [sms]
       parameters:
         - name: text
@@ -591,8 +591,6 @@ paths:
                   total_price:
                     type: number
                     format: float
-    post:
-      <<: *sms
   /status:
     get:
       tags: [status]
