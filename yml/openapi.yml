@@ -308,12 +308,6 @@ paths:
             The default value is json.
           schema:
             type: string
-        - name: type
-          in: query
-          description: Sets the SMS type to get pricings for. Allowed values are "direct"
-            and "economy". The default value is "direct".
-          schema:
-            type: string
       responses:
         200:
           description: OK

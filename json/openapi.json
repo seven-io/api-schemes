@@ -761,14 +761,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "type",
-            "in": "query",
-            "description": "Sets the SMS type to get pricings for. Allowed values are \"direct\" and \"economy\". The default value is \"direct\".",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -874,14 +866,6 @@
             "name": "format",
             "in": "query",
             "description": "Determines the response format. Allowed values are json and csv. The default value is json.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "type",
-            "in": "query",
-            "description": "Sets the SMS type to get pricings for. Allowed values are \"direct\" and \"economy\". The default value is \"direct\".",
             "schema": {
               "type": "string"
             }

@@ -258,10 +258,6 @@ paths:
           name: format
           description: Determines the response format. Allowed values are json and csv. The default value is json.
           type: string
-        - in: query
-          name: type
-          description: Sets the SMS type to get pricings for. Allowed values are "direct" and "economy". The default value is "direct".
-          type: string
       responses:
         '200':
           description: OK
