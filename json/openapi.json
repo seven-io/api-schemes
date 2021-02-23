@@ -1269,65 +1269,6 @@
       }
     },
     "/voice": {
-      "get": {
-        "tags": [
-          "voice"
-        ],
-        "parameters": [
-          {
-            "name": "to",
-            "in": "query",
-            "description": "Determines the receiver. Must be a valid phone number or contact from the address book.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "text",
-            "in": "query",
-            "description": "The text to convert to a voice message. Accepts valid XML too.",
-            "required": true,
-            "schema": {
-              "maxLength": 10000,
-              "type": "string"
-            }
-          },
-          {
-            "name": "xml",
-            "in": "query",
-            "description": "Decides whetherthe parameter \"text\" is plain text or XML. The default value is 0.",
-            "schema": {
-              "type": "number",
-              "enum": [
-                1,
-                0
-              ]
-            }
-          },
-          {
-            "name": "from",
-            "in": "query",
-            "description": "Sets the sender. Must be a verificated sender. Use an inbound number of yours or one of ours.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "example": "100\n123456789\n0\n"
-                }
-              }
-            }
-          }
-        }
-      },
       "post": {
         "tags": [
           "voice"

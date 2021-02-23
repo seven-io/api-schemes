@@ -501,7 +501,7 @@ paths:
             type: object
       tags: [ validate_for_voice ]
   /voice:
-    get: &voice
+    post:
       tags: [ voice ]
       produces: [ text/plain ]
       parameters:
@@ -534,8 +534,6 @@ paths:
               100
               123456789
               0
-    post:
-      <<: *voice
 securityDefinitions:
   ApiKeyAuth:
     in: header

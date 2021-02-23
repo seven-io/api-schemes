@@ -643,7 +643,7 @@ paths:
                   success:
                     type: boolean
   /voice:
-    get: &voice
+    post:
       tags: [voice]
       parameters:
         - name: to
@@ -686,8 +686,6 @@ paths:
                   100
                   123456789
                   0
-    post:
-      <<: *voice
 components:
   schemas:
     Carrier:
