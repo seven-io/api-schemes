@@ -104,7 +104,7 @@ paths:
     post:
       <<: *analytics
   /balance:
-    get: &balance
+    get:
       tags: [ balance ]
       produces: [ text/plain ]
       responses:
@@ -114,9 +114,6 @@ paths:
             type: number
             format: float
             example: 12.34
-
-    post:
-      <<: *balance
   /contacts:
     get: &contacts
       parameters:

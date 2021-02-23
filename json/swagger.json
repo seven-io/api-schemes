@@ -268,24 +268,6 @@
             }
           }
         }
-      },
-      "post": {
-        "tags": [
-          "balance"
-        ],
-        "produces": [
-          "text/plain"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "number",
-              "format": "float",
-              "example": 12.34
-            }
-          }
-        }
       }
     },
     "/contacts": {

@@ -300,25 +300,6 @@
             }
           }
         }
-      },
-      "post": {
-        "tags": [
-          "balance"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "number",
-                  "format": "float",
-                  "example": 12.34
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/contacts": {
