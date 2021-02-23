@@ -569,13 +569,13 @@
           {
             "in": "query",
             "name": "from",
-            "description": "Set a cusotm sender name.",
+            "description": "Set a custom sender name.",
             "type": "string"
           },
           {
             "in": "query",
             "name": "foreign_id",
-            "description": "Identifer to return in callbacks.",
+            "description": "Identifier to return in callbacks.",
             "pattern": "^[A-Z|a-z|0-9|.|\\-|_|@]+",
             "type": "string"
           },
@@ -874,7 +874,7 @@
           },
           {
             "in": "query",
-            "description": "Decides whetherthe parameter \"text\" is plain text or XML. The default value is 0.",
+            "description": "Decides whether the parameter \"text\" is plain text or XML. The default value is 0.",
             "enum": [
               1,
               0
@@ -884,7 +884,7 @@
           },
           {
             "in": "query",
-            "description": "Sets the sender. Must be a verificated sender. Use an inbound number of yours or one of ours.",
+            "description": "Sets the sender. Must be a verified sender. Use an inbound number of yours or one of ours.",
             "name": "from",
             "type": "string"
           }
