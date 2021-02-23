@@ -1625,15 +1625,15 @@
     }
   },
   "securityDefinitions": {
-    "api_key": {
-      "in": "query",
-      "name": "p",
+    "ApiKeyAuth": {
+      "in": "header",
+      "name": "X-API-Key",
       "type": "apiKey"
     }
   },
   "security": [
     {
-      "api_key": []
+      "ApiKeyAuth": []
     }
   ],
   "externalDocs": {

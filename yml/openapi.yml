@@ -18,7 +18,7 @@ servers:
   - url: https://gateway.sms77.io/api
   - url: http://gateway.sms77.io/api
 security:
-  - api_key: [ ]
+  - ApiKeyAuth: [ ]
 tags:
   - name: analytics
     externalDocs:
@@ -747,7 +747,7 @@ components:
         roaming_network_name:
           type: string
   securitySchemes:
-    api_key:
+    ApiKeyAuth:
+      in: header
+      name: X-API-Key
       type: apiKey
-      name: p
-      in: query

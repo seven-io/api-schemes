@@ -552,12 +552,12 @@ paths:
     post:
       <<: *voice
 securityDefinitions:
-  api_key:
-    in: query
-    name: p
+  ApiKeyAuth:
+    in: header
+    name: X-API-Key
     type: apiKey
 security:
-  - api_key: [ ]
+  - ApiKeyAuth: [ ]
 externalDocs:
   description: Find out more about the Sms77.io SMS gateway.
   url: http://sms77.io/en/docs/gateway/http-api

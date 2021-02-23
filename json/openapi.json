@@ -29,7 +29,7 @@
   ],
   "security": [
     {
-      "api_key": []
+      "ApiKeyAuth": []
     }
   ],
   "tags": [
@@ -2004,10 +2004,10 @@
       }
     },
     "securitySchemes": {
-      "api_key": {
-        "type": "apiKey",
-        "name": "p",
-        "in": "query"
+      "ApiKeyAuth": {
+        "in": "header",
+        "name": "X-API-Key",
+        "type": "apiKey"
       }
     }
   }
