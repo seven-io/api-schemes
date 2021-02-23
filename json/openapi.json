@@ -22,9 +22,6 @@
   "servers": [
     {
       "url": "https://gateway.sms77.io/api"
-    },
-    {
-      "url": "http://gateway.sms77.io/api"
     }
   ],
   "security": [

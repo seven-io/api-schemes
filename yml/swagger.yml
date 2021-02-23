@@ -50,7 +50,7 @@ tags:
     externalDocs:
       description: Get number format, CNAM,- HLR- or MNP information for given phone number
       url: http://sms77.io/en/docs/gateway/http-api
-schemes: [ https, http ]
+schemes: [ https ]
 paths:
   /analytics:
     get: &analytics
