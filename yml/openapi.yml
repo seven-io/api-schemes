@@ -59,6 +59,7 @@ tags:
 paths:
   /analytics:
     get:
+      operationId: Analytics
       tags: [analytics]
       parameters:
         - name: start
@@ -121,6 +122,7 @@ paths:
                     format: float
   /balance:
     get:
+      operationId: Balance
       tags: [balance]
       responses:
         200:
@@ -133,6 +135,7 @@ paths:
                 example: 12.34
   /contacts:
     get: &contacts
+      operationId: ContactsGET
       tags: [contacts]
       parameters:
         - name: action
@@ -170,8 +173,10 @@ paths:
                 example: 12.34
     post:
       <<: *contacts
+      operationId: ContactsPOST
   /lookup:
     post:
+      operationId: Lookup
       tags: [lookup]
       parameters:
         - name: type
@@ -290,6 +295,7 @@ paths:
                         $ref: '#/components/schemas/Roaming'
   /pricing:
     get:
+      operationId: Pricing
       tags: [pricing]
       parameters:
         - name: country
@@ -365,6 +371,7 @@ paths:
                                   format: float
   /sms:
     post:
+      operationId: Sms
       tags: [sms]
       parameters:
         - name: text
@@ -589,6 +596,7 @@ paths:
                     format: float
   /status:
     get:
+      operationId: Status
       tags: [status]
       parameters:
         - name: msg_id
@@ -609,6 +617,7 @@ paths:
                   2020-01-09 15:41:30.656
   /validate_for_voice:
     post:
+      operationId: ValidateForVoice
       tags: [validate_for_voice]
       parameters:
         - name: number
@@ -640,6 +649,7 @@ paths:
                     type: boolean
   /voice:
     post:
+      operationId: Voice
       tags: [voice]
       parameters:
         - name: to

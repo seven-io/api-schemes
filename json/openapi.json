@@ -97,6 +97,7 @@
   "paths": {
     "/analytics": {
       "get": {
+        "operationId": "Analytics",
         "tags": [
           "analytics"
         ],
@@ -191,6 +192,7 @@
     },
     "/balance": {
       "get": {
+        "operationId": "Balance",
         "tags": [
           "balance"
         ],
@@ -212,6 +214,7 @@
     },
     "/contacts": {
       "get": {
+        "operationId": "ContactsGET",
         "tags": [
           "contacts"
         ],
@@ -266,6 +269,7 @@
         }
       },
       "post": {
+        "operationId": "ContactsPOST",
         "tags": [
           "contacts"
         ],
@@ -322,6 +326,7 @@
     },
     "/lookup": {
       "post": {
+        "operationId": "Lookup",
         "tags": [
           "lookup"
         ],
@@ -487,6 +492,7 @@
     },
     "/pricing": {
       "get": {
+        "operationId": "Pricing",
         "tags": [
           "pricing"
         ],
@@ -597,6 +603,7 @@
     },
     "/sms": {
       "post": {
+        "operationId": "Sms",
         "tags": [
           "sms"
         ],
@@ -934,6 +941,7 @@
     },
     "/status": {
       "get": {
+        "operationId": "Status",
         "tags": [
           "status"
         ],
@@ -965,6 +973,7 @@
     },
     "/validate_for_voice": {
       "post": {
+        "operationId": "ValidateForVoice",
         "tags": [
           "validate_for_voice"
         ],
@@ -1015,6 +1024,7 @@
     },
     "/voice": {
       "post": {
+        "operationId": "Voice",
         "tags": [
           "voice"
         ],

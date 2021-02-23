@@ -54,6 +54,7 @@ schemes: [ https ]
 paths:
   /analytics:
     get:
+      operationId: Analytics
       tags: [ analytics ]
       parameters:
         - in: query
@@ -103,6 +104,7 @@ paths:
                 format: float
   /balance:
     get:
+      operationId: Balance
       tags: [ balance ]
       produces: [ text/plain ]
       responses:
@@ -114,6 +116,7 @@ paths:
             example: 12.34
   /contacts:
     get: &contacts
+      operationId: ContactsGET
       parameters:
         - in: query
           description: Determines the action to execute.
@@ -137,8 +140,10 @@ paths:
       tags: [ contacts ]
     post:
       <<: *contacts
+      operationId: ContactsPOST
   /lookup:
     post:
+      operationId: Lookup
       tags: [ lookup ]
       produces: [ application/json, text/plain ]
       parameters:
@@ -243,6 +248,7 @@ paths:
                       $ref: '#/definitions/Roaming'
   /pricing:
     get:
+      operationId: Pricing
       tags: [ pricing ]
       produces: [ application/json, text/csv ]
       parameters:
@@ -314,6 +320,7 @@ paths:
                                 format: float
   /sms:
     post:
+      operationId: Sms
       tags: [ sms ]
       produces: [ text/plain, application/json ]
       parameters:
@@ -453,6 +460,7 @@ paths:
             type: object
   /status:
     get:
+      operationId: Status
       tags: [ status ]
       produces: [ text/plain ]
       parameters:
@@ -471,6 +479,7 @@ paths:
               2020-01-09 15:41:30.656
   /validate_for_voice:
     post:
+      operationId: ValidateForVoice
       parameters:
         - in: query
           description: Determines the recipient. Can only be a number, not a contact from your address book.
@@ -498,6 +507,7 @@ paths:
       tags: [ validate_for_voice ]
   /voice:
     post:
+      operationId: Voice
       tags: [ voice ]
       produces: [ text/plain ]
       parameters:
