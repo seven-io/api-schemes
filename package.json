@@ -1,0 +1,42 @@
+{
+    "name": "@sms77.io/api-schemes",
+    "version": "1.0.0",
+    "description": "API definitions for the Sms77.io SMS Gateway",
+    "scripts": {
+        "build": "node build.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prepare": "husky install"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/sms77io/api-schemes.git"
+    },
+    "keywords": [
+        "api",
+        "swagger",
+        "openapi",
+        "sms",
+        "tts",
+        "hlr",
+        "cnam",
+        "mnp"
+    ],
+    "author": "sms77 e.K.",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/sms77io/api-schemes/issues"
+    },
+    "homepage": "https://github.com/sms77io/api-schemes#readme",
+    "devDependencies": {
+        "@apidevtools/swagger-parser": "^10.0.2",
+        "husky": "^5.1.2",
+        "prettier": "^2.2.1",
+        "swagger2openapi": "^7.0.5",
+        "yamljs": "^0.3.0"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "node build.js"
+        }
+    }
+}

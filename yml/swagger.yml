@@ -3,14 +3,14 @@ info:
   description: sms77.io Swagger API. Get your API-Key now at sms77.io.
   version: 1.0.0
   title: sms77.io API
-  termsOfService: http://sms77.io/en/company/terms/
+  termsOfService: https://sms77.io/en/company/terms/
   contact:
     email: support@sms77.io
-    url: http://sms77.io/en/company/contact
+    url: https://sms77.io/en/company/contact
     name: Support
   license:
     name: Licensed by Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
 host: gateway.sms77.io
 basePath: /api
 tags:
@@ -21,35 +21,35 @@ tags:
   - name: sms
     externalDocs:
       description: Send one/multiple SMS
-      url: http://sms77.io/en/docs/gateway/http-api/sms-disptach
+      url: https://sms77.io/en/docs/gateway/http-api/sms-disptach
   - name: balance
     externalDocs:
       description: Retrieve account balance
-      url: http://sms77.io/en/docs/gateway/http-api/credit-balance
+      url: https://sms77.io/en/docs/gateway/http-api/credit-balance
   - name: contacts
     externalDocs:
       description: Retrieve/edit/delete contact(s)
-      url: http://sms77.io/en/docs/gateway/http-api/contacts
+      url: https://sms77.io/en/docs/gateway/http-api/contacts
   - name: pricing
     externalDocs:
       description: Retrieve pricing information
-      url: http://sms77.io/en/docs/gateway/http-api/pricing
+      url: https://sms77.io/en/docs/gateway/http-api/pricing
   - name: status
     externalDocs:
       description: Retrieve the status for a sent SMS with the given ID
-      url: http://sms77.io/en/docs/gateway/http-api/status-reports
+      url: https://sms77.io/en/docs/gateway/http-api/status-reports
   - name: validate_for_voice
     externalDocs:
       description: Validate caller ID for voice Voice API
-      url: http://sms77.io/en/docs/gateway/http-api/caller-ids
+      url: https://sms77.io/en/docs/gateway/http-api/caller-ids
   - name: voice
     externalDocs:
       description: Issue voice call to phone number
-      url: http://sms77.io/en/docs/gateway/http-api/voice
+      url: https://sms77.io/en/docs/gateway/http-api/voice
   - name: lookup
     externalDocs:
       description: Get number format, CNAM,- HLR- or MNP information for given phone number
-      url: http://sms77.io/en/docs/gateway/http-api
+      url: https://sms77.io/en/docs/gateway/http-api
 schemes: [ https ]
 paths:
   /analytics:
@@ -115,32 +115,68 @@ paths:
             format: float
             example: 12.34
   /contacts:
-    get: &contacts
-      operationId: ContactsGET
+    get:
+      operationId: ContactsGet
       parameters:
         - in: query
           description: Determines the action to execute.
-          enum: [ read, write, del ]
+          enum: [ read ]
           name: action
           required: true
           type: string
         - in: query
-          description: Defines whether to return the response as JSON or plain text (CSV).
-          enum: [ 1, 0 ]
+          description: Defines whether to return the response as JSON or CSV separated by semicolon.
+          enum: [ 0, 1 ]
+          default: 0
           name: json
           type: number
       produces: [ text/csv, application/json ]
       responses:
         '200':
-          description: OK
+          description: OK (CSV)
           schema:
-            type: number
-            format: float
-            example: 12.34
+            example: '"1";"Tommy Tester";"0049179876543210"'
+            type: string
       tags: [ contacts ]
     post:
-      <<: *contacts
       operationId: ContactsPOST
+      parameters:
+        - in: query
+          description: Determines the action to execute.
+          enum: [ del, write ]
+          name: action
+          required: true
+          type: string
+        - in: query
+          description: Defines whether to return the response as JSON or CSV separated by semicolon.
+          enum: [ 0, 1 ]
+          default: 0
+          name: json
+          type: number
+        - in: query
+          description: The contact ID for editing/deletion.
+          name: id
+          type: string
+        - in: query
+          description: The contacts name.
+          name: nick
+          type: string
+        - in: query
+          description: The contacts phone number.
+          name: empfaenger
+          type: string
+        - in: query
+          description: The contacts email address.
+          name: email
+          type: string
+      produces: [ text/plain, application/json ]
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+            example: 152
+      tags: [ contacts ]
   /lookup:
     post:
       operationId: Lookup
@@ -549,7 +585,7 @@ security:
   - ApiKeyAuth: [ ]
 externalDocs:
   description: Find out more about the Sms77.io SMS gateway.
-  url: http://sms77.io/en/docs/gateway/http-api
+  url: https://sms77.io/en/docs/gateway/http-api
 definitions:
   Carrier:
     type: object
