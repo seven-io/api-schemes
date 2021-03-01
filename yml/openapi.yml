@@ -88,6 +88,14 @@ tags:
           url: "https://sms77.io/en/docs/gateway/http-api",
         },
     }
+  - {
+      name: hooks,
+      externalDocs:
+        {
+          description: "Create, view and delete webhooks",
+          url: "https://www.sms77.io/en/docs/gateway/http-api/webhooks/",
+        },
+    }
 paths:
   /analytics:
     {
@@ -288,6 +296,124 @@ paths:
                 },
             },
           tags: [contacts],
+        },
+    }
+  /hooks:
+    {
+      get:
+        {
+          operationId: HooksGet,
+          parameters:
+            [
+              {
+                in: query,
+                description: "Determines the action to execute.",
+                name: action,
+                required: true,
+                schema: { type: string, enum: [read] },
+              },
+            ],
+          tags: [hooks],
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        {
+                          schema:
+                            {
+                              type: object,
+                              properties:
+                                {
+                                  hooks:
+                                    {
+                                      type: array,
+                                      items:
+                                        {
+                                          type: object,
+                                          properties:
+                                            {
+                                              id: { type: string },
+                                              target_url: { type: string },
+                                              event_type: { type: string },
+                                              request_method: { type: string },
+                                              created: { type: string },
+                                            },
+                                        },
+                                    },
+                                  success: { type: boolean },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+      post:
+        {
+          operationId: HooksPOST,
+          parameters:
+            [
+              {
+                in: query,
+                description: "Determines the action to execute.",
+                name: action,
+                required: true,
+                schema: { type: string, enum: [subscribe, unsubscribe] },
+              },
+              {
+                in: query,
+                description: "The Webhook ID you wish to unsubscribe.",
+                name: id,
+                schema: { type: integer },
+              },
+              {
+                in: query,
+                description: "Target URL of your Webhook.",
+                name: target_url,
+                schema: { type: string },
+              },
+              {
+                in: query,
+                description: "Type of event for which you would like to receive a webhook.",
+                name: event_type,
+                schema:
+                  { type: string, enum: [all, sms_mo, dlr, voice_status] },
+              },
+              {
+                in: query,
+                description: "Request method in which you want to receive the webhook.",
+                name: request_method,
+                schema:
+                  { type: string, enum: [POST, JSON, GET], default: POST },
+              },
+            ],
+          tags: [hooks],
+          responses:
+            {
+              "200":
+                {
+                  description: "Hook subscribed",
+                  content:
+                    {
+                      application/json:
+                        {
+                          schema:
+                            {
+                              type: object,
+                              properties:
+                                {
+                                  success: { type: boolean },
+                                  id: { type: integer },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
         },
     }
   /lookup:
