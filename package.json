@@ -9,7 +9,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/sms77io/api-schemes.git"
+        "url": "git+https://github.com/seven-io/api-schemes.git"
     },
     "keywords": [
         "api",
@@ -24,14 +24,14 @@
     "author": "sms77 e.K.",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/sms77io/api-schemes/issues"
+        "url": "https://github.com/seven-io/api-schemes/issues"
     },
-    "homepage": "https://github.com/sms77io/api-schemes#readme",
+    "homepage": "https://github.com/seven-io/api-schemes#readme",
     "devDependencies": {
-        "@apidevtools/swagger-parser": "^10.0.2",
-        "husky": "^5.1.2",
-        "prettier": "^2.2.1",
-        "swagger2openapi": "^7.0.5",
+        "@apidevtools/swagger-parser": "^10.1.0",
+        "husky": "^8.0.1",
+        "prettier": "^2.7.1",
+        "swagger2openapi": "^7.0.8",
         "yamljs": "^0.3.0"
     },
     "husky": {

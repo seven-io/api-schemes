@@ -591,6 +591,369 @@ paths:
             },
         },
     }
+  /lookup/cnam:
+    {
+      post:
+        {
+          operationId: LookupCnam,
+          tags: [lookup],
+          parameters:
+            [
+              {
+                in: query,
+                description: "The phone number to look up.",
+                name: number,
+                required: true,
+                style: form,
+                explode: false,
+                schema: { type: array, items: { type: string } },
+              },
+            ],
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        {
+                          examples:
+                            {
+                              response:
+                                {
+                                  value:
+                                    {
+                                      schema:
+                                        {
+                                          type: object,
+                                          properties:
+                                            {
+                                              code:
+                                                {
+                                                  description: "The API status code",
+                                                  enum: [100],
+                                                  type: number,
+                                                },
+                                              name:
+                                                {
+                                                  description: "The country for given phone number",
+                                                  type: string,
+                                                },
+                                              number:
+                                                {
+                                                  description: "The phone number that was looked up",
+                                                  type: string,
+                                                },
+                                              success:
+                                                {
+                                                  description: "Whether the request was successful or not",
+                                                  enum: [true, false],
+                                                  type: string,
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    }
+  /lookup/format:
+    {
+      post:
+        {
+          operationId: LookupFormat,
+          tags: [lookup],
+          parameters:
+            [
+              {
+                in: query,
+                description: "The phone number to look up.",
+                name: number,
+                required: true,
+                style: form,
+                explode: false,
+                schema: { type: array, items: { type: string } },
+              },
+            ],
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        {
+                          examples:
+                            {
+                              response:
+                                {
+                                  value:
+                                    {
+                                      schema:
+                                        {
+                                          type: object,
+                                          properties:
+                                            {
+                                              carrier:
+                                                {
+                                                  description: "Network operator to whom the call number was originally assigned.",
+                                                  type: string,
+                                                },
+                                              country_code:
+                                                {
+                                                  description: "Country code of the queried number – international without leading “00”.",
+                                                  type: string,
+                                                },
+                                              country_iso:
+                                                {
+                                                  description: "Country code of the phone number in the format ISO 3166-1 alpha-2 (two letters).",
+                                                  type: string,
+                                                },
+                                              country_name:
+                                                {
+                                                  description: "The full name of the country of the queried phone number in English.",
+                                                  type: string,
+                                                },
+                                              international:
+                                                {
+                                                  description: "International E.164 format of the queried phone number.",
+                                                  type: string,
+                                                },
+                                              international_formatted:
+                                                {
+                                                  description: "The international number.",
+                                                  type: string,
+                                                },
+                                              national:
+                                                {
+                                                  description: "National format of the queried phone number.",
+                                                  type: string,
+                                                },
+                                              network_type:
+                                                {
+                                                  description: "The type of network for the requested number.",
+                                                  type: string,
+                                                },
+                                              success:
+                                                {
+                                                  description: "Whether the request was successful or not.",
+                                                  type: boolean,
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    }
+  /lookup/hlr:
+    {
+      post:
+        {
+          operationId: LookupHlr,
+          tags: [lookup],
+          parameters:
+            [
+              {
+                in: query,
+                description: "The phone number to look up.",
+                name: number,
+                required: true,
+                style: form,
+                explode: false,
+                schema: { type: array, items: { type: string } },
+              },
+            ],
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        {
+                          examples:
+                            {
+                              response:
+                                {
+                                  value:
+                                    {
+                                      schema:
+                                        {
+                                          type: object,
+                                          properties:
+                                            {
+                                              international_formatted:
+                                                {
+                                                  description: "The number formatted accordingly to the E.164 standard in a human readable format.",
+                                                  type: string,
+                                                },
+                                              country_name:
+                                                {
+                                                  type: string,
+                                                  description: "The full english name if the number belonging country.",
+                                                },
+                                              country_code:
+                                                {
+                                                  type: string,
+                                                  description: "The area code of the number belonging country. This value is numeric.",
+                                                },
+                                              gsm_code: { type: string },
+                                              gsm_message: { type: string },
+                                              status_message: { type: string },
+                                              status: { type: boolean },
+                                              international_format_number:
+                                                { type: string },
+                                              national_format_number:
+                                                { type: string },
+                                              country_code_iso3:
+                                                { type: string },
+                                              country_prefix: { type: string },
+                                              ported:
+                                                {
+                                                  type: string,
+                                                  enum:
+                                                    [
+                                                      unknown,
+                                                      ported,
+                                                      not_ported,
+                                                      assumed_not_ported,
+                                                      assumed_ported,
+                                                    ],
+                                                },
+                                              current_carrier:
+                                                {
+                                                  schema:
+                                                    {
+                                                      $ref: "#/components/schemas/Carrier",
+                                                    },
+                                                },
+                                              original_carrier:
+                                                {
+                                                  schema:
+                                                    {
+                                                      $ref: "#/components/schemas/Carrier",
+                                                    },
+                                                },
+                                              lookup_outcome: { type: string },
+                                              lookup_outcome_message:
+                                                { type: string },
+                                              valid_number: { type: string },
+                                              reachable:
+                                                {
+                                                  type: string,
+                                                  enum:
+                                                    [
+                                                      unknown,
+                                                      reachable,
+                                                      undeliverable,
+                                                      absent,
+                                                      bad_number,
+                                                      blacklisted,
+                                                    ],
+                                                },
+                                              roaming:
+                                                {
+                                                  schema:
+                                                    {
+                                                      $ref: "#/components/schemas/Roaming",
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    }
+  /lookup/mnp:
+    {
+      post:
+        {
+          operationId: LookupMnp,
+          tags: [lookup],
+          parameters:
+            [
+              {
+                in: query,
+                description: "The phone number to look up.",
+                name: number,
+                required: true,
+                style: form,
+                explode: false,
+                schema: { type: array, items: { type: string } },
+              },
+              {
+                in: query,
+                description: "Determines whether the response shall be returned in JSON format.",
+                name: json,
+                schema: { type: string },
+              },
+            ],
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        {
+                          examples:
+                            {
+                              response:
+                                {
+                                  value:
+                                    {
+                                      schema:
+                                        {
+                                          type: object,
+                                          properties:
+                                            {
+                                              code:
+                                                {
+                                                  enum: [100, 202, 500, 600],
+                                                  type: number,
+                                                },
+                                              success:
+                                                {
+                                                  description: "Determines if the request was successful.,",
+                                                  type: boolean,
+                                                },
+                                              price: { type: float },
+                                              mnp:
+                                                {
+                                                  schema:
+                                                    {
+                                                      $ref: "#/components/schemas/Mnp",
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    }
   /pricing:
     {
       get:
@@ -697,8 +1060,8 @@ paths:
                                                                               type: string,
                                                                             },
                                                                         },
-                                                                      ? networkName
-                                                                      : {
+                                                                      networkName:
+                                                                        {
                                                                           type: string,
                                                                           description: "The full name of the carrier.",
                                                                         },
@@ -1114,6 +1477,20 @@ components:
                       voip,
                     ],
                 },
+            },
+        },
+      Mnp:
+        {
+          type: object,
+          properties:
+            {
+              country: { type: string },
+              isPorted: { type: boolean },
+              international_formatted: { type: string },
+              mccmnc: { type: string },
+              national_format: { type: string },
+              network: { type: string },
+              number: { type: string },
             },
         },
       Roaming:
