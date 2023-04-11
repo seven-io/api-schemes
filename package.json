@@ -1,7 +1,7 @@
 {
-    "name": "@sms77.io/api-schemes",
+    "name": "@seven.io/api-schemes",
     "version": "1.0.0",
-    "description": "API definitions for the Sms77.io SMS Gateway",
+    "description": "API definitions for the seven.io SMS Gateway",
     "scripts": {
         "build": "node build.js",
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,7 +21,7 @@
         "cnam",
         "mnp"
     ],
-    "author": "sms77 e.K.",
+    "author": "seven communications GmbH & Co. KG <support@seven.io> (https://www.seven.io/)",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/seven-io/api-schemes/issues"
@@ -29,8 +29,8 @@
     "homepage": "https://github.com/seven-io/api-schemes#readme",
     "devDependencies": {
         "@apidevtools/swagger-parser": "^10.1.0",
-        "husky": "^8.0.1",
-        "prettier": "^2.7.1",
+        "husky": "^8.0.3",
+        "prettier": "^2.8.7",
         "swagger2openapi": "^7.0.8",
         "yamljs": "^0.3.0"
     },
