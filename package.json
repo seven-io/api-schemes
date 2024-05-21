@@ -1,11 +1,14 @@
 {
     "name": "@seven.io/api-schemes",
     "version": "1.0.0",
-    "description": "API definitions for the seven.io SMS Gateway",
+    "description": "API definitions for seven.io",
+    "engines" : {
+        "node" : ">=18.0.0"
+    },
     "scripts": {
-        "build": "node build.js",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "prepare": "husky install"
+        "build": "node build.mjs",
+        "prepare": "husky install",
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
         "type": "git",
@@ -13,13 +16,13 @@
     },
     "keywords": [
         "api",
-        "swagger",
+        "cnam",
+        "hlr",
+        "mnp",
         "openapi",
         "sms",
-        "tts",
-        "hlr",
-        "cnam",
-        "mnp"
+        "swagger",
+        "tts"
     ],
     "author": "seven communications GmbH & Co. KG <support@seven.io> (https://www.seven.io/)",
     "license": "MIT",
@@ -29,8 +32,8 @@
     "homepage": "https://github.com/seven-io/api-schemes#readme",
     "devDependencies": {
         "@apidevtools/swagger-parser": "^10.1.0",
-        "husky": "^8.0.3",
-        "prettier": "^2.8.7",
+        "husky": "^9.0.11",
+        "prettier": "^3.2.5",
         "swagger2openapi": "^7.0.8",
         "yamljs": "^0.3.0"
     },
