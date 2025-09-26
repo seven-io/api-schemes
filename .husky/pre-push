@@ -1,0 +1,3 @@
+npm run build
+
+git commit -a --no-edit --amend

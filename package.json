@@ -40,10 +40,5 @@
         "tsx": "^4.20.6",
         "typescript": "^5.9.2",
         "yamljs": "^0.3.0"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "npm run build"
-        }
     }
 }
