@@ -1021,6 +1021,11 @@ paths:
           description: Sets the sender - must be a verified sender - use an inbound number of yours or one of ours.
           type: string
           x-ms-summary: From
+        - in: formData
+          name: foreign_id
+          description: A unique ID that you can use for later assignment of the call. This ID is passed in the webhook events.
+          type: string
+          x-ms-summary: Foreign ID
       responses:
         '200':
           description: Success

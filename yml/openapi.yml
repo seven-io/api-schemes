@@ -1965,6 +1965,12 @@ paths:
                                   maxLength: 16,
                                   x-ms-summary: From,
                                 },
+                              foreign_id:
+                                {
+                                  description: "A unique ID that you can use for later assignment of the call. This ID is passed in the webhook events.",
+                                  type: string,
+                                  x-ms-summary: "Foreign ID",
+                                },
                             },
                           required: [to, text],
                         },
