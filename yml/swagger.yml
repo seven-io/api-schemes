@@ -183,6 +183,28 @@ paths:
       summary: List Contacts
       description: Retrieves contacts
       operationId: ContactsList
+    post:
+      tags: [ contacts ]
+      parameters:
+        - $ref: '#/parameters/contactAddress'
+        - $ref: '#/parameters/contactAvatar'
+        - $ref: '#/parameters/contactBirthday'
+        - $ref: '#/parameters/contactCity'
+        - $ref: '#/parameters/contactEmail'
+        - $ref: '#/parameters/contactFirstname'
+        - $ref: '#/parameters/contactHomeNumber'
+        - $ref: '#/parameters/contactLastname'
+        - $ref: '#/parameters/contactMobileNumber'
+        - $ref: '#/parameters/contactNotes'
+        - $ref: '#/parameters/contactPostalCode'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Contact'
+      summary: Create Contact
+      description: Creates a contact
+      operationId: ContactsCreate
   /journal/outbound:
     get:
       tags:
@@ -1112,6 +1134,72 @@ parameters:
     description: Receive the data only for the main account, all your (sub-)accounts or only for specific subaccounts.
     type: string
     x-ms-summary: Subaccounts
+  contactAvatar:
+    in: formData
+    name: avatar
+    description: The avatar of a contact
+    type: string
+    x-ms-summary: Avatar
+  contactAddress:
+    in: formData
+    name: address
+    description: The address of a contact
+    type: string
+    x-ms-summary: Address
+  contactBirthday:
+    in: formData
+    name: birthday
+    description: The birthday of a contact
+    type: string
+    x-ms-summary: Birthday
+  contactCity:
+    in: formData
+    name: city
+    description: The city of a contact
+    type: string
+    x-ms-summary: City
+  contactEmail:
+    in: formData
+    name: email
+    description: The email of a contact
+    type: string
+    x-ms-summary: Email
+  contactFirstname:
+    in: formData
+    name: firstname
+    description: The first name of a contact
+    type: string
+    x-ms-summary: First Name
+  contactHomeNumber:
+    in: formData
+    name: home_number
+    description: The home number of a contact
+    type: string
+    x-ms-summary: Home Number
+  contactLastname:
+    in: formData
+    name: lastname
+    description: The last name of a contact
+    type: string
+    x-ms-summary: Last Name
+  contactMobileNumber:
+    in: formData
+    name: mobile_number
+    description: The mobile number of a contact
+    type: string
+    x-ms-summary: Mobile Number
+  contactNotes:
+    in: formData
+    name: notes
+    description: The notes of a contact
+    type: string
+    x-ms-summary: Notes
+  contactPostalCode:
+    in: formData
+    name: postal_code
+    description: The postal code of a contact
+    type: string
+    x-ms-summary: Postal Code
   journalId:
     in: query
     name: id
