@@ -279,72 +279,7 @@
       },
       "post": {
         "tags": ["contacts"],
-        "requestBody": {
-          "content": {
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "address": {
-                    "description": "The address of a contact",
-                    "type": "string",
-                    "x-ms-summary": "Address"
-                  },
-                  "avatar": {
-                    "description": "The avatar of a contact",
-                    "type": "string",
-                    "x-ms-summary": "Avatar"
-                  },
-                  "birthday": {
-                    "description": "The birthday of a contact",
-                    "type": "string",
-                    "x-ms-summary": "Birthday"
-                  },
-                  "city": {
-                    "description": "The city of a contact",
-                    "type": "string",
-                    "x-ms-summary": "City"
-                  },
-                  "email": {
-                    "description": "The email of a contact",
-                    "type": "string",
-                    "x-ms-summary": "Email"
-                  },
-                  "firstname": {
-                    "description": "The first name of a contact",
-                    "type": "string",
-                    "x-ms-summary": "First Name"
-                  },
-                  "home_number": {
-                    "description": "The home number of a contact",
-                    "type": "string",
-                    "x-ms-summary": "Home Number"
-                  },
-                  "lastname": {
-                    "description": "The last name of a contact",
-                    "type": "string",
-                    "x-ms-summary": "Last Name"
-                  },
-                  "mobile_number": {
-                    "description": "The mobile number of a contact",
-                    "type": "string",
-                    "x-ms-summary": "Mobile Number"
-                  },
-                  "notes": {
-                    "description": "The notes of a contact",
-                    "type": "string",
-                    "x-ms-summary": "Notes"
-                  },
-                  "postal_code": {
-                    "description": "The postal code of a contact",
-                    "type": "string",
-                    "x-ms-summary": "Postal Code"
-                  }
-                }
-              }
-            }
-          }
-        },
+        "requestBody": { "$ref": "#/components/requestBodies/ContactsCreate" },
         "responses": {
           "200": {
             "description": "OK",
@@ -358,6 +293,93 @@
         "summary": "Create Contact",
         "description": "Creates a contact",
         "operationId": "ContactsCreate"
+      }
+    },
+    "/contacts/{id}": {
+      "delete": {
+        "tags": ["contacts"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The ID of the contact for deletion.",
+            "required": true,
+            "x-ms-summary": "Number",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string" },
+                    "success": { "type": "boolean" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete Contact",
+        "description": "Delete a contact by its ID",
+        "operationId": "ContactsDelete"
+      },
+      "get": {
+        "tags": ["contacts"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The ID of the contact for retrieval.",
+            "required": true,
+            "x-ms-summary": "Number",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Contact" }
+              }
+            }
+          }
+        },
+        "summary": "Get Contact",
+        "description": "Retrieves a contact by its ID",
+        "operationId": "ContactsGet"
+      },
+      "patch": {
+        "tags": ["contacts"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The ID of the contact for deletion.",
+            "required": true,
+            "x-ms-summary": "Number",
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": { "$ref": "#/components/requestBodies/ContactsCreate" },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Contact" }
+              }
+            }
+          }
+        },
+        "summary": "Update Contact",
+        "description": "Updates a contact",
+        "operationId": "ContactsUpdate"
       }
     },
     "/journal/outbound": {
@@ -1801,6 +1823,74 @@
         "required": true,
         "x-ms-summary": "Number",
         "schema": { "type": "string" }
+      }
+    },
+    "requestBodies": {
+      "ContactsCreate": {
+        "content": {
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "address": {
+                  "description": "The address of a contact",
+                  "type": "string",
+                  "x-ms-summary": "Address"
+                },
+                "avatar": {
+                  "description": "The avatar of a contact",
+                  "type": "string",
+                  "x-ms-summary": "Avatar"
+                },
+                "birthday": {
+                  "description": "The birthday of a contact",
+                  "type": "string",
+                  "x-ms-summary": "Birthday"
+                },
+                "city": {
+                  "description": "The city of a contact",
+                  "type": "string",
+                  "x-ms-summary": "City"
+                },
+                "email": {
+                  "description": "The email of a contact",
+                  "type": "string",
+                  "x-ms-summary": "Email"
+                },
+                "firstname": {
+                  "description": "The first name of a contact",
+                  "type": "string",
+                  "x-ms-summary": "First Name"
+                },
+                "home_number": {
+                  "description": "The home number of a contact",
+                  "type": "string",
+                  "x-ms-summary": "Home Number"
+                },
+                "lastname": {
+                  "description": "The last name of a contact",
+                  "type": "string",
+                  "x-ms-summary": "Last Name"
+                },
+                "mobile_number": {
+                  "description": "The mobile number of a contact",
+                  "type": "string",
+                  "x-ms-summary": "Mobile Number"
+                },
+                "notes": {
+                  "description": "The notes of a contact",
+                  "type": "string",
+                  "x-ms-summary": "Notes"
+                },
+                "postal_code": {
+                  "description": "The postal code of a contact",
+                  "type": "string",
+                  "x-ms-summary": "Postal Code"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "securitySchemes": {

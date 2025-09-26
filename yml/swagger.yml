@@ -233,7 +233,7 @@ paths:
       parameters:
         - in: path
           name: id
-          description: The ID of the contact for deletion.
+          description: The ID of the contact for retrieval.
           required: true
           type: string
           x-ms-summary: Number
@@ -242,9 +242,9 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/Contact'
-      summary: Delete Contact
-      description: Delete a contact by its ID
-      operationId: ContactsDelete
+      summary: Get Contact
+      description: Retrieves a contact by its ID
+      operationId: ContactsGet
     patch:
       tags: [ contacts ]
       parameters:
