@@ -438,7 +438,7 @@
     },
     "/lookup/cnam": {
       "get": {
-        "tags": ["lookup_cnam"],
+        "tags": ["lookup"],
         "parameters": [{ "$ref": "#/components/parameters/lookupNumber" }],
         "responses": {
           "200": {
@@ -483,7 +483,7 @@
     },
     "/lookup/format": {
       "get": {
-        "tags": ["lookup_format"],
+        "tags": ["lookup"],
         "parameters": [{ "$ref": "#/components/parameters/lookupNumber" }],
         "responses": {
           "200": {
@@ -518,7 +518,7 @@
     },
     "/lookup/hlr": {
       "get": {
-        "tags": ["lookup_hlr"],
+        "tags": ["lookup"],
         "parameters": [{ "$ref": "#/components/parameters/lookupNumber" }],
         "responses": {
           "200": {
@@ -575,7 +575,7 @@
     },
     "/lookup/mnp": {
       "get": {
-        "tags": ["lookup_mnp"],
+        "tags": ["lookup"],
         "parameters": [{ "$ref": "#/components/parameters/lookupNumber" }],
         "responses": {
           "200": {
@@ -616,7 +616,7 @@
     },
     "/lookup/rcs": {
       "get": {
-        "tags": ["lookup_rcs"],
+        "tags": ["lookup"],
         "parameters": [
           {
             "in": "query",
@@ -651,6 +651,32 @@
         "summary": "Lookup RCS Capabilities",
         "description": "Retrieves Rich Content Services capabilities",
         "operationId": "LookupRCS"
+      }
+    },
+    "/numbers/active": {
+      "get": {
+        "tags": ["numbers"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "activeNumbers": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/ActiveNumber" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List Active Numbers",
+        "description": "Retrieves active phone numbers",
+        "operationId": "NumbersListActive"
       }
     },
     "/numbers/active/{number}": {

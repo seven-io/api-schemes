@@ -292,8 +292,7 @@ paths:
       operationId: JournalVoice
   /lookup/cnam:
     get:
-      tags:
-        - lookup_cnam
+      tags: [lookup]
       parameters:
         - $ref: '#/parameters/lookupNumber'
       responses:
@@ -323,8 +322,7 @@ paths:
       operationId: LookupCNAM
   /lookup/format:
     get:
-      tags:
-        - lookup_format
+      tags: [lookup]
       parameters:
         - $ref: '#/parameters/lookupNumber'
       responses:
@@ -343,8 +341,7 @@ paths:
       operationId: LookupFormat
   /lookup/hlr:
     get:
-      tags:
-        - lookup_hlr
+      tags: [lookup]
       parameters:
         - $ref: '#/parameters/lookupNumber'
       responses:
@@ -392,8 +389,7 @@ paths:
       operationId: LookupHLR
   /lookup/mnp:
     get:
-      tags:
-        - lookup_mnp
+      tags: [lookup]
       parameters:
         - $ref: '#/parameters/lookupNumber'
       responses:
@@ -424,8 +420,7 @@ paths:
       operationId: LookupMNP
   /lookup/rcs:
     get:
-      tags:
-        - lookup_rcs
+      tags: [lookup]
       parameters:
         - in: query
           name: number
