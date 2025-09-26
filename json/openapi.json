@@ -1153,6 +1153,46 @@
         "description": "Sends a text-to-speech message to a given recipient number",
         "operationId": "VoiceDispatch"
       }
+    },
+    "/voice/{call_id}/hangup": {
+      "post": {
+        "tags": ["voice"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "call_id",
+            "description": "The ID of the call to be ended",
+            "required": true,
+            "x-ms-summary": "Call ID",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "response": {
+                    "value": {
+                      "schema": {
+                        "type": "object",
+                        "properties": {
+                          "error": { "type": "string" },
+                          "success": { "type": "boolean" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "End Voice Call",
+        "description": "This endpoint ends an active call. Only calls with the status in-progress can be ended.",
+        "operationId": "VoiceCallEnd"
+      }
     }
   },
   "security": [{ "oauth2_auth": [] }],
