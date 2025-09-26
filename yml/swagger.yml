@@ -183,28 +183,6 @@ paths:
       summary: List Contacts
       description: Retrieves contacts
       operationId: ContactsList
-    patch:
-      tags: [ contacts ]
-      parameters:
-        - $ref: '#/parameters/contactAddress'
-        - $ref: '#/parameters/contactAvatar'
-        - $ref: '#/parameters/contactBirthday'
-        - $ref: '#/parameters/contactCity'
-        - $ref: '#/parameters/contactEmail'
-        - $ref: '#/parameters/contactFirstname'
-        - $ref: '#/parameters/contactHomeNumber'
-        - $ref: '#/parameters/contactLastname'
-        - $ref: '#/parameters/contactMobileNumber'
-        - $ref: '#/parameters/contactNotes'
-        - $ref: '#/parameters/contactPostalCode'
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/Contact'
-      summary: Update Contact
-      description: Updates a contact
-      operationId: ContactsUpdate
     post:
       tags: [ contacts ]
       parameters:
@@ -250,6 +228,34 @@ paths:
       summary: Delete Contact
       description: Delete a contact by its ID
       operationId: ContactsDelete
+    patch:
+      tags: [ contacts ]
+      parameters:
+        - in: path
+          name: id
+          description: The ID of the contact for deletion.
+          required: true
+          type: string
+          x-ms-summary: Number
+        - $ref: '#/parameters/contactAddress'
+        - $ref: '#/parameters/contactAvatar'
+        - $ref: '#/parameters/contactBirthday'
+        - $ref: '#/parameters/contactCity'
+        - $ref: '#/parameters/contactEmail'
+        - $ref: '#/parameters/contactFirstname'
+        - $ref: '#/parameters/contactHomeNumber'
+        - $ref: '#/parameters/contactLastname'
+        - $ref: '#/parameters/contactMobileNumber'
+        - $ref: '#/parameters/contactNotes'
+        - $ref: '#/parameters/contactPostalCode'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Contact'
+      summary: Update Contact
+      description: Updates a contact
+      operationId: ContactsUpdate
   /journal/outbound:
     get:
       tags:
