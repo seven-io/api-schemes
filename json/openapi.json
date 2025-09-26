@@ -653,6 +653,111 @@
         "operationId": "LookupRCS"
       }
     },
+    "/numbers/available": {
+      "get": {
+        "tags": ["numbers"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "country",
+            "description": "The ISO 3166-1 alpha-2 country code of the country to search for available numbers in.",
+            "required": false,
+            "x-ms-summary": "Country",
+            "schema": { "type": "string" }
+          },
+          {
+            "in": "query",
+            "name": "features_sms",
+            "description": "If set to true, only numbers that support SMS will be returned.",
+            "required": false,
+            "x-ms-summary": "Features SMS",
+            "schema": { "type": "boolean" }
+          },
+          {
+            "in": "query",
+            "name": "features_a2p_sms",
+            "description": "If set to true, only numbers that support A2P SMS will be returned.",
+            "required": false,
+            "x-ms-summary": "Features A2P SMS",
+            "schema": { "type": "boolean" }
+          },
+          {
+            "in": "query",
+            "name": "features_voice",
+            "description": "If set to true, only numbers that support voice will be returned.",
+            "required": false,
+            "x-ms-summary": "Features Voice",
+            "schema": { "type": "boolean" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "response": {
+                    "value": {
+                      "schema": {
+                        "type": "object",
+                        "properties": {
+                          "availableNumbers": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "country": { "type": "string" },
+                                "number": { "type": "string" },
+                                "number_parsed": { "type": "string" },
+                                "fees": {
+                                  "type": "object",
+                                  "properties": {
+                                    "monthly": {
+                                      "type": "object",
+                                      "properties": {
+                                        "basic_charge": { "type": "number" },
+                                        "setup": { "type": "number" }
+                                      }
+                                    },
+                                    "annually": {
+                                      "type": "object",
+                                      "properties": {
+                                        "basic_charge": { "type": "number" },
+                                        "setup": { "type": "number" }
+                                      }
+                                    },
+                                    "sms_mo": {
+                                      "type": "integer",
+                                      "format": "int32"
+                                    },
+                                    "voice_mo": { "type": "number" }
+                                  }
+                                },
+                                "features": {
+                                  "type": "object",
+                                  "properties": {
+                                    "sms": { "type": "boolean" },
+                                    "a2p_sms": { "type": "boolean" },
+                                    "voice": { "type": "boolean" }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get Available Numbers",
+        "description": "Retrieves available numbers",
+        "operationId": "NumbersListAvailable"
+      }
+    },
     "/pricing": {
       "get": {
         "tags": ["pricing"],
