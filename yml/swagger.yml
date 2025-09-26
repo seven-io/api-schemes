@@ -448,6 +448,33 @@ paths:
       description: Retrieves Rich Content Services capabilities
       operationId: LookupRCS
   /numbers/active/{number}:
+    delete:
+      tags: [ numbers ]
+      parameters:
+        - in: path
+          name: number
+          description: The phone number to delete.
+          required: true
+          type: string
+          x-ms-summary: Number
+        - in: formData
+          name: delete_immediately
+          default: false
+          description: If set to true, the number will be deleted immediately. If set to false, the number will be deleted at the end of the current billing period.
+          required: false
+          type: string
+          x-ms-summary: Delete Immediately
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+      summary: Delete Number
+      description: Deletes a phone number
+      operationId: NumbersDelete
     patch:
       tags: [ numbers ]
       parameters:

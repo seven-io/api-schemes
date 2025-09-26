@@ -710,9 +710,9 @@
             }
           }
         },
-        "summary": "Get Available Numbers",
-        "description": "Retrieves available numbers",
-        "operationId": "NumbersListAvailable"
+        "summary": "Update Number",
+        "description": "Updates a phone number",
+        "operationId": "NumbersUpdate"
       }
     },
     "/numbers/available": {

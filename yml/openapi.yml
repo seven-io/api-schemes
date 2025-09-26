@@ -885,6 +885,84 @@ paths:
           operationId: LookupRCS,
         },
     }
+  "/numbers/active/{number}":
+    {
+      patch:
+        {
+          tags: [numbers],
+          parameters:
+            [
+              {
+                in: path,
+                name: number,
+                description: "The phone number to update details for.",
+                required: true,
+                x-ms-summary: Number,
+                schema: { type: string },
+              },
+            ],
+          requestBody:
+            {
+              content:
+                {
+                  application/x-www-form-urlencoded:
+                    {
+                      schema:
+                        {
+                          type: object,
+                          properties:
+                            {
+                              friendly_name:
+                                {
+                                  description: "The updated friendly name for the number.",
+                                  type: string,
+                                  x-ms-summary: "Friendly Name",
+                                },
+                              sms_forward:
+                                {
+                                  description: "The phone number to forward incoming SMS to. If empty, incoming SMS won't be forwarded by SMS.",
+                                  type: array,
+                                  items: { type: string },
+                                  x-ms-summary: "SMS Forward",
+                                },
+                              email_forward:
+                                {
+                                  description: "The email address to forward incoming SMS to. If empty, incoming SMS won't be forwarded by email.",
+                                  type: array,
+                                  items: { type: string },
+                                  x-ms-summary: "Email Forward",
+                                },
+                              slack_forward:
+                                {
+                                  description: "The Slack webhook URL to forward incoming SMS to. If empty, incoming SMS won't be forwarded by Slack.",
+                                  type: array,
+                                  items: { type: string },
+                                  x-ms-summary: "Slack Forward",
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        {
+                          schema: { $ref: "#/components/schemas/ActiveNumber" },
+                        },
+                    },
+                },
+            },
+          summary: "Update Number",
+          description: "Updates a phone number",
+          operationId: NumbersUpdate,
+        },
+    }
   /numbers/available:
     {
       get:
@@ -1875,6 +1953,14 @@ tags:
           url: "https://seven.io/en/docs/gateway/http-api",
         },
     }
+  - {
+      name: numbers,
+      externalDocs:
+        {
+          description: "Explore detailed documentation on utilizing our Phone Number Management API for comprehensive control over searching, booking, and managing your communication channels' phone numbers.",
+          url: "https://docs.seven.io/en/rest-api/endpoints/numbers",
+        },
+    }
 externalDocs:
   description: "Find out more about the seven.io SMS gateway."
   url: "https://seven.io/en/docs/gateway/http-api"
@@ -2014,6 +2100,81 @@ components:
     }
   schemas:
     {
+      ActiveNumber:
+        {
+          properties:
+            {
+              country: { type: string },
+              number: { type: string },
+              friendly_name: { type: string },
+              billing:
+                {
+                  type: object,
+                  properties:
+                    {
+                      fees:
+                        {
+                          type: object,
+                          properties:
+                            {
+                              setup: { type: number },
+                              basic_charge: { type: number },
+                              sms_mo: { type: integer, format: int32 },
+                              voice_mo: { type: integer, format: int32 },
+                            },
+                        },
+                      payment_interval: { type: string },
+                    },
+                },
+              features:
+                {
+                  type: object,
+                  properties:
+                    {
+                      sms: { type: boolean },
+                      a2p_sms: { type: boolean },
+                      voice: { type: boolean },
+                    },
+                },
+              forward_sms_mo:
+                {
+                  type: object,
+                  properties:
+                    {
+                      sms:
+                        {
+                          type: object,
+                          properties:
+                            {
+                              number: { type: string },
+                              enabled: { type: boolean },
+                            },
+                        },
+                      email:
+                        {
+                          type: object,
+                          properties:
+                            {
+                              address: { type: array, items: { type: string } },
+                              enabled: { type: boolean },
+                            },
+                        },
+                      slack:
+                        {
+                          type: object,
+                          properties:
+                            {
+                              uri: { type: string },
+                              enabled: { type: boolean },
+                            },
+                        },
+                    },
+                },
+              expires: { type: string },
+              created: { type: string },
+            },
+          type: object,
+        },
       AnalyticsBase:
         {
           properties:
