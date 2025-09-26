@@ -475,6 +475,23 @@ paths:
       summary: Delete Number
       description: Deletes a phone number
       operationId: NumbersDelete
+    get:
+      tags: [ numbers ]
+      parameters:
+        - in: path
+          name: number
+          description: The phone number to retrieve.
+          required: true
+          type: string
+          x-ms-summary: Number
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ActiveNumber'
+      summary: Get Number
+      description: Retrieves a phone number
+      operationId: NumbersGet
     patch:
       tags: [ numbers ]
       parameters:
