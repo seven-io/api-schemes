@@ -814,6 +814,13 @@ paths:
           type: boolean
           default: false
           x-ms-summary: Performance Tracking
+        - in: formData
+          name: fallback
+          description: Message fallback type
+          enum: [sms, webview]
+          type: string
+          required: false
+          x-ms-summary: Fallback
       responses:
         '200':
           description: Success

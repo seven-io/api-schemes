@@ -1591,6 +1591,13 @@ paths:
                                   default: false,
                                   x-ms-summary: "Performance Tracking",
                                 },
+                              fallback:
+                                {
+                                  description: "Message fallback type",
+                                  type: string,
+                                  enum: [sms, webview],
+                                  x-ms-summary: Fallback,
+                                },
                             },
                           required: [text, to],
                         },
@@ -2031,7 +2038,7 @@ tags:
       externalDocs:
         {
           description: "Send one/multiple SMS",
-          url: "https://seven.io/en/docs/gateway/http-api/sms-disptach",
+          url: "https://docs.seven.io/en/rest-api/endpoints/sms",
         },
     }
   - {
@@ -2039,7 +2046,7 @@ tags:
       externalDocs:
         {
           description: "Retrieve account balance",
-          url: "https://seven.io/en/docs/gateway/http-api/credit-balance",
+          url: "https://docs.seven.io/en/rest-api/endpoints/account#balance",
         },
     }
   - {
@@ -2047,7 +2054,7 @@ tags:
       externalDocs:
         {
           description: "Retrieve pricing information",
-          url: "https://seven.io/en/docs/gateway/http-api/pricing",
+          url: "https://docs.seven.io/en/rest-api/endpoints/account#prices",
         },
     }
   - {
@@ -2055,7 +2062,7 @@ tags:
       externalDocs:
         {
           description: "Retrieve the status for a sent SMS with the given ID",
-          url: "https://seven.io/en/docs/gateway/http-api/status-reports",
+          url: "https://docs.seven.io/en/rest-api/endpoints/status-reports",
         },
     }
   - {
@@ -2063,7 +2070,7 @@ tags:
       externalDocs:
         {
           description: "Validate caller ID for voice Voice API",
-          url: "https://seven.io/en/docs/gateway/http-api/caller-ids",
+          url: "https://docs.seven.io/en/rest-api/endpoints/sender-identifiers",
         },
     }
   - {
@@ -2071,7 +2078,7 @@ tags:
       externalDocs:
         {
           description: "Issue voice call to phone number",
-          url: "https://seven.io/en/docs/gateway/http-api/voice",
+          url: "https://docs.seven.io/en/rest-api/endpoints/voice",
         },
     }
   - {
@@ -2079,7 +2086,7 @@ tags:
       externalDocs:
         {
           description: "Get number format, CNAM,- HLR- or MNP information for given phone number",
-          url: "https://seven.io/en/docs/gateway/http-api",
+          url: "https://docs.seven.io/en/rest-api/endpoints/lookup",
         },
     }
   - {
@@ -2092,7 +2099,7 @@ tags:
     }
 externalDocs:
   description: "Find out more about the seven.io SMS gateway."
-  url: "https://seven.io/en/docs/gateway/http-api"
+  url: "https://docs.seven.io/en/rest-api/first-steps"
 servers:
   - { url: "https://gateway.seven.io/api" }
 components:
