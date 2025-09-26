@@ -154,6 +154,35 @@ paths:
       summary: Get Balance
       description: Retrieves the account balance for given API key
       operationId: Balance
+  /contacts:
+    get:
+      tags: [ contacts ]
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Contact'
+              pagingMetadata:
+                type: object
+                properties:
+                  offset:
+                    type: integer
+                  count:
+                    type: integer
+                  total:
+                    type: integer
+                  limit:
+                    type: integer
+                  has_more:
+                    type: boolean
+      summary: List Contacts
+      description: Retrieves contacts
+      operationId: ContactsList
   /journal/outbound:
     get:
       tags:
@@ -1225,30 +1254,6 @@ definitions:
         type: number
         description: The total costs for this day.
     type: object
-  NumberFormat:
-    type: object
-    properties:
-      success:
-        type: boolean
-        description: Determines if the request was successful.,
-      international:
-        type: string
-        description: The number formatted accordingly to the E.164 standard.
-      international_formatted:
-        type: string
-        description: The number formatted accordingly to the E.164 standard in a human readable format.
-      national:
-        type: string
-        description: The number in a domestic number format.
-      country_iso:
-        type: string
-        description: The two digit ISO 3166-1 alpha-2 country code.
-      country_name:
-        type: string
-        description: The full english name if the number belonging country.
-      country_code:
-        type: string
-        description: The area code of the number belonging country. This value is numeric.
   Carrier:
     type: object
     properties:
@@ -1273,6 +1278,59 @@ definitions:
           - unknown
           - voicemail
           - voip
+  Contact:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      avatar:
+        type: string
+      validation:
+        type: object
+        properties:
+          state:
+            type: string
+          timestamp:
+            type: string
+      initials:
+        type: object
+        properties:
+          initials:
+            type: string
+          color:
+            type: string
+      properties:
+        type: object
+        properties:
+          firstname:
+            type: string
+          lastname:
+            type: string
+          mobile_number:
+            type: integer
+            format: int64
+          home_number:
+            type: string
+          email:
+            type: string
+          address:
+            type: string
+          postal_code:
+            type: string
+          city:
+            type: string
+          birthday:
+            type: string
+            format: date
+          notes:
+            type: string
+      groups:
+        type: array
+        items:
+          type: integer
+      created:
+        type: string
   JournalBase:
     type: object
     properties:
@@ -1294,21 +1352,6 @@ definitions:
       id:
         type: string
         description: The message price.
-  Roaming:
-    type: object
-    properties:
-      status:
-        type: string
-        enum:
-          - unknown
-          - roaming
-          - not_roaming
-      roaming_country_code:
-        type: string
-      roaming_network_code:
-        type: string
-      roaming_network_name:
-        type: string
   MNP:
     type: object
     properties:
@@ -1327,6 +1370,45 @@ definitions:
       isPorted:
         type: boolean
       network_type:
+        type: string
+  NumberFormat:
+    type: object
+    properties:
+      success:
+        type: boolean
+        description: Determines if the request was successful.,
+      international:
+        type: string
+        description: The number formatted accordingly to the E.164 standard.
+      international_formatted:
+        type: string
+        description: The number formatted accordingly to the E.164 standard in a human readable format.
+      national:
+        type: string
+        description: The number in a domestic number format.
+      country_iso:
+        type: string
+        description: The two digit ISO 3166-1 alpha-2 country code.
+      country_name:
+        type: string
+        description: The full english name if the number belonging country.
+      country_code:
+        type: string
+        description: The area code of the number belonging country. This value is numeric.
+  Roaming:
+    type: object
+    properties:
+      status:
+        type: string
+        enum:
+          - unknown
+          - roaming
+          - not_roaming
+      roaming_country_code:
+        type: string
+      roaming_network_code:
+        type: string
+      roaming_network_name:
         type: string
   SmsResponse:
     properties:
@@ -1450,6 +1532,10 @@ tags:
     externalDocs:
       description: Explore detailed documentation on utilizing our Phone Number Management API for comprehensive control over searching, booking, and managing your communication channels' phone numbers.
       url: https://docs.seven.io/en/rest-api/endpoints/numbers
+  - name: contacts
+    externalDocs:
+      description: Contacts are a central part of seven. On this page, we'll look at the different contact endpoints you can use to manage contacts programmatically. We'll look at how you can query, create, update and delete contacts.
+      url: https://docs.seven.io/en/rest-api/endpoints/contacts
 externalDocs:
   description: Find out more about the seven.io SMS gateway.
   url: https://docs.seven.io/en/rest-api/first-steps
