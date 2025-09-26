@@ -25,16 +25,16 @@ const openapiJSON = await formatJSON((await converter.convertStr(swaggerYML, {})
   await write('yml/openapi.yml', openapiYML)
 }
 
-async function formatJSON(jsonStr) {
+async function formatJSON(jsonStr: any) {
   return await prettier.format(JSON.stringify(jsonStr), {
     parser: "json"
   });
 }
 
-async function write(path, content) {
+async function write(path: string, content: string) {
   return await promises.writeFile(path, content, { encoding: "utf8" });
 }
 
-async function validate(json) {
+async function validate(json: string) {
   return await SwaggerParser.validate(JSON.parse(json));
 }

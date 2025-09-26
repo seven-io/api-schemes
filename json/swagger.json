@@ -29,45 +29,14 @@
   "consumes": ["application/x-www-form-urlencoded"],
   "produces": ["application/json"],
   "paths": {
-    "/analytics": {
+    "/analytics/country": {
       "get": {
         "tags": ["analytics"],
         "parameters": [
-          {
-            "in": "query",
-            "name": "end",
-            "description": "End date of the statistics. Defaults to the current day.",
-            "type": "string",
-            "x-ms-summary": "End Date"
-          },
-          {
-            "in": "query",
-            "name": "start",
-            "description": "Start date of the statistics in the format YYYY-MM-DD. By default, the date of 30 days ago is set.",
-            "type": "string",
-            "x-ms-summary": "Start Date"
-          },
-          {
-            "in": "query",
-            "name": "label",
-            "description": "Shows only data of a specific label.",
-            "type": "string",
-            "x-ms-summary": "Label"
-          },
-          {
-            "in": "query",
-            "name": "subaccounts",
-            "description": "Receive the data only for the main account, all your (sub-)accounts or only for specific subaccounts.",
-            "type": "string",
-            "x-ms-summary": "Subaccounts"
-          },
-          {
-            "in": "query",
-            "name": "group_by",
-            "description": "Defines the grouping of the data.",
-            "type": "string",
-            "x-ms-summary": "Group By"
-          }
+          { "$ref": "#/parameters/analyticsEnd" },
+          { "$ref": "#/parameters/analyticsLabel" },
+          { "$ref": "#/parameters/analyticsStart" },
+          { "$ref": "#/parameters/analyticsSubaccounts" }
         ],
         "responses": {
           "200": {
@@ -76,51 +45,152 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "date": {
-                        "type": "string",
-                        "description": "The date the numbers refer to."
-                      },
-                      "country": {
-                        "type": "string",
-                        "description": "The country the numbers refer to."
-                      },
-                      "sms": {
-                        "type": "integer",
-                        "description": "The amount of outgoing SMS for this day."
-                      },
-                      "voice": {
-                        "type": "integer",
-                        "description": "The amount of voice calls for this day."
-                      },
-                      "hlr": {
-                        "type": "integer",
-                        "description": "The amount of HLR lookups for this day."
-                      },
-                      "mnp": {
-                        "type": "integer",
-                        "description": "The amount of MNP lookups for this day."
-                      },
-                      "inbound": {
-                        "type": "integer",
-                        "description": "The amount of inbound messages for this day."
-                      },
-                      "usage_eur": {
-                        "type": "number",
-                        "description": "The total costs for this day."
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "allOf": [
+                          {
+                            "country": null,
+                            "type": "string",
+                            "description": "The country the entries refer to."
+                          },
+                          { "$ref": "#/definitions/AnalyticsBase" }
+                        ]
                       }
                     }
-                  }
+                  ]
                 }
               }
             }
           }
         },
-        "summary": "Get Analytics",
-        "description": "Retrieves analytics for the associated API key",
-        "operationId": "Analytics"
+        "summary": "Get Analytics By Country",
+        "description": "Retrieves analytics grouped by country",
+        "operationId": "AnalyticsByCountry"
+      }
+    },
+    "/analytics/date": {
+      "get": {
+        "tags": ["analytics"],
+        "parameters": [
+          { "$ref": "#/parameters/analyticsEnd" },
+          { "$ref": "#/parameters/analyticsLabel" },
+          { "$ref": "#/parameters/analyticsStart" },
+          { "$ref": "#/parameters/analyticsSubaccounts" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "allOf": [
+                          {
+                            "date": null,
+                            "type": "string",
+                            "description": "The date the entries refer to."
+                          },
+                          { "$ref": "#/definitions/AnalyticsBase" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get Analytics By Date",
+        "description": "Retrieves analytics grouped by date",
+        "operationId": "AnalyticsByDate"
+      }
+    },
+    "/analytics/label": {
+      "get": {
+        "tags": ["analytics"],
+        "parameters": [
+          { "$ref": "#/parameters/analyticsEnd" },
+          { "$ref": "#/parameters/analyticsLabel" },
+          { "$ref": "#/parameters/analyticsStart" },
+          { "$ref": "#/parameters/analyticsSubaccounts" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "allOf": [
+                          {
+                            "label": null,
+                            "type": "string",
+                            "description": "The label the entries refer to."
+                          },
+                          { "$ref": "#/definitions/AnalyticsBase" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get Analytics By Label",
+        "description": "Retrieves analytics grouped by label",
+        "operationId": "AnalyticsByLabel"
+      }
+    },
+    "/analytics/subaccount": {
+      "get": {
+        "tags": ["analytics"],
+        "parameters": [
+          { "$ref": "#/parameters/analyticsEnd" },
+          { "$ref": "#/parameters/analyticsLabel" },
+          { "$ref": "#/parameters/analyticsStart" },
+          { "$ref": "#/parameters/analyticsSubaccounts" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "allOf": [
+                          {
+                            "account": null,
+                            "type": "string",
+                            "description": "The AnalyticsByLabel the entries refer to."
+                          },
+                          { "$ref": "#/definitions/AnalyticsBase" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get Analytics By Label",
+        "description": "Retrieves analytics grouped by AnalyticsByLabel",
+        "operationId": "AnalyticsBySubaccount"
       }
     },
     "/balance": {
@@ -952,6 +1022,34 @@
     }
   },
   "parameters": {
+    "analyticsEnd": {
+      "in": "query",
+      "name": "end",
+      "description": "End date of the statistics. Defaults to the current day.",
+      "type": "string",
+      "x-ms-summary": "End Date"
+    },
+    "analyticsStart": {
+      "in": "query",
+      "name": "start",
+      "description": "Start date of the statistics in the format YYYY-MM-DD. By default, the date of 30 days ago is set.",
+      "type": "string",
+      "x-ms-summary": "Start Date"
+    },
+    "analyticsLabel": {
+      "in": "query",
+      "name": "label",
+      "description": "Shows only data of a specific label.",
+      "type": "string",
+      "x-ms-summary": "Label"
+    },
+    "analyticsSubaccounts": {
+      "in": "query",
+      "name": "subaccounts",
+      "description": "Receive the data only for the main account, all your (sub-)accounts or only for specific subaccounts.",
+      "type": "string",
+      "x-ms-summary": "Subaccounts"
+    },
     "journalId": {
       "in": "query",
       "name": "id",
@@ -1013,6 +1111,39 @@
     }
   },
   "definitions": {
+    "AnalyticsBase": {
+      "properties": {
+        "sms": {
+          "type": "integer",
+          "description": "The amount of outgoing SMS for this day."
+        },
+        "rcs": {
+          "type": "integer",
+          "description": "The amount of  RCS messages for this day."
+        },
+        "voice": {
+          "type": "integer",
+          "description": "The amount of voice calls for this day."
+        },
+        "hlr": {
+          "type": "integer",
+          "description": "The amount of HLR lookups for this day."
+        },
+        "mnp": {
+          "type": "integer",
+          "description": "The amount of MNP lookups for this day."
+        },
+        "inbound": {
+          "type": "integer",
+          "description": "The amount of inbound messages for this day."
+        },
+        "usage_eur": {
+          "type": "number",
+          "description": "The total costs for this day."
+        }
+      },
+      "type": "object"
+    },
     "NumberFormat": {
       "type": "object",
       "properties": {
