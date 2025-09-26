@@ -665,6 +665,50 @@
         "operationId": "NumbersListAvailable"
       }
     },
+    "/numbers/order": {
+      "post": {
+        "tags": ["numbers"],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "number",
+            "description": "The phone number to order.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Number"
+          },
+          {
+            "in": "formData",
+            "name": "payment_interval",
+            "default": "annually",
+            "description": "The payment interval for the number. Possible values are monthly and annually (default).",
+            "enum": ["annually", "monthly"],
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Payment Interval"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string" },
+                    "success": { "type": "boolean" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Order Number",
+        "description": "Orders a number",
+        "operationId": "NumbersOrder"
+      }
+    },
     "/pricing": {
       "get": {
         "tags": ["pricing"],

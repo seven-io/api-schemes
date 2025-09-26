@@ -1041,6 +1041,79 @@ paths:
           operationId: NumbersListAvailable,
         },
     }
+  /numbers/order:
+    {
+      post:
+        {
+          tags: [numbers],
+          requestBody:
+            {
+              content:
+                {
+                  application/x-www-form-urlencoded:
+                    {
+                      schema:
+                        {
+                          type: object,
+                          properties:
+                            {
+                              number:
+                                {
+                                  description: "The phone number to order.",
+                                  type: string,
+                                  x-ms-summary: Number,
+                                },
+                              payment_interval:
+                                {
+                                  description: "The payment interval for the number. Possible values are monthly and annually (default).",
+                                  type: string,
+                                  enum: [annually, monthly],
+                                  default: annually,
+                                  x-ms-summary: "Payment Interval",
+                                },
+                            },
+                          required: [number],
+                        },
+                    },
+                },
+              required: true,
+            },
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        {
+                          examples:
+                            {
+                              response:
+                                {
+                                  value:
+                                    {
+                                      schema:
+                                        {
+                                          type: object,
+                                          properties:
+                                            {
+                                              error: { type: string },
+                                              success: { type: boolean },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+          summary: "Order Number",
+          description: "Orders a number",
+          operationId: NumbersOrder,
+        },
+    }
   /pricing:
     {
       get:
