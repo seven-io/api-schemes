@@ -447,6 +447,22 @@ paths:
       summary: Lookup RCS Capabilities
       description: Retrieves Rich Content Services capabilities
       operationId: LookupRCS
+  /numbers/active:
+    get:
+      tags: [ numbers ]
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              activeNumbers:
+                type: array
+                items:
+                  $ref: '#/definitions/ActiveNumber'
+      summary: List Active Numbers
+      description: Retrieves active phone numbers
+      operationId: NumbersListActive
   /numbers/active/{number}:
     delete:
       tags: [ numbers ]

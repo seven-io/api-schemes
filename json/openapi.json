@@ -700,6 +700,32 @@
         "description": "Deletes a phone number",
         "operationId": "NumbersDelete"
       },
+      "get": {
+        "tags": ["numbers"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "number",
+            "description": "The phone number to retrieve.",
+            "required": true,
+            "x-ms-summary": "Number",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ActiveNumber" }
+              }
+            }
+          }
+        },
+        "summary": "Get Number",
+        "description": "Retrieves a phone number",
+        "operationId": "NumbersGet"
+      },
       "patch": {
         "tags": ["numbers"],
         "parameters": [
