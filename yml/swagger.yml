@@ -29,8 +29,7 @@ produces:
 paths:
   /analytics/country:
     get:
-      tags:
-        - analytics
+      tags: [ Analytics ]
       parameters:
         - $ref: '#/parameters/analyticsEnd'
         - $ref: '#/parameters/analyticsLabel'
@@ -56,8 +55,7 @@ paths:
       operationId: AnalyticsByCountry
   /analytics/date:
     get:
-      tags:
-        - analytics
+      tags: [ Analytics ]
       parameters:
         - $ref: '#/parameters/analyticsEnd'
         - $ref: '#/parameters/analyticsLabel'
@@ -83,8 +81,7 @@ paths:
       operationId: AnalyticsByDate
   /analytics/label:
     get:
-      tags:
-        - analytics
+      tags: [ Analytics ]
       parameters:
         - $ref: '#/parameters/analyticsEnd'
         - $ref: '#/parameters/analyticsLabel'
@@ -110,8 +107,7 @@ paths:
       operationId: AnalyticsByLabel
   /analytics/subaccount:
     get:
-      tags:
-        - analytics
+      tags: [ Analytics ]
       parameters:
         - $ref: '#/parameters/analyticsEnd'
         - $ref: '#/parameters/analyticsLabel'
@@ -137,8 +133,7 @@ paths:
       operationId: AnalyticsBySubaccount
   /balance:
     get:
-      tags:
-        - balance
+      tags: [ Balance ]
       responses:
         '200':
           description: OK
@@ -156,7 +151,7 @@ paths:
       operationId: Balance
   /contacts:
     get:
-      tags: [ contacts ]
+      tags: [ Contacts ]
       responses:
         '200':
           description: OK
@@ -173,7 +168,7 @@ paths:
       description: Retrieves contacts
       operationId: ContactsList
     post:
-      tags: [ contacts ]
+      tags: [ Contacts ]
       parameters:
         - $ref: '#/parameters/contactAddress'
         - $ref: '#/parameters/contactAvatar'
@@ -196,7 +191,7 @@ paths:
       operationId: ContactsCreate
   /contacts/{id}:
     delete:
-      tags: [ contacts ]
+      tags: [ Contacts ]
       parameters:
         - in: path
           name: id
@@ -218,7 +213,7 @@ paths:
       description: Delete a contact by its ID
       operationId: ContactsDelete
     get:
-      tags: [ contacts ]
+      tags: [ Contacts ]
       parameters:
         - in: path
           name: id
@@ -235,7 +230,7 @@ paths:
       description: Retrieves a contact by its ID
       operationId: ContactsGet
     patch:
-      tags: [ contacts ]
+      tags: [ Contacts ]
       parameters:
         - in: path
           name: id
@@ -264,7 +259,7 @@ paths:
       operationId: ContactsUpdate
   /groups:
     get:
-      tags: [ groups ]
+      tags: [ Groups ]
       responses:
         '200':
           description: OK
@@ -281,7 +276,7 @@ paths:
       description: Retrieves Groups
       operationId: GroupsList
     post:
-      tags: [ groups ]
+      tags: [ Groups ]
       parameters:
         - $ref: '#/parameters/groupName'
       responses:
@@ -294,7 +289,7 @@ paths:
       operationId: GroupsCreate
   /groups/{id}:
     delete:
-      tags: [ groups ]
+      tags: [ Groups ]
       parameters:
         - in: path
           name: id
@@ -320,7 +315,7 @@ paths:
       description: Delete a group by its ID
       operationId: GroupsDelete
     get:
-      tags: [ groups ]
+      tags: [ Groups ]
       parameters:
         - in: path
           name: id
@@ -337,7 +332,7 @@ paths:
       description: Retrieves a group by its ID
       operationId: GroupsGet
     patch:
-      tags: [ groups ]
+      tags: [ Groups ]
       parameters:
         - in: path
           name: id
@@ -363,7 +358,7 @@ paths:
           required: true
           type: integer
           x-ms-summary: ID
-      tags: [ hooks ]
+      tags: [ Hooks ]
       responses:
         '200':
           description: OK
@@ -382,7 +377,7 @@ paths:
       description: Deletes a hook by its ID.
       operationId: HooksDelete
     get:
-      tags: [ hooks ]
+      tags: [ Hooks ]
       responses:
         '200':
           description: OK
@@ -403,12 +398,12 @@ paths:
                           type: string
                         event_type:
                           type: string
-                          enum: [all, rcs, sms_mo, dlr, voice_call, voice_status, voice_dtmf, tracking]
+                          enum: [ all, rcs, sms_mo, dlr, voice_call, voice_status, voice_dtmf, tracking ]
                         event_filter:
                           type: string
                         request_method:
                           type: string
-                          enum: [GET, JSON, POST]
+                          enum: [ GET, JSON, POST ]
                         enabled:
                           type: boolean
                         created:
@@ -421,7 +416,7 @@ paths:
       description: Query the active webhooks of your account.
       operationId: HooksList
     post:
-      tags: [ hooks ]
+      tags: [ Hooks ]
       parameters:
         - in: formData
           name: target_url
@@ -441,7 +436,7 @@ paths:
           required: true
           type: string
           x-ms-summary: Event Type
-          enum: [all, rcs, sms_mo, dlr, voice_call, voice_status, voice_dtmf, tracking]
+          enum: [ all, rcs, sms_mo, dlr, voice_call, voice_status, voice_dtmf, tracking ]
         - in: formData
           name: event_filter
           description: Sends the webhook only if the filter applies. For example, for different webhooks with different inbound numbers.
@@ -454,7 +449,7 @@ paths:
           required: false
           type: string
           x-ms-summary: Request Method
-          enum: [GET, JSON, POST]
+          enum: [ GET, JSON, POST ]
       responses:
         '200':
           description: OK
@@ -474,8 +469,7 @@ paths:
       operationId: HooksCreate
   /journal/outbound:
     get:
-      tags:
-        - journal
+      tags: [ Journal ]
       parameters:
         - $ref: '#/parameters/journalId'
         - $ref: '#/parameters/journalDateFrom'
@@ -528,8 +522,7 @@ paths:
       operationId: JournalOutbound
   /journal/inbound:
     get:
-      tags:
-        - journal
+      tags: [ Journal ]
       parameters:
         - $ref: '#/parameters/journalId'
         - $ref: '#/parameters/journalDateFrom'
@@ -552,8 +545,7 @@ paths:
       operationId: JournalInbound
   /journal/replies:
     get:
-      tags:
-        - journal
+      tags: [ Journal ]
       parameters:
         - $ref: '#/parameters/journalId'
         - $ref: '#/parameters/journalDateFrom'
@@ -576,8 +568,7 @@ paths:
       operationId: JournalReplies
   /journal/voice:
     get:
-      tags:
-        - journal
+      tags: [ Journal ]
       parameters:
         - $ref: '#/parameters/journalId'
         - $ref: '#/parameters/journalDateFrom'
@@ -610,7 +601,7 @@ paths:
       operationId: JournalVoice
   /lookup/cnam:
     get:
-      tags: [lookup]
+      tags: [ Lookup ]
       parameters:
         - $ref: '#/parameters/lookupNumber'
       responses:
@@ -640,7 +631,7 @@ paths:
       operationId: LookupCNAM
   /lookup/format:
     get:
-      tags: [lookup]
+      tags: [ Lookup ]
       parameters:
         - $ref: '#/parameters/lookupNumber'
       responses:
@@ -659,7 +650,7 @@ paths:
       operationId: LookupFormat
   /lookup/hlr:
     get:
-      tags: [lookup]
+      tags: [ Lookup ]
       parameters:
         - $ref: '#/parameters/lookupNumber'
       responses:
@@ -707,7 +698,7 @@ paths:
       operationId: LookupHLR
   /lookup/mnp:
     get:
-      tags: [lookup]
+      tags: [ Lookup ]
       parameters:
         - $ref: '#/parameters/lookupNumber'
       responses:
@@ -738,7 +729,7 @@ paths:
       operationId: LookupMNP
   /lookup/rcs:
     get:
-      tags: [lookup]
+      tags: [ Lookup ]
       parameters:
         - in: query
           name: number
@@ -762,7 +753,7 @@ paths:
       operationId: LookupRCS
   /numbers/active:
     get:
-      tags: [ numbers ]
+      tags: [ Numbers ]
       responses:
         '200':
           description: OK
@@ -778,7 +769,7 @@ paths:
       operationId: NumbersListActive
   /numbers/active/{number}:
     delete:
-      tags: [ numbers ]
+      tags: [ Numbers ]
       parameters:
         - in: path
           name: number
@@ -805,7 +796,7 @@ paths:
       description: Deletes a phone number
       operationId: NumbersDelete
     get:
-      tags: [ numbers ]
+      tags: [ Numbers ]
       parameters:
         - in: path
           name: number
@@ -822,7 +813,7 @@ paths:
       description: Retrieves a phone number
       operationId: NumbersGet
     patch:
-      tags: [ numbers ]
+      tags: [ Numbers ]
       parameters:
         - in: path
           name: number
@@ -870,7 +861,7 @@ paths:
       operationId: NumbersUpdate
   /numbers/available:
     get:
-      tags: [numbers]
+      tags: [ Numbers ]
       parameters:
         - in: query
           name: country
@@ -951,7 +942,7 @@ paths:
       operationId: NumbersListAvailable
   /numbers/order:
     post:
-      tags: [ numbers ]
+      tags: [ Numbers ]
       parameters:
         - in: formData
           name: number
@@ -963,7 +954,7 @@ paths:
           name: payment_interval
           default: annually
           description: The payment interval for the number. Possible values are monthly and annually (default).
-          enum: [annually, monthly]
+          enum: [ annually, monthly ]
           required: false
           type: string
           x-ms-summary: Payment Interval
@@ -984,8 +975,7 @@ paths:
       operationId: NumbersOrder
   /pricing:
     get:
-      tags:
-        - pricing
+      tags: [ Pricing ]
       parameters:
         - in: query
           name: country
@@ -1052,8 +1042,7 @@ paths:
       operationId: Pricing
   /rcs/events:
     post:
-      tags:
-        - rcs
+      tags: [ RCS ]
       parameters:
         - in: formData
           name: event
@@ -1089,8 +1078,7 @@ paths:
       operationId: RcsEvent
   /rcs/messages:
     post:
-      tags:
-        - rcs
+      tags: [ RCS ]
       parameters:
         - in: formData
           name: text
@@ -1135,7 +1123,7 @@ paths:
         - in: formData
           name: fallback
           description: Message fallback type
-          enum: [sms, webview]
+          enum: [ sms, webview ]
           type: string
           required: false
           x-ms-summary: Fallback
@@ -1149,8 +1137,7 @@ paths:
       operationId: RcsDispatch
   /rcs/messages/{id}:
     delete:
-      tags:
-        - rcs
+      tags: [ RCS ]
       parameters:
         - in: path
           name: id
@@ -1173,8 +1160,7 @@ paths:
       operationId: RcsDelete
   /sms:
     delete:
-      tags:
-        - sms
+      tags: [ SMS ]
       parameters:
         - in: formData
           name: ids
@@ -1200,8 +1186,7 @@ paths:
       description: Delete one or more SMS messages before they have been sent to prevent them from being sent.
       operationId: SmsDelete
     post:
-      tags:
-        - sms
+      tags: [ SMS ]
       parameters:
         - in: formData
           name: text
@@ -1264,8 +1249,7 @@ paths:
       operationId: SmsDispatch
   /status:
     get:
-      tags:
-        - status
+      tags: [ Status ]
       parameters:
         - in: query
           name: msg_id
@@ -1287,7 +1271,7 @@ paths:
       operationId: Status
   /subaccounts/list:
     get:
-      tags: [subaccounts]
+      tags: [ Subaccounts ]
       parameters:
         - in: query
           name: id
@@ -1309,7 +1293,7 @@ paths:
       operationId: SubaccountsList
   /subaccounts/create:
     post:
-      tags: [subaccounts]
+      tags: [ Subaccounts ]
       parameters:
         - in: formData
           name: name
@@ -1340,7 +1324,7 @@ paths:
       operationId: SubaccountsCreate
   /subaccounts/update:
     post:
-      tags: [subaccounts]
+      tags: [ Subaccounts ]
       parameters:
         - in: formData
           name: id
@@ -1375,7 +1359,7 @@ paths:
       operationId: SubaccountsAutomaticBalanceTransfer
   /subaccounts/transfer_credits:
     post:
-      tags: [subaccounts]
+      tags: [ Subaccounts ]
       parameters:
         - in: formData
           name: id
@@ -1404,7 +1388,7 @@ paths:
       operationId: SubaccountsManualBalanceTransfer
   /subaccounts/delete:
     post:
-      tags: [subaccounts]
+      tags: [ Subaccounts ]
       parameters:
         - in: formData
           name: id
@@ -1427,8 +1411,7 @@ paths:
       operationId: SubaccountsDeleteSubaccount
   /validate_for_voice:
     post:
-      tags:
-        - validate_for_voice
+      tags: [ Validate For Voice ]
       parameters:
         - in: formData
           name: number
@@ -1450,8 +1433,7 @@ paths:
       operationId: ValidateForVoice
   /voice:
     post:
-      tags:
-        - voice
+      tags: [ Voice ]
       parameters:
         - in: formData
           name: to
@@ -1492,8 +1474,7 @@ paths:
       operationId: VoiceDispatch
   /voice/{call_id}/hangup:
     post:
-      tags:
-        - voice
+      tags: [ Voice ]
       parameters:
         - in: path
           name: call_id
@@ -2050,9 +2031,9 @@ securityDefinitions:
     tokenUrl: https://oauth.seven.io/token
     type: oauth2
 security:
-  - oauth2_auth: []
+  - oauth2_auth: [ ]
 tags:
-  - name: sms
+  - name: SMS
     externalDocs:
       description: Send one/multiple SMS
       url: https://docs.seven.io/en/rest-api/endpoints/sms
@@ -2060,43 +2041,43 @@ tags:
     externalDocs:
       description: Retrieve account balance
       url: https://docs.seven.io/en/rest-api/endpoints/account#balance
-  - name: pricing
+  - name: Pricing
     externalDocs:
       description: Retrieve pricing information
       url: https://docs.seven.io/en/rest-api/endpoints/account#prices
-  - name: status
+  - name: Status
     externalDocs:
       description: Retrieve the status for a sent SMS with the given ID
       url: https://docs.seven.io/en/rest-api/endpoints/status-reports
-  - name: validate_for_voice
+  - name: Validate For Voice
     externalDocs:
       description: Validate caller ID for voice Voice API
       url: https://docs.seven.io/en/rest-api/endpoints/sender-identifiers
-  - name: voice
+  - name: Voice
     externalDocs:
       description: Issue voice call to phone number
       url: https://docs.seven.io/en/rest-api/endpoints/voice
-  - name: lookup
+  - name: Lookup
     externalDocs:
       description: Get number format, CNAM,- HLR- or MNP information for given phone number
       url: https://docs.seven.io/en/rest-api/endpoints/lookup
-  - name: numbers
+  - name: Numbers
     externalDocs:
       description: Explore detailed documentation on utilizing our Phone Number Management API for comprehensive control over searching, booking, and managing your communication channels' phone numbers.
       url: https://docs.seven.io/en/rest-api/endpoints/numbers
-  - name: contacts
+  - name: Contacts
     externalDocs:
       description: Contacts are a central part of seven. You can use to manage contacts programmatically. We'll look at how you can query, create, update and delete contacts.
       url: https://docs.seven.io/en/rest-api/endpoints/contacts
-  - name: groups
+  - name: Groups
     externalDocs:
       description: You can query, create, update and delete groups.
       url: https://docs.seven.io/en/rest-api/endpoints/groups
-  - name: subaccounts
+  - name: Subaccounts
     externalDocs:
       description: Create, delete, retrieve information, and transfer balance. Ideal for those who want to manage their account structure clearly and efficiently.
       url: https://docs.seven.io/en/rest-api/endpoints/subaccounts
-  - name: hooks
+  - name: Hooks
     externalDocs:
       description: You can create, view and delete webhooks via this endpoint.
       url: https://docs.seven.io/en/rest-api/endpoints/webhooks
