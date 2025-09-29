@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  description: seven.io offers you the possibility to send SMS, text2voice messages, perform home register lookups, mobile number portability status lookups, phone number formats and much more.
+  description: seven.io offers you the possibility to send SMS, RCS, text-to-speech messages, perform home register lookups, mobile number portability status lookups, phone number formats and much more.
   version: 1.0.0
   title: seven
   termsOfService: https://www.seven.io/en/company/terms/
