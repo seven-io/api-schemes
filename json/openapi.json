@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "description": "seven.io offers you the possibility to send SMS, text2voice messages, perform home register lookups, mobile number portability status lookups, phone number formats and much more.",
+    "description": "seven.io offers you the possibility to send SMS, RCS, text-to-speech messages, perform home register lookups, mobile number portability status lookups, phone number formats and much more.",
     "version": "1.0.0",
     "title": "seven",
     "termsOfService": "https://www.seven.io/en/company/terms/",
@@ -26,7 +26,7 @@
   "paths": {
     "/analytics/country": {
       "get": {
-        "tags": ["analytics"],
+        "tags": ["Account"],
         "parameters": [
           { "$ref": "#/components/parameters/analyticsEnd" },
           { "$ref": "#/components/parameters/analyticsLabel" },
@@ -38,28 +38,21 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "array",
-                        "items": [
-                          {
-                            "type": "object",
-                            "properties": {
-                              "allOf": [
-                                {
-                                  "country": null,
-                                  "type": "string",
-                                  "description": "The country the entries refer to."
-                                },
-                                { "$ref": "#/components/schemas/AnalyticsBase" }
-                              ]
-                            }
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      { "$ref": "#/components/schemas/AnalyticsBase" },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "country": {
+                            "type": "string",
+                            "description": "The country the entries refer to."
                           }
-                        ]
+                        }
                       }
-                    }
+                    ]
                   }
                 }
               }
@@ -73,7 +66,7 @@
     },
     "/analytics/date": {
       "get": {
-        "tags": ["analytics"],
+        "tags": ["Account"],
         "parameters": [
           { "$ref": "#/components/parameters/analyticsEnd" },
           { "$ref": "#/components/parameters/analyticsLabel" },
@@ -85,28 +78,21 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "array",
-                        "items": [
-                          {
-                            "type": "object",
-                            "properties": {
-                              "allOf": [
-                                {
-                                  "date": null,
-                                  "type": "string",
-                                  "description": "The date the entries refer to."
-                                },
-                                { "$ref": "#/components/schemas/AnalyticsBase" }
-                              ]
-                            }
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      { "$ref": "#/components/schemas/AnalyticsBase" },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "date": {
+                            "type": "string",
+                            "description": "The date the entries refer to."
                           }
-                        ]
+                        }
                       }
-                    }
+                    ]
                   }
                 }
               }
@@ -120,7 +106,7 @@
     },
     "/analytics/label": {
       "get": {
-        "tags": ["analytics"],
+        "tags": ["Account"],
         "parameters": [
           { "$ref": "#/components/parameters/analyticsEnd" },
           { "$ref": "#/components/parameters/analyticsLabel" },
@@ -132,28 +118,21 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "array",
-                        "items": [
-                          {
-                            "type": "object",
-                            "properties": {
-                              "allOf": [
-                                {
-                                  "label": null,
-                                  "type": "string",
-                                  "description": "The label the entries refer to."
-                                },
-                                { "$ref": "#/components/schemas/AnalyticsBase" }
-                              ]
-                            }
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      { "$ref": "#/components/schemas/AnalyticsBase" },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "label": {
+                            "type": "string",
+                            "description": "The label the entries refer to."
                           }
-                        ]
+                        }
                       }
-                    }
+                    ]
                   }
                 }
               }
@@ -167,7 +146,7 @@
     },
     "/analytics/subaccount": {
       "get": {
-        "tags": ["analytics"],
+        "tags": ["Account"],
         "parameters": [
           { "$ref": "#/components/parameters/analyticsEnd" },
           { "$ref": "#/components/parameters/analyticsLabel" },
@@ -179,28 +158,21 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "array",
-                        "items": [
-                          {
-                            "type": "object",
-                            "properties": {
-                              "allOf": [
-                                {
-                                  "account": null,
-                                  "type": "string",
-                                  "description": "The AnalyticsByLabel the entries refer to."
-                                },
-                                { "$ref": "#/components/schemas/AnalyticsBase" }
-                              ]
-                            }
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      { "$ref": "#/components/schemas/AnalyticsBase" },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "account": {
+                            "type": "string",
+                            "description": "The AnalyticsByLabel the entries refer to."
                           }
-                        ]
+                        }
                       }
-                    }
+                    ]
                   }
                 }
               }
@@ -214,23 +186,17 @@
     },
     "/balance": {
       "get": {
-        "tags": ["balance"],
+        "tags": ["Account"],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "object",
-                        "properties": {
-                          "amount": { "type": "float" },
-                          "currency": { "type": "string" }
-                        }
-                      }
-                    }
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "amount": { "format": "float", "type": "number" },
+                    "currency": { "type": "string" }
                   }
                 }
               }
@@ -244,7 +210,7 @@
     },
     "/contacts": {
       "get": {
-        "tags": ["contacts"],
+        "tags": ["Contacts"],
         "responses": {
           "200": {
             "description": "OK",
@@ -271,7 +237,7 @@
         "operationId": "ContactsList"
       },
       "post": {
-        "tags": ["contacts"],
+        "tags": ["Contacts"],
         "requestBody": { "$ref": "#/components/requestBodies/ContactsCreate" },
         "responses": {
           "200": {
@@ -290,7 +256,7 @@
     },
     "/contacts/{id}": {
       "delete": {
-        "tags": ["contacts"],
+        "tags": ["Contacts"],
         "parameters": [
           {
             "in": "path",
@@ -322,7 +288,7 @@
         "operationId": "ContactsDelete"
       },
       "get": {
-        "tags": ["contacts"],
+        "tags": ["Contacts"],
         "parameters": [
           {
             "in": "path",
@@ -348,7 +314,7 @@
         "operationId": "ContactsGet"
       },
       "patch": {
-        "tags": ["contacts"],
+        "tags": ["Contacts"],
         "parameters": [
           {
             "in": "path",
@@ -377,7 +343,7 @@
     },
     "/groups": {
       "get": {
-        "tags": ["groups"],
+        "tags": ["Groups"],
         "responses": {
           "200": {
             "description": "OK",
@@ -404,7 +370,7 @@
         "operationId": "GroupsList"
       },
       "post": {
-        "tags": ["groups"],
+        "tags": ["Groups"],
         "requestBody": { "$ref": "#/components/requestBodies/GroupsCreate" },
         "responses": {
           "200": {
@@ -423,7 +389,7 @@
     },
     "/groups/{id}": {
       "delete": {
-        "tags": ["groups"],
+        "tags": ["Groups"],
         "parameters": [
           {
             "in": "path",
@@ -468,7 +434,7 @@
         "operationId": "GroupsDelete"
       },
       "get": {
-        "tags": ["groups"],
+        "tags": ["Groups"],
         "parameters": [
           {
             "in": "path",
@@ -494,7 +460,7 @@
         "operationId": "GroupsGet"
       },
       "patch": {
-        "tags": ["groups"],
+        "tags": ["Groups"],
         "parameters": [
           {
             "in": "path",
@@ -541,7 +507,7 @@
           },
           "required": true
         },
-        "tags": ["hooks"],
+        "tags": ["Hooks"],
         "responses": {
           "200": {
             "description": "OK",
@@ -565,7 +531,7 @@
         "operationId": "HooksDelete"
       },
       "get": {
-        "tags": ["hooks"],
+        "tags": ["Hooks"],
         "responses": {
           "200": {
             "description": "OK",
@@ -622,7 +588,7 @@
         "operationId": "HooksList"
       },
       "post": {
-        "tags": ["hooks"],
+        "tags": ["Hooks"],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -697,7 +663,7 @@
     },
     "/journal/outbound": {
       "get": {
-        "tags": ["journal"],
+        "tags": ["Journal"],
         "parameters": [
           { "$ref": "#/components/parameters/journalId" },
           { "$ref": "#/components/parameters/journalDateFrom" },
@@ -712,59 +678,53 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "array",
-                        "items": {
-                          "allOf": [
-                            {
-                              "type": "object",
-                              "properties": {
-                                "channel": {
-                                  "type": "string",
-                                  "description": "The communication channel used."
-                                },
-                                "dlr": {
-                                  "type": "string",
-                                  "description": "The message delivery report."
-                                },
-                                "dlr_timestamp": {
-                                  "type": "string",
-                                  "description": "The message delivery report timestamp."
-                                },
-                                "mccmnc": {
-                                  "type": "string",
-                                  "description": "The mobile country code / mobile network code."
-                                },
-                                "latency": {
-                                  "type": "string",
-                                  "description": "The message delivery latency."
-                                },
-                                "type": {
-                                  "type": "string",
-                                  "description": "The SMS type."
-                                },
-                                "connection": {
-                                  "type": "string",
-                                  "description": "The connection type."
-                                },
-                                "label": {
-                                  "type": "string",
-                                  "description": "The label used for this message."
-                                },
-                                "foreign_id": {
-                                  "type": "string",
-                                  "description": "The foreign ID used for this message."
-                                }
-                              }
-                            },
-                            { "$ref": "#/components/schemas/JournalBase" }
-                          ]
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "channel": {
+                            "type": "string",
+                            "description": "The communication channel used."
+                          },
+                          "dlr": {
+                            "type": "string",
+                            "description": "The message delivery report."
+                          },
+                          "dlr_timestamp": {
+                            "type": "string",
+                            "description": "The message delivery report timestamp."
+                          },
+                          "mccmnc": {
+                            "type": "string",
+                            "description": "The mobile country code / mobile network code."
+                          },
+                          "latency": {
+                            "type": "string",
+                            "description": "The message delivery latency."
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "The SMS type."
+                          },
+                          "connection": {
+                            "type": "string",
+                            "description": "The connection type."
+                          },
+                          "label": {
+                            "type": "string",
+                            "description": "The label used for this message."
+                          },
+                          "foreign_id": {
+                            "type": "string",
+                            "description": "The foreign ID used for this message."
+                          }
                         }
-                      }
-                    }
+                      },
+                      { "$ref": "#/components/schemas/JournalBase" }
+                    ]
                   }
                 }
               }
@@ -778,7 +738,7 @@
     },
     "/journal/inbound": {
       "get": {
-        "tags": ["journal"],
+        "tags": ["Journal"],
         "parameters": [
           { "$ref": "#/components/parameters/journalId" },
           { "$ref": "#/components/parameters/journalDateFrom" },
@@ -793,15 +753,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "array",
-                        "items": { "$ref": "#/components/schemas/JournalBase" }
-                      }
-                    }
-                  }
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/JournalBase" }
                 }
               }
             }
@@ -814,7 +768,7 @@
     },
     "/journal/replies": {
       "get": {
-        "tags": ["journal"],
+        "tags": ["Journal"],
         "parameters": [
           { "$ref": "#/components/parameters/journalId" },
           { "$ref": "#/components/parameters/journalDateFrom" },
@@ -829,15 +783,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "array",
-                        "items": { "$ref": "#/components/schemas/JournalBase" }
-                      }
-                    }
-                  }
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/JournalBase" }
                 }
               }
             }
@@ -850,7 +798,7 @@
     },
     "/journal/voice": {
       "get": {
-        "tags": ["journal"],
+        "tags": ["Journal"],
         "parameters": [
           { "$ref": "#/components/parameters/journalId" },
           { "$ref": "#/components/parameters/journalDateFrom" },
@@ -865,19 +813,22 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "$ref": "#/components/schemas/JournalBase"
-                          }
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "allOf": [
+                      { "$ref": "#/components/schemas/JournalBase" },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "xml": { "type": "boolean" },
+                          "duration": { "type": "string" },
+                          "status": { "type": "string" },
+                          "error": { "type": "string" }
                         }
                       }
-                    }
+                    ]
                   }
                 }
               }
@@ -891,37 +842,28 @@
     },
     "/lookup/cnam": {
       "get": {
-        "tags": ["lookup"],
+        "tags": ["Lookup"],
         "parameters": [{ "$ref": "#/components/parameters/lookupNumber" }],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "object",
-                        "properties": {
-                          "code": {
-                            "description": "The API status code.",
-                            "type": "number"
-                          },
-                          "success": {
-                            "type": "string",
-                            "enum": ["true", "false"]
-                          },
-                          "name": {
-                            "type": "string",
-                            "description": "The name of the country"
-                          },
-                          "number": {
-                            "type": "string",
-                            "description": "The number formatted accordingly to the E.164 standard in a human readable format."
-                          }
-                        }
-                      }
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "description": "The API status code.",
+                      "type": "number"
+                    },
+                    "success": { "type": "string", "enum": ["true", "false"] },
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the country"
+                    },
+                    "number": {
+                      "type": "string",
+                      "description": "The number formatted accordingly to the E.164 standard in a human readable format."
                     }
                   }
                 }
@@ -936,30 +878,14 @@
     },
     "/lookup/format": {
       "get": {
-        "tags": ["lookup"],
+        "tags": ["Lookup"],
         "parameters": [{ "$ref": "#/components/parameters/lookupNumber" }],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "oneOf": [
-                          { "$ref": "#/components/schemas/NumberFormat" },
-                          {
-                            "type": "array",
-                            "items": {
-                              "$ref": "#/components/schemas/NumberFormat"
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
+                "schema": { "$ref": "#/components/schemas/NumberFormat" }
               }
             }
           }
@@ -971,50 +897,42 @@
     },
     "/lookup/hlr": {
       "get": {
-        "tags": ["lookup"],
+        "tags": ["Lookup"],
         "parameters": [{ "$ref": "#/components/parameters/lookupNumber" }],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "object",
-                        "properties": {
-                          "international_formatted": {
-                            "type": "string",
-                            "description": "The number formatted accordingly to the E.164 standard in a human readable format."
-                          },
-                          "country_name": {
-                            "type": "string",
-                            "description": "The full english name if the number belonging country."
-                          },
-                          "country_code": {
-                            "type": "string",
-                            "description": "The area code of the number belonging country. This value is numeric."
-                          },
-                          "international_format_number": { "type": "string" },
-                          "national_format_number": { "type": "string" },
-                          "country_prefix": { "type": "string" },
-                          "current_carrier": {
-                            "schema": { "$ref": "#/components/schemas/Carrier" }
-                          },
-                          "original_carrier": {
-                            "schema": { "$ref": "#/components/schemas/Carrier" }
-                          },
-                          "lookup_outcome": { "type": "string" },
-                          "lookup_outcome_message": { "type": "string" },
-                          "valid_number": { "type": "string" },
-                          "reachable": { "type": "string" },
-                          "roaming": {
-                            "schema": { "$ref": "#/components/schemas/Roaming" }
-                          }
-                        }
-                      }
-                    }
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "international_formatted": {
+                      "type": "string",
+                      "description": "The number formatted accordingly to the E.164 standard in a human readable format."
+                    },
+                    "country_name": {
+                      "type": "string",
+                      "description": "The full english name if the number belonging country."
+                    },
+                    "country_code": {
+                      "type": "string",
+                      "description": "The area code of the number belonging country. This value is numeric."
+                    },
+                    "international_format_number": { "type": "string" },
+                    "national_format_number": { "type": "string" },
+                    "country_prefix": { "type": "string" },
+                    "current_carrier": {
+                      "$ref": "#/components/schemas/Carrier"
+                    },
+                    "original_carrier": {
+                      "$ref": "#/components/schemas/Carrier"
+                    },
+                    "lookup_outcome": { "type": "string" },
+                    "lookup_outcome_message": { "type": "string" },
+                    "valid_number": { "type": "string" },
+                    "reachable": { "type": "string" },
+                    "roaming": { "$ref": "#/components/schemas/Roaming" }
                   }
                 }
               }
@@ -1028,34 +946,23 @@
     },
     "/lookup/mnp": {
       "get": {
-        "tags": ["lookup"],
+        "tags": ["Lookup"],
         "parameters": [{ "$ref": "#/components/parameters/lookupNumber" }],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "object",
-                        "properties": {
-                          "code": {
-                            "type": "number",
-                            "enum": [100, 202, 500, 600]
-                          },
-                          "success": {
-                            "type": "boolean",
-                            "description": "Determines if the request was successful.,"
-                          },
-                          "price": { "type": "float" },
-                          "mnp": {
-                            "schema": { "$ref": "#/components/schemas/MNP" }
-                          }
-                        }
-                      }
-                    }
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": { "type": "number", "enum": [100, 202, 500, 600] },
+                    "success": {
+                      "type": "boolean",
+                      "description": "Determines if the request was successful.,"
+                    },
+                    "price": { "format": "float", "type": "number" },
+                    "mnp": { "$ref": "#/components/schemas/MNP" }
                   }
                 }
               }
@@ -1069,7 +976,7 @@
     },
     "/lookup/rcs": {
       "get": {
-        "tags": ["lookup"],
+        "tags": ["Lookup"],
         "parameters": [
           {
             "in": "query",
@@ -1085,17 +992,11 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "allOf": [
-                          { "$ref": "#/components/schemas/NumberFormat" },
-                          { "type": "array", "items": { "type": "string" } }
-                        ]
-                      }
-                    }
-                  }
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/NumberFormat" },
+                    { "type": "array", "items": { "type": "string" } }
+                  ]
                 }
               }
             }
@@ -1108,7 +1009,7 @@
     },
     "/numbers/active": {
       "get": {
-        "tags": ["numbers"],
+        "tags": ["Numbers"],
         "responses": {
           "200": {
             "description": "OK",
@@ -1134,7 +1035,7 @@
     },
     "/numbers/active/{number}": {
       "delete": {
-        "tags": ["numbers"],
+        "tags": ["Numbers"],
         "parameters": [
           {
             "in": "path",
@@ -1180,7 +1081,7 @@
         "operationId": "NumbersDelete"
       },
       "get": {
-        "tags": ["numbers"],
+        "tags": ["Numbers"],
         "parameters": [
           {
             "in": "path",
@@ -1206,7 +1107,7 @@
         "operationId": "NumbersGet"
       },
       "patch": {
-        "tags": ["numbers"],
+        "tags": ["Numbers"],
         "parameters": [
           {
             "in": "path",
@@ -1268,7 +1169,7 @@
     },
     "/numbers/available": {
       "get": {
-        "tags": ["numbers"],
+        "tags": ["Numbers"],
         "parameters": [
           {
             "in": "query",
@@ -1308,53 +1209,47 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "availableNumbers": {
+                      "type": "array",
+                      "items": {
                         "type": "object",
                         "properties": {
-                          "availableNumbers": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "country": { "type": "string" },
-                                "number": { "type": "string" },
-                                "number_parsed": { "type": "string" },
-                                "fees": {
-                                  "type": "object",
-                                  "properties": {
-                                    "monthly": {
-                                      "type": "object",
-                                      "properties": {
-                                        "basic_charge": { "type": "number" },
-                                        "setup": { "type": "number" }
-                                      }
-                                    },
-                                    "annually": {
-                                      "type": "object",
-                                      "properties": {
-                                        "basic_charge": { "type": "number" },
-                                        "setup": { "type": "number" }
-                                      }
-                                    },
-                                    "sms_mo": {
-                                      "type": "integer",
-                                      "format": "int32"
-                                    },
-                                    "voice_mo": { "type": "number" }
-                                  }
-                                },
-                                "features": {
-                                  "type": "object",
-                                  "properties": {
-                                    "sms": { "type": "boolean" },
-                                    "a2p_sms": { "type": "boolean" },
-                                    "voice": { "type": "boolean" }
-                                  }
+                          "country": { "type": "string" },
+                          "number": { "type": "string" },
+                          "number_parsed": { "type": "string" },
+                          "fees": {
+                            "type": "object",
+                            "properties": {
+                              "monthly": {
+                                "type": "object",
+                                "properties": {
+                                  "basic_charge": { "type": "number" },
+                                  "setup": { "type": "number" }
                                 }
-                              }
+                              },
+                              "annually": {
+                                "type": "object",
+                                "properties": {
+                                  "basic_charge": { "type": "number" },
+                                  "setup": { "type": "number" }
+                                }
+                              },
+                              "sms_mo": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "voice_mo": { "type": "number" }
+                            }
+                          },
+                          "features": {
+                            "type": "object",
+                            "properties": {
+                              "sms": { "type": "boolean" },
+                              "a2p_sms": { "type": "boolean" },
+                              "voice": { "type": "boolean" }
                             }
                           }
                         }
@@ -1373,7 +1268,7 @@
     },
     "/numbers/order": {
       "post": {
-        "tags": ["numbers"],
+        "tags": ["Numbers"],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -1404,17 +1299,11 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "object",
-                        "properties": {
-                          "error": { "type": "string" },
-                          "success": { "type": "boolean" }
-                        }
-                      }
-                    }
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string" },
+                    "success": { "type": "boolean" }
                   }
                 }
               }
@@ -1428,7 +1317,7 @@
     },
     "/pricing": {
       "get": {
-        "tags": ["pricing"],
+        "tags": ["Account"],
         "parameters": [
           {
             "in": "query",
@@ -1443,71 +1332,62 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "countCountries": {
+                      "type": "integer",
+                      "description": "The number if countries in total."
+                    },
+                    "countNetworks": {
+                      "type": "integer",
+                      "description": "The number of total networks."
+                    },
+                    "countries": {
+                      "type": "array",
+                      "items": {
                         "type": "object",
                         "properties": {
-                          "countCountries": {
-                            "type": "integer",
-                            "description": "The number if countries in total."
+                          "countryCode": {
+                            "type": "string",
+                            "description": "The countries ISO code."
                           },
-                          "countNetworks": {
-                            "type": "integer",
-                            "description": "The number of total networks."
+                          "countryName": {
+                            "type": "string",
+                            "description": "The countries full name."
                           },
-                          "countries": {
+                          "countryPrefix": {
+                            "type": "string",
+                            "description": "The countries number prefix."
+                          },
+                          "networks": {
                             "type": "array",
                             "items": {
                               "type": "object",
                               "properties": {
-                                "countryCode": {
-                                  "type": "string",
-                                  "description": "The countries ISO code."
+                                "comment": {
+                                  "description": "Any information which might be of interest.",
+                                  "type": "string"
                                 },
-                                "countryName": {
-                                  "type": "string",
-                                  "description": "The countries full name."
-                                },
-                                "countryPrefix": {
-                                  "type": "string",
-                                  "description": "The countries number prefix."
-                                },
-                                "networks": {
+                                "features": {
+                                  "description": "The features supported by this network.",
                                   "type": "array",
-                                  "items": {
-                                    "type": "object",
-                                    "properties": {
-                                      "comment": {
-                                        "description": "Any information which might be of interest.",
-                                        "type": "string"
-                                      },
-                                      "features": {
-                                        "description": "The features supported by this network.",
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                      },
-                                      "networkName": {
-                                        "type": "string",
-                                        "description": "The full name of the carrier."
-                                      },
-                                      "mcc": {
-                                        "type": "string",
-                                        "description": "The mobile country code."
-                                      },
-                                      "mncs": {
-                                        "description": "The mobile network code(s).",
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                      },
-                                      "price": {
-                                        "type": "number",
-                                        "format": "float"
-                                      }
-                                    }
-                                  }
-                                }
+                                  "items": { "type": "string" }
+                                },
+                                "networkName": {
+                                  "type": "string",
+                                  "description": "The full name of the carrier."
+                                },
+                                "mcc": {
+                                  "type": "string",
+                                  "description": "The mobile country code."
+                                },
+                                "mncs": {
+                                  "description": "The mobile network code(s).",
+                                  "type": "array",
+                                  "items": { "type": "string" }
+                                },
+                                "price": { "type": "number", "format": "float" }
                               }
                             }
                           }
@@ -1527,7 +1407,7 @@
     },
     "/rcs/events": {
       "post": {
-        "tags": ["rcs"],
+        "tags": ["RCS"],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -1562,15 +1442,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "object",
-                        "properties": { "success": { "type": "boolean" } }
-                      }
-                    }
-                  }
+                "schema": {
+                  "type": "object",
+                  "properties": { "success": { "type": "boolean" } }
                 }
               }
             }
@@ -1583,7 +1457,7 @@
     },
     "/rcs/messages": {
       "post": {
-        "tags": ["rcs"],
+        "tags": ["RCS"],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -1658,7 +1532,7 @@
     },
     "/rcs/messages/{id}": {
       "delete": {
-        "tags": ["rcs"],
+        "tags": ["RCS"],
         "parameters": [
           {
             "in": "path",
@@ -1674,15 +1548,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "object",
-                        "properties": { "success": { "type": "boolean" } }
-                      }
-                    }
-                  }
+                "schema": {
+                  "type": "object",
+                  "properties": { "success": { "type": "boolean" } }
                 }
               }
             }
@@ -1695,7 +1563,7 @@
     },
     "/sms": {
       "delete": {
-        "tags": ["sms"],
+        "tags": ["SMS"],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -1739,7 +1607,7 @@
         "operationId": "SmsDelete"
       },
       "post": {
-        "tags": ["sms"],
+        "tags": ["SMS"],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -1819,7 +1687,7 @@
     },
     "/status": {
       "get": {
-        "tags": ["status"],
+        "tags": ["Status"],
         "parameters": [
           {
             "in": "query",
@@ -1835,15 +1703,9 @@
             "description": "Success",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "array",
-                        "items": { "$ref": "#/components/schemas/SmsStatus" }
-                      }
-                    }
-                  }
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/SmsStatus" }
                 }
               }
             }
@@ -1856,7 +1718,7 @@
     },
     "/subaccounts/list": {
       "get": {
-        "tags": ["subaccounts"],
+        "tags": ["Subaccounts"],
         "parameters": [
           {
             "in": "query",
@@ -1872,15 +1734,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "array",
-                        "items": { "$ref": "#/components/schemas/Subaccount" }
-                      }
-                    }
-                  }
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Subaccount" }
                 }
               }
             }
@@ -1893,7 +1749,7 @@
     },
     "/subaccounts/create": {
       "post": {
-        "tags": ["subaccounts"],
+        "tags": ["Subaccounts"],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -1941,7 +1797,7 @@
     },
     "/subaccounts/update": {
       "post": {
-        "tags": ["subaccounts"],
+        "tags": ["Subaccounts"],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -1993,7 +1849,7 @@
     },
     "/subaccounts/transfer_credits": {
       "post": {
-        "tags": ["subaccounts"],
+        "tags": ["Subaccounts"],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -2040,7 +1896,7 @@
     },
     "/subaccounts/delete": {
       "post": {
-        "tags": ["subaccounts"],
+        "tags": ["Subaccounts"],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -2082,7 +1938,7 @@
     },
     "/validate_for_voice": {
       "post": {
-        "tags": ["validate_for_voice"],
+        "tags": ["Validate For Voice"],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -2115,7 +1971,7 @@
     },
     "/voice": {
       "post": {
-        "tags": ["voice"],
+        "tags": ["Voice"],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -2166,7 +2022,7 @@
     },
     "/voice/{call_id}/hangup": {
       "post": {
-        "tags": ["voice"],
+        "tags": ["Voice"],
         "parameters": [
           {
             "in": "path",
@@ -2182,17 +2038,11 @@
             "description": "Success",
             "content": {
               "application/json": {
-                "examples": {
-                  "response": {
-                    "value": {
-                      "schema": {
-                        "type": "object",
-                        "properties": {
-                          "error": { "type": "string" },
-                          "success": { "type": "boolean" }
-                        }
-                      }
-                    }
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string" },
+                    "success": { "type": "boolean" }
                   }
                 }
               }
@@ -2208,87 +2058,94 @@
   "security": [{ "oauth2_auth": [] }],
   "tags": [
     {
-      "name": "sms",
+      "name": "SMS",
       "externalDocs": {
         "description": "Send one/multiple SMS",
         "url": "https://docs.seven.io/en/rest-api/endpoints/sms"
       }
     },
     {
-      "name": "balance",
-      "externalDocs": {
-        "description": "Retrieve account balance",
-        "url": "https://docs.seven.io/en/rest-api/endpoints/account#balance"
-      }
-    },
-    {
-      "name": "pricing",
-      "externalDocs": {
-        "description": "Retrieve pricing information",
-        "url": "https://docs.seven.io/en/rest-api/endpoints/account#prices"
-      }
-    },
-    {
-      "name": "status",
+      "name": "Status",
       "externalDocs": {
         "description": "Retrieve the status for a sent SMS with the given ID",
         "url": "https://docs.seven.io/en/rest-api/endpoints/status-reports"
       }
     },
     {
-      "name": "validate_for_voice",
+      "name": "Validate For Voice",
       "externalDocs": {
         "description": "Validate caller ID for voice Voice API",
         "url": "https://docs.seven.io/en/rest-api/endpoints/sender-identifiers"
       }
     },
     {
-      "name": "voice",
+      "name": "Voice",
       "externalDocs": {
         "description": "Issue voice call to phone number",
         "url": "https://docs.seven.io/en/rest-api/endpoints/voice"
       }
     },
     {
-      "name": "lookup",
+      "name": "Lookup",
       "externalDocs": {
         "description": "Get number format, CNAM,- HLR- or MNP information for given phone number",
         "url": "https://docs.seven.io/en/rest-api/endpoints/lookup"
       }
     },
     {
-      "name": "numbers",
+      "name": "Numbers",
       "externalDocs": {
         "description": "Explore detailed documentation on utilizing our Phone Number Management API for comprehensive control over searching, booking, and managing your communication channels' phone numbers.",
         "url": "https://docs.seven.io/en/rest-api/endpoints/numbers"
       }
     },
     {
-      "name": "contacts",
+      "name": "Contacts",
       "externalDocs": {
         "description": "Contacts are a central part of seven. You can use to manage contacts programmatically. We'll look at how you can query, create, update and delete contacts.",
         "url": "https://docs.seven.io/en/rest-api/endpoints/contacts"
       }
     },
     {
-      "name": "groups",
+      "name": "Groups",
       "externalDocs": {
         "description": "You can query, create, update and delete groups.",
         "url": "https://docs.seven.io/en/rest-api/endpoints/groups"
       }
     },
     {
-      "name": "subaccounts",
+      "name": "Subaccounts",
       "externalDocs": {
         "description": "Create, delete, retrieve information, and transfer balance. Ideal for those who want to manage their account structure clearly and efficiently.",
         "url": "https://docs.seven.io/en/rest-api/endpoints/subaccounts"
       }
     },
     {
-      "name": "hooks",
+      "name": "Hooks",
       "externalDocs": {
         "description": "You can create, view and delete webhooks via this endpoint.",
         "url": "https://docs.seven.io/en/rest-api/endpoints/webhooks"
+      }
+    },
+    {
+      "name": "Account",
+      "externalDocs": {
+        "description": "Account-specific endpoints.",
+        "url": "https://docs.seven.io/en/rest-api/endpoints/account"
+      }
+    },
+    {
+      "name": "RCS",
+      "externalDocs": {
+        "description": "Endpoints regarding Rich Content Services.",
+        "url": "https://docs.seven.io/en/rest-api/endpoints/rcs"
+      }
+    },
+    {
+      "name": "Journal",
+      "externalDocs": {
+        "description": "Endpoints regarding insights for sent/received messages.",
+        "url": "https://docs.seven.io/en/rest-api/endpoints/logbook"
       }
     }
   ],

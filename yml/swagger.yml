@@ -38,18 +38,16 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
-                type: array
-                items:
-                  - type: object
-                    properties:
-                      allOf:
-                        - country:
-                          type: string
-                          description: The country the entries refer to.
-                        - $ref: '#/definitions/AnalyticsBase'
+          schema:
+            type: array
+            items:
+              allOf:
+                - $ref: '#/definitions/AnalyticsBase'
+                - type: object
+                  properties:
+                    country:
+                      type: string
+                      description: The country the entries refer to.
       summary: Get Analytics By Country
       description: Retrieves analytics grouped by country
       operationId: AnalyticsByCountry
@@ -64,18 +62,16 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
-                type: array
-                items:
-                  - type: object
-                    properties:
-                      allOf:
-                        - date:
-                          type: string
-                          description: The date the entries refer to.
-                        - $ref: '#/definitions/AnalyticsBase'
+          schema:
+            type: array
+            items:
+              allOf:
+                - $ref: '#/definitions/AnalyticsBase'
+                - type: object
+                  properties:
+                    date:
+                      type: string
+                      description: The date the entries refer to.
       summary: Get Analytics By Date
       description: Retrieves analytics grouped by date
       operationId: AnalyticsByDate
@@ -90,18 +86,16 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
-                type: array
-                items:
-                  - type: object
-                    properties:
-                      allOf:
-                        - label:
-                          type: string
-                          description: The label the entries refer to.
-                        - $ref: '#/definitions/AnalyticsBase'
+          schema:
+            type: array
+            items:
+              allOf:
+                - $ref: '#/definitions/AnalyticsBase'
+                - type: object
+                  properties:
+                    label:
+                      type: string
+                      description: The label the entries refer to.
       summary: Get Analytics By Label
       description: Retrieves analytics grouped by label
       operationId: AnalyticsByLabel
@@ -116,18 +110,16 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
-                type: array
-                items:
-                  - type: object
-                    properties:
-                      allOf:
-                        - account:
-                          type: string
-                          description: The AnalyticsByLabel the entries refer to.
-                        - $ref: '#/definitions/AnalyticsBase'
+          schema:
+            type: array
+            items:
+              allOf:
+                - $ref: '#/definitions/AnalyticsBase'
+                - type: object
+                  properties:
+                    account:
+                      type: string
+                      description: The AnalyticsByLabel the entries refer to.
       summary: Get Analytics By Label
       description: Retrieves analytics grouped by AnalyticsByLabel
       operationId: AnalyticsBySubaccount
@@ -137,15 +129,14 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  amount:
-                    type: float
-                  currency:
-                    type: string
+          schema:
+            type: object
+            properties:
+              amount:
+                format: float
+                type: number
+              currency:
+                type: string
       summary: Get Balance
       description: Retrieves the account balance for given API key
       operationId: Balance
@@ -481,42 +472,40 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
-                type: array
-                items:
-                  allOf:
-                    - type: object
-                      properties:
-                        channel:
-                          type: string
-                          description: The communication channel used.
-                        dlr:
-                          type: string
-                          description: The message delivery report.
-                        dlr_timestamp:
-                          type: string
-                          description: The message delivery report timestamp.
-                        mccmnc:
-                          type: string
-                          description: The mobile country code / mobile network code.
-                        latency:
-                          type: string
-                          description: The message delivery latency.
-                        type:
-                          type: string
-                          description: The SMS type.
-                        connection:
-                          type: string
-                          description: The connection type.
-                        label:
-                          type: string
-                          description: The label used for this message.
-                        foreign_id:
-                          type: string
-                          description: The foreign ID used for this message.
-                    - $ref: '#/definitions/JournalBase'
+          schema:
+            type: array
+            items:
+              allOf:
+                - type: object
+                  properties:
+                    channel:
+                      type: string
+                      description: The communication channel used.
+                    dlr:
+                      type: string
+                      description: The message delivery report.
+                    dlr_timestamp:
+                      type: string
+                      description: The message delivery report timestamp.
+                    mccmnc:
+                      type: string
+                      description: The mobile country code / mobile network code.
+                    latency:
+                      type: string
+                      description: The message delivery latency.
+                    type:
+                      type: string
+                      description: The SMS type.
+                    connection:
+                      type: string
+                      description: The connection type.
+                    label:
+                      type: string
+                      description: The label used for this message.
+                    foreign_id:
+                      type: string
+                      description: The foreign ID used for this message.
+                - $ref: '#/definitions/JournalBase'
       summary: Get outbound messages
       description: Retrieves outbound journals for the associated API key
       operationId: JournalOutbound
@@ -534,12 +523,10 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/definitions/JournalBase'
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/JournalBase'
       summary: Get inbound messages
       description: Retrieves inbound journals for the associated API key
       operationId: JournalInbound
@@ -557,12 +544,10 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/definitions/JournalBase'
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/JournalBase'
       summary: Get message replies
       description: Retrieves message replies for the associated API key
       operationId: JournalReplies
@@ -580,14 +565,14 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
+          schema:
+            type: array
+            items:
+              type: object
+              allOf:
+                - $ref: '#/definitions/JournalBase'
+                - type: object
                   properties:
-                    $ref: '#/definitions/JournalBase'
                     xml:
                       type: boolean
                     duration:
@@ -607,9 +592,7 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
+          schema:
                 type: object
                 properties:
                   code:
@@ -637,14 +620,8 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
-                oneOf:
-                  - $ref: '#/definitions/NumberFormat'
-                  - type: array
-                    items:
-                      $ref: '#/definitions/NumberFormat'
+          schema:
+            $ref: '#/definitions/NumberFormat'
       summary: Lookup Format
       description: Retrieves number format info
       operationId: LookupFormat
@@ -656,9 +633,7 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
+          schema:
                 type: object
                 properties:
                   international_formatted:
@@ -677,11 +652,9 @@ paths:
                   country_prefix:
                     type: string
                   current_carrier:
-                    schema:
-                      $ref: '#/definitions/Carrier'
+                    $ref: '#/definitions/Carrier'
                   original_carrier:
-                    schema:
-                      $ref: '#/definitions/Carrier'
+                    $ref: '#/definitions/Carrier'
                   lookup_outcome:
                     type: string
                   lookup_outcome_message:
@@ -691,8 +664,7 @@ paths:
                   reachable:
                     type: string
                   roaming:
-                    schema:
-                      $ref: '#/definitions/Roaming'
+                    $ref: '#/definitions/Roaming'
       summary: Lookup HLR
       description: Retrieves home location register info
       operationId: LookupHLR
@@ -704,9 +676,7 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
+          schema:
                 type: object
                 properties:
                   code:
@@ -720,10 +690,10 @@ paths:
                     type: boolean
                     description: Determines if the request was successful.,
                   price:
-                    type: float
+                    format: float
+                    type: number
                   mnp:
-                    schema:
-                      $ref: '#/definitions/MNP'
+                    $ref: '#/definitions/MNP'
       summary: Lookup MNP
       description: Retrieves mobile number portability info
       operationId: LookupMNP
@@ -740,14 +710,12 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/definitions/NumberFormat'
-                  - type: array
-                    items:
-                      type: string
+          schema:
+            allOf:
+              - $ref: '#/definitions/NumberFormat'
+              - type: array
+                items:
+                  type: string
       summary: Lookup RCS Capabilities
       description: Retrieves Rich Content Services capabilities
       operationId: LookupRCS
@@ -890,53 +858,51 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  availableNumbers:
-                    type: array
-                    items:
+          schema:
+            type: object
+            properties:
+              availableNumbers:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    country:
+                      type: string
+                    number:
+                      type: string
+                    number_parsed:
+                      type: string
+                    fees:
                       type: object
                       properties:
-                        country:
-                          type: string
-                        number:
-                          type: string
-                        number_parsed:
-                          type: string
-                        fees:
+                        monthly:
                           type: object
                           properties:
-                            monthly:
-                              type: object
-                              properties:
-                                basic_charge:
-                                  type: number
-                                setup:
-                                  type: number
-                            annually:
-                              type: object
-                              properties:
-                                basic_charge:
-                                  type: number
-                                setup:
-                                  type: number
-                            sms_mo:
-                              type: integer
-                              format: int32
-                            voice_mo:
+                            basic_charge:
                               type: number
-                        features:
+                            setup:
+                              type: number
+                        annually:
                           type: object
                           properties:
-                            sms:
-                              type: boolean
-                            a2p_sms:
-                              type: boolean
-                            voice:
-                              type: boolean
+                            basic_charge:
+                              type: number
+                            setup:
+                              type: number
+                        sms_mo:
+                          type: integer
+                          format: int32
+                        voice_mo:
+                          type: number
+                    features:
+                      type: object
+                      properties:
+                        sms:
+                          type: boolean
+                        a2p_sms:
+                          type: boolean
+                        voice:
+                          type: boolean
       summary: Get Available Numbers
       description: Retrieves available numbers
       operationId: NumbersListAvailable
@@ -961,15 +927,13 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                  success:
-                    type: boolean
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              success:
+                type: boolean
       summary: Order Number
       description: Orders a number
       operationId: NumbersOrder
@@ -985,9 +949,7 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
+          schema:
                 type: object
                 properties:
                   countCountries:
@@ -1066,13 +1028,11 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
       summary: Trigger RCS Event
       description: Trigger a Rich Content Message event
       operationId: RcsEvent
@@ -1148,13 +1108,11 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
       summary: Delete RCS
       description: Delete a scheduled Rich Content Message
       operationId: RcsDelete
@@ -1260,12 +1218,10 @@ paths:
       responses:
         '200':
           description: Success
-          examples:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/definitions/SmsStatus'
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SmsStatus'
       summary: Get SMS Status
       description: Retrieves dispatch status for given SMS IDs
       operationId: Status
@@ -1282,12 +1238,10 @@ paths:
       responses:
         '200':
           description: OK
-          examples:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/definitions/Subaccount'
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Subaccount'
       summary: List Subaccounts
       description: Request a list of all subaccounts of an account.
       operationId: SubaccountsList
@@ -1485,15 +1439,13 @@ paths:
       responses:
         '200':
           description: Success
-          examples:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                  success:
-                    type: boolean
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              success:
+                type: boolean
       summary: End Voice Call
       description: This endpoint ends an active call. Only calls with the status in-progress can be ended.
       operationId: VoiceCallEnd
