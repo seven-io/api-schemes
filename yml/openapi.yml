@@ -664,6 +664,231 @@ paths:
           operationId: GroupsUpdate,
         },
     }
+  /hooks:
+    {
+      delete:
+        {
+          requestBody:
+            {
+              content:
+                {
+                  application/x-www-form-urlencoded:
+                    {
+                      schema:
+                        {
+                          type: object,
+                          properties:
+                            {
+                              id:
+                                {
+                                  description: "The ID of the webhook you want to delete.",
+                                  type: integer,
+                                  x-ms-summary: ID,
+                                },
+                            },
+                          required: [id],
+                        },
+                    },
+                },
+              required: true,
+            },
+          tags: [hooks],
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        {
+                          schema:
+                            {
+                              properties:
+                                {
+                                  code: { type: string },
+                                  error_message: { type: string },
+                                  id: { type: integer },
+                                  success: { type: boolean },
+                                },
+                              type: object,
+                            },
+                        },
+                    },
+                },
+            },
+          summary: "Delete Hook",
+          description: "Deletes a hook by its ID.",
+          operationId: HooksDelete,
+        },
+      get:
+        {
+          tags: [hooks],
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        {
+                          schema:
+                            {
+                              type: object,
+                              properties:
+                                {
+                                  data:
+                                    {
+                                      type: array,
+                                      items:
+                                        {
+                                          properties:
+                                            {
+                                              hooks:
+                                                {
+                                                  properties:
+                                                    {
+                                                      id: { type: string },
+                                                      target_url:
+                                                        { type: string },
+                                                      headers: { type: string },
+                                                      event_type:
+                                                        {
+                                                          type: string,
+                                                          enum:
+                                                            [
+                                                              all,
+                                                              rcs,
+                                                              sms_mo,
+                                                              dlr,
+                                                              voice_call,
+                                                              voice_status,
+                                                              voice_dtmf,
+                                                              tracking,
+                                                            ],
+                                                        },
+                                                      event_filter:
+                                                        { type: string },
+                                                      request_method:
+                                                        {
+                                                          type: string,
+                                                          enum:
+                                                            [GET, JSON, POST],
+                                                        },
+                                                      enabled:
+                                                        { type: boolean },
+                                                      created: { type: string },
+                                                    },
+                                                  type: object,
+                                                },
+                                              success: { type: boolean },
+                                            },
+                                          type: object,
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+          summary: "List Hooks",
+          description: "Query the active webhooks of your account.",
+          operationId: HooksList,
+        },
+      post:
+        {
+          tags: [hooks],
+          requestBody:
+            {
+              content:
+                {
+                  application/x-www-form-urlencoded:
+                    {
+                      schema:
+                        {
+                          type: object,
+                          properties:
+                            {
+                              target_url:
+                                {
+                                  description: "Destination address of your webhook.",
+                                  type: string,
+                                  x-ms-summary: "Target URL",
+                                },
+                              headers:
+                                {
+                                  description: "Custom headers to be sent to the webhook URL. Could contain multiple headers separated by a line break.",
+                                  type: string,
+                                  x-ms-summary: Headers,
+                                },
+                              event_type:
+                                {
+                                  description: "Type of event for which you would like to receive a webhook.",
+                                  type: string,
+                                  enum:
+                                    [
+                                      all,
+                                      rcs,
+                                      sms_mo,
+                                      dlr,
+                                      voice_call,
+                                      voice_status,
+                                      voice_dtmf,
+                                      tracking,
+                                    ],
+                                  x-ms-summary: "Event Type",
+                                },
+                              event_filter:
+                                {
+                                  description: "Sends the webhook only if the filter applies. For example, for different webhooks with different inbound numbers.",
+                                  type: string,
+                                  x-ms-summary: "Event Filter",
+                                },
+                              request_method:
+                                {
+                                  description: "Request method in which you would like to receive the webhook.",
+                                  type: string,
+                                  enum: [GET, JSON, POST],
+                                  x-ms-summary: "Request Method",
+                                },
+                            },
+                          required: [target_url, event_type],
+                        },
+                    },
+                },
+              required: true,
+            },
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        {
+                          schema:
+                            {
+                              properties:
+                                {
+                                  code: { type: string },
+                                  error_message: { type: string },
+                                  id: { type: integer },
+                                  success: { type: boolean },
+                                },
+                              type: object,
+                            },
+                        },
+                    },
+                },
+            },
+          summary: "Create Hook",
+          description: "Creates a hook",
+          operationId: HooksCreate,
+        },
+    }
   /journal/outbound:
     {
       get:
@@ -2227,6 +2452,307 @@ paths:
           operationId: Status,
         },
     }
+  /subaccounts/list:
+    {
+      get:
+        {
+          tags: [subaccounts],
+          parameters:
+            [
+              {
+                in: query,
+                name: id,
+                description: "The ID of a subaccount. This will give you only the data for a specific subaccount.",
+                required: false,
+                x-ms-summary: ID,
+                schema: { type: string },
+              },
+            ],
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        {
+                          examples:
+                            {
+                              response:
+                                {
+                                  value:
+                                    {
+                                      schema:
+                                        {
+                                          type: array,
+                                          items:
+                                            {
+                                              $ref: "#/components/schemas/Subaccount",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+          summary: "List Subaccounts",
+          description: "Request a list of all subaccounts of an account.",
+          operationId: SubaccountsList,
+        },
+    }
+  /subaccounts/create:
+    {
+      post:
+        {
+          tags: [subaccounts],
+          requestBody:
+            {
+              content:
+                {
+                  application/x-www-form-urlencoded:
+                    {
+                      schema:
+                        {
+                          type: object,
+                          properties:
+                            {
+                              name:
+                                {
+                                  description: "Full first and last name of the account owner.",
+                                  type: string,
+                                  x-ms-summary: Name,
+                                },
+                              email:
+                                {
+                                  description: "Email address of the account.",
+                                  type: string,
+                                  x-ms-summary: Email,
+                                },
+                            },
+                          required: [name, email],
+                        },
+                    },
+                },
+              required: true,
+            },
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        {
+                          schema:
+                            {
+                              type: object,
+                              properties:
+                                {
+                                  error: { type: string },
+                                  subaccount:
+                                    { $ref: "#/components/schemas/Subaccount" },
+                                  success: { type: boolean },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+          summary: "Create Subaccount",
+          description: "Creates a subaccount.",
+          operationId: SubaccountsCreate,
+        },
+    }
+  /subaccounts/update:
+    {
+      post:
+        {
+          tags: [subaccounts],
+          requestBody:
+            {
+              content:
+                {
+                  application/x-www-form-urlencoded:
+                    {
+                      schema:
+                        {
+                          type: object,
+                          properties:
+                            {
+                              id:
+                                {
+                                  description: "The ID of the subaccount.",
+                                  type: string,
+                                  x-ms-summary: ID,
+                                },
+                              threshold:
+                                {
+                                  description: "The credit threshold, below which credit should be transferred.",
+                                  type: number,
+                                  x-ms-summary: Threshold,
+                                },
+                              amount:
+                                {
+                                  description: "The amount of credit that should be sent from the main account to the subaccount when threshold is reached.",
+                                  type: number,
+                                  x-ms-summary: Amount,
+                                },
+                            },
+                          required: [id, threshold, amount],
+                        },
+                    },
+                },
+              required: true,
+            },
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        {
+                          schema:
+                            {
+                              type: object,
+                              properties:
+                                {
+                                  error: { type: string },
+                                  success: { type: boolean },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+          summary: "Automatic Balance Transfer",
+          description: "With this API, you can configure the automatic credit transfer for a subaccount. This can transfer credit from the main account to the subaccount when a set threshold is reached. To deactivate, simply set amount to 0.",
+          operationId: SubaccountsAutomaticBalanceTransfer,
+        },
+    }
+  /subaccounts/transfer_credits:
+    {
+      post:
+        {
+          tags: [subaccounts],
+          requestBody:
+            {
+              content:
+                {
+                  application/x-www-form-urlencoded:
+                    {
+                      schema:
+                        {
+                          type: object,
+                          properties:
+                            {
+                              id:
+                                {
+                                  description: "The ID of the subaccount.",
+                                  type: string,
+                                  x-ms-summary: ID,
+                                },
+                              amount:
+                                {
+                                  description: "Credit to be transferred.",
+                                  type: number,
+                                  x-ms-summary: Amount,
+                                },
+                            },
+                          required: [id, amount],
+                        },
+                    },
+                },
+              required: true,
+            },
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        {
+                          schema:
+                            {
+                              type: object,
+                              properties:
+                                {
+                                  error: { type: string },
+                                  success: { type: boolean },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+          summary: "Manual Credit Transfer",
+          description: "With this API, you can transfer credit from the main account to the subaccount once.",
+          operationId: SubaccountsManualBalanceTransfer,
+        },
+    }
+  /subaccounts/delete:
+    {
+      post:
+        {
+          tags: [subaccounts],
+          requestBody:
+            {
+              content:
+                {
+                  application/x-www-form-urlencoded:
+                    {
+                      schema:
+                        {
+                          type: object,
+                          properties:
+                            {
+                              id:
+                                {
+                                  description: "The ID of the subaccount.",
+                                  type: string,
+                                  x-ms-summary: ID,
+                                },
+                            },
+                          required: [id],
+                        },
+                    },
+                },
+              required: true,
+            },
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        {
+                          schema:
+                            {
+                              type: object,
+                              properties:
+                                {
+                                  error: { type: string },
+                                  success: { type: boolean },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+          summary: "Delete Subaccount",
+          description: "With this API, subaccounts can be deleted based on their ID.",
+          operationId: SubaccountsDeleteSubaccount,
+        },
+    }
   /validate_for_voice:
     {
       post:
@@ -2465,6 +2991,22 @@ tags:
         {
           description: "You can query, create, update and delete groups.",
           url: "https://docs.seven.io/en/rest-api/endpoints/groups",
+        },
+    }
+  - {
+      name: subaccounts,
+      externalDocs:
+        {
+          description: "Create, delete, retrieve information, and transfer balance. Ideal for those who want to manage their account structure clearly and efficiently.",
+          url: "https://docs.seven.io/en/rest-api/endpoints/subaccounts",
+        },
+    }
+  - {
+      name: hooks,
+      externalDocs:
+        {
+          description: "You can create, view and delete webhooks via this endpoint.",
+          url: "https://docs.seven.io/en/rest-api/endpoints/webhooks",
         },
     }
 externalDocs:
@@ -3062,5 +3604,29 @@ components:
               type: object,
             },
           type: array,
+        },
+      Subaccount:
+        {
+          properties:
+            {
+              id: { type: string },
+              username: { type: string },
+              company: { type: string },
+              balance: { type: string },
+              total_usage: { type: string },
+              auto_topup:
+                {
+                  properties:
+                    { amount: { type: string }, threshold: { type: string } },
+                  type: object,
+                },
+              contact:
+                {
+                  properties:
+                    { email: { type: string }, name: { type: string } },
+                  type: object,
+                },
+            },
+          type: object,
         },
     }

@@ -354,6 +354,124 @@ paths:
       summary: Update Group
       description: Updates a group
       operationId: GroupsUpdate
+  /hooks:
+    delete:
+      parameters:
+        - in: formData
+          name: id
+          description: The ID of the webhook you want to delete.
+          required: true
+          type: integer
+          x-ms-summary: ID
+      tags: [ hooks ]
+      responses:
+        '200':
+          description: OK
+          schema:
+            properties:
+              code:
+                type: string
+              error_message:
+                type: string
+              id:
+                type: integer
+              success:
+                type: boolean
+            type: object
+      summary: Delete Hook
+      description: Deletes a hook by its ID.
+      operationId: HooksDelete
+    get:
+      tags: [ hooks ]
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  properties:
+                    hooks:
+                      properties:
+                        id:
+                          type: string
+                        target_url:
+                          type: string
+                        headers:
+                          type: string
+                        event_type:
+                          type: string
+                          enum: [all, rcs, sms_mo, dlr, voice_call, voice_status, voice_dtmf, tracking]
+                        event_filter:
+                          type: string
+                        request_method:
+                          type: string
+                          enum: [GET, JSON, POST]
+                        enabled:
+                          type: boolean
+                        created:
+                          type: string
+                      type: object
+                    success:
+                      type: boolean
+                  type: object
+      summary: List Hooks
+      description: Query the active webhooks of your account.
+      operationId: HooksList
+    post:
+      tags: [ hooks ]
+      parameters:
+        - in: formData
+          name: target_url
+          description: Destination address of your webhook.
+          required: true
+          type: string
+          x-ms-summary: Target URL
+        - in: formData
+          name: headers
+          description: Custom headers to be sent to the webhook URL. Could contain multiple headers separated by a line break.
+          required: false
+          type: string
+          x-ms-summary: Headers
+        - in: formData
+          name: event_type
+          description: Type of event for which you would like to receive a webhook.
+          required: true
+          type: string
+          x-ms-summary: Event Type
+          enum: [all, rcs, sms_mo, dlr, voice_call, voice_status, voice_dtmf, tracking]
+        - in: formData
+          name: event_filter
+          description: Sends the webhook only if the filter applies. For example, for different webhooks with different inbound numbers.
+          required: false
+          type: string
+          x-ms-summary: Event Filter
+        - in: formData
+          name: request_method
+          description: Request method in which you would like to receive the webhook.
+          required: false
+          type: string
+          x-ms-summary: Request Method
+          enum: [GET, JSON, POST]
+      responses:
+        '200':
+          description: OK
+          schema:
+            properties:
+              code:
+                type: string
+              error_message:
+                type: string
+              id:
+                type: integer
+              success:
+                type: boolean
+            type: object
+      summary: Create Hook
+      description: Creates a hook
+      operationId: HooksCreate
   /journal/outbound:
     get:
       tags:
@@ -1978,6 +2096,10 @@ tags:
     externalDocs:
       description: Create, delete, retrieve information, and transfer balance. Ideal for those who want to manage their account structure clearly and efficiently.
       url: https://docs.seven.io/en/rest-api/endpoints/subaccounts
+  - name: hooks
+    externalDocs:
+      description: You can create, view and delete webhooks via this endpoint.
+      url: https://docs.seven.io/en/rest-api/endpoints/webhooks
 externalDocs:
   description: Find out more about the seven.io SMS gateway.
   url: https://docs.seven.io/en/rest-api/first-steps
