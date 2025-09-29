@@ -1750,7 +1750,7 @@ securityDefinitions:
     flow: accessCode
     scopes:
       analytics: analytics
-      balance: analytics
+      balance: balance
       contacts: contacts
       hooks: hooks
       journal: journal

@@ -345,15 +345,7 @@ paths:
                                     },
                                   pagingMetadata:
                                     {
-                                      type: object,
-                                      properties:
-                                        {
-                                          offset: { type: integer },
-                                          count: { type: integer },
-                                          total: { type: integer },
-                                          limit: { type: integer },
-                                          has_more: { type: boolean },
-                                        },
+                                      $ref: "#/components/schemas/PagingMetadata",
                                     },
                                 },
                             },
@@ -398,7 +390,7 @@ paths:
                 name: id,
                 description: "The ID of the contact for deletion.",
                 required: true,
-                x-ms-summary: Number,
+                x-ms-summary: ID,
                 schema: { type: string },
               },
             ],
@@ -438,7 +430,7 @@ paths:
                 name: id,
                 description: "The ID of the contact for retrieval.",
                 required: true,
-                x-ms-summary: Number,
+                x-ms-summary: ID,
                 schema: { type: string },
               },
             ],
@@ -488,6 +480,188 @@ paths:
           summary: "Update Contact",
           description: "Updates a contact",
           operationId: ContactsUpdate,
+        },
+    }
+  /groups:
+    {
+      get:
+        {
+          tags: [groups],
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        {
+                          schema:
+                            {
+                              type: object,
+                              properties:
+                                {
+                                  data:
+                                    {
+                                      type: array,
+                                      items:
+                                        { $ref: "#/components/schemas/Group" },
+                                    },
+                                  pagingMetadata:
+                                    {
+                                      $ref: "#/components/schemas/PagingMetadata",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+          summary: "List Groups",
+          description: "Retrieves Groups",
+          operationId: GroupsList,
+        },
+      post:
+        {
+          tags: [groups],
+          requestBody: { $ref: "#/components/requestBodies/GroupsCreate" },
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        { schema: { $ref: "#/components/schemas/Group" } },
+                    },
+                },
+            },
+          summary: "Create Group",
+          description: "Creates a group",
+          operationId: GroupsCreate,
+        },
+    }
+  "/groups/{id}":
+    {
+      delete:
+        {
+          tags: [groups],
+          parameters:
+            [
+              {
+                in: path,
+                name: id,
+                description: "The ID of the group for deletion.",
+                required: true,
+                x-ms-summary: Number,
+                schema: { type: string },
+              },
+            ],
+          requestBody:
+            {
+              content:
+                {
+                  application/x-www-form-urlencoded:
+                    {
+                      schema:
+                        {
+                          type: object,
+                          properties:
+                            {
+                              delete_contacts:
+                                {
+                                  description: "Specifies whether the contacts who are members of this group should also be deleted.",
+                                  type: string,
+                                  x-ms-summary: "Delete Contacts",
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        {
+                          schema:
+                            {
+                              type: object,
+                              properties: { success: { type: boolean } },
+                            },
+                        },
+                    },
+                },
+            },
+          summary: "Delete Group",
+          description: "Delete a group by its ID",
+          operationId: GroupsDelete,
+        },
+      get:
+        {
+          tags: [groups],
+          parameters:
+            [
+              {
+                in: path,
+                name: id,
+                description: "The ID of the group for retrieval.",
+                required: true,
+                x-ms-summary: ID,
+                schema: { type: integer },
+              },
+            ],
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        { schema: { $ref: "#/components/schemas/Group" } },
+                    },
+                },
+            },
+          summary: "Get Group",
+          description: "Retrieves a group by its ID",
+          operationId: GroupsGet,
+        },
+      patch:
+        {
+          tags: [groups],
+          parameters:
+            [
+              {
+                in: path,
+                name: id,
+                description: "The ID of the group for updating.",
+                required: true,
+                x-ms-summary: ID,
+                schema: { type: integer },
+              },
+            ],
+          requestBody: { $ref: "#/components/requestBodies/GroupsCreate" },
+          responses:
+            {
+              "200":
+                {
+                  description: OK,
+                  content:
+                    {
+                      application/json:
+                        { schema: { $ref: "#/components/schemas/Group" } },
+                    },
+                },
+            },
+          summary: "Update Group",
+          description: "Updates a group",
+          operationId: GroupsUpdate,
         },
     }
   /journal/outbound:
@@ -2281,8 +2455,16 @@ tags:
       name: contacts,
       externalDocs:
         {
-          description: "Contacts are a central part of seven. On this page, we'll look at the different contact endpoints you can use to manage contacts programmatically. We'll look at how you can query, create, update and delete contacts.",
+          description: "Contacts are a central part of seven. You can use to manage contacts programmatically. We'll look at how you can query, create, update and delete contacts.",
           url: "https://docs.seven.io/en/rest-api/endpoints/contacts",
+        },
+    }
+  - {
+      name: groups,
+      externalDocs:
+        {
+          description: "You can query, create, update and delete groups.",
+          url: "https://docs.seven.io/en/rest-api/endpoints/groups",
         },
     }
 externalDocs:
@@ -2475,6 +2657,28 @@ components:
                 },
             },
         },
+      GroupsCreate:
+        {
+          content:
+            {
+              application/x-www-form-urlencoded:
+                {
+                  schema:
+                    {
+                      type: object,
+                      properties:
+                        {
+                          name:
+                            {
+                              description: "The name of a group",
+                              type: string,
+                              x-ms-summary: Name,
+                            },
+                        },
+                    },
+                },
+            },
+        },
     }
   securitySchemes:
     {
@@ -2490,7 +2694,7 @@ components:
                   scopes:
                     {
                       analytics: analytics,
-                      balance: analytics,
+                      balance: balance,
                       contacts: contacts,
                       hooks: hooks,
                       journal: journal,
@@ -2692,6 +2896,17 @@ components:
               created: { type: string },
             },
         },
+      Group:
+        {
+          type: object,
+          properties:
+            {
+              id: { type: integer },
+              name: { type: string },
+              members_count: { type: integer },
+              has_more: { type: boolean },
+            },
+        },
       JournalBase:
         {
           type: object,
@@ -2761,6 +2976,18 @@ components:
                   type: string,
                   description: "The area code of the number belonging country. This value is numeric.",
                 },
+            },
+        },
+      PagingMetadata:
+        {
+          type: object,
+          properties:
+            {
+              offset: { type: integer },
+              count: { type: integer },
+              total: { type: integer },
+              limit: { type: integer },
+              has_more: { type: boolean },
             },
         },
       Roaming:
