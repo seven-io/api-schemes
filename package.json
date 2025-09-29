@@ -6,7 +6,7 @@
         "node": ">=18.0.0"
     },
     "scripts": {
-        "build": "tsx build.mts",
+        "build": "tsx build.mts && tsc",
         "prepare": "husky"
     },
     "repository": {
@@ -40,5 +40,6 @@
         "tsx": "^4.20.6",
         "typescript": "^5.9.2",
         "yamljs": "^0.3.0"
-    }
+    },
+    "type": "module"
 }
