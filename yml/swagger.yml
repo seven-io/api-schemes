@@ -1449,6 +1449,95 @@ paths:
       summary: End Voice Call
       description: This endpoint ends an active call. Only calls with the status in-progress can be ended.
       operationId: VoiceCallEnd
+  /waba/messages:
+    post:
+      tags: [ WABA ]
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: The WhatsApp message to send.
+          required: true
+          schema:
+            $ref: '#/definitions/WabaMessageRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/WabaMessageResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/WabaErrorResponse'
+      summary: Send WhatsApp Message
+      description: Sends a WhatsApp message via the WhatsApp Business API. Supports template messages, free text messages within active conversations, and delayed dispatch.
+      operationId: WabaDispatch
+  /waba/messages/{id}:
+    delete:
+      tags: [ WABA ]
+      parameters:
+        - in: path
+          name: id
+          description: The ID of the message to delete.
+          required: true
+          type: string
+          x-ms-summary: Message ID
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/WabaErrorResponse'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+              message:
+                type: string
+              errors:
+                type: array
+                items:
+                  type: string
+      summary: Delete WhatsApp Message
+      description: Deletes a scheduled WhatsApp message. Only messages that have not yet been sent can be deleted. WhatsApp does not support message revocation.
+      operationId: WabaDelete
+  /waba/events:
+    post:
+      tags: [ WABA ]
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: The event to send. At least one of "to" or "msg_id" must be provided.
+          required: true
+          schema:
+            $ref: '#/definitions/WabaEventRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/WabaEventsErrorResponse'
+      summary: Trigger WhatsApp Event
+      description: Triggers a WhatsApp event such as a read receipt or typing indicator.
+      operationId: WabaEvent
 parameters:
   analyticsEnd:
     in: query
@@ -1962,6 +2051,203 @@ definitions:
             type: string
         type: object
     type: object
+  WabaMessageRequest:
+    type: object
+    required:
+      - from
+      - to
+    properties:
+      from:
+        type: string
+        description: The WhatsApp sender number.
+      to:
+        type: string
+        description: The recipient phone number.
+      type:
+        type: string
+        enum:
+          - template
+          - text
+          - image
+          - video
+          - audio
+          - document
+          - sticker
+          - location
+          - contacts
+          - interactive
+          - reaction
+        description: The message type. Required for structured messages. Omit for simple freetext messages using the "text" parameter.
+      template:
+        type: string
+        description: The template name. Required when type is "template".
+      language:
+        type: string
+        description: The language code for the template (e.g. "de", "en"). Required when type is "template".
+      text:
+        type: string
+        description: The free text message content. Used for non-template messages within an active conversation.
+      delay:
+        type: string
+        description: Date/Time for delayed dispatch - expects a date time like "2026-02-10 09:00:00" or a Unix timestamp.
+      label:
+        type: string
+        pattern: ^[A-Z|a-z|0-9|.|\-|_|@]+
+        maxLength: 100
+        description: A custom label for sorting analytics.
+      foreign_id:
+        type: string
+        pattern: ^[A-Z|a-z|0-9|.|\-|_|@]+
+        maxLength: 64
+        description: Identifier to return in callbacks for status reports etc.
+      ttl:
+        type: integer
+        description: Time to live in minutes for the message.
+      performance_tracking:
+        type: boolean
+        default: false
+        description: Enable performance tracking for found URLs.
+      components:
+        $ref: '#/definitions/WabaTemplateComponents'
+  WabaTemplateComponents:
+    type: object
+    description: Template components for parameter substitution. Values are positional and replace {{1}}, {{2}}, etc. in the template.
+    properties:
+      header:
+        type: array
+        items:
+          type: string
+        description: Positional parameters for the template header.
+      body:
+        type: array
+        items:
+          type: string
+        description: Positional parameters for the template body.
+      buttons:
+        type: array
+        items:
+          $ref: '#/definitions/WabaTemplateButton'
+        description: Button parameter definitions.
+  WabaTemplateButton:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+          - button
+      sub_type:
+        type: string
+        enum:
+          - url
+        description: The button sub-type.
+      parameters:
+        type: array
+        items:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - text
+            text:
+              type: string
+  WabaEventRequest:
+    type: object
+    description: At least one of "to" or "msg_id" must be provided to identify the target conversation or message.
+    required:
+      - from
+      - event
+    properties:
+      from:
+        type: string
+        description: The WhatsApp sender number.
+        x-ms-summary: From
+      to:
+        type: string
+        description: The recipient phone number. At least one of "to" or "msg_id" must be provided.
+        x-ms-summary: To
+      event:
+        type: string
+        enum:
+          - read
+          - is_typing
+        description: The event type to trigger.
+        x-ms-summary: Event
+      msg_id:
+        type: string
+        description: The ID of the message to which the event refers. At least one of "to" or "msg_id" must be provided.
+        x-ms-summary: Message ID
+  WabaMessageResponse:
+    type: object
+    properties:
+      success:
+        type: string
+        description: The API status code as a string (e.g. "100" for success). Not to be confused with the boolean success field in individual message objects.
+      total_price:
+        type: number
+        minimum: 0
+      balance:
+        type: number
+      debug:
+        type: string
+        pattern: \b(false|true)
+      sms_type:
+        type: string
+        enum:
+          - WA
+      messages:
+        type: array
+        items:
+          $ref: '#/definitions/WabaMessage'
+  WabaMessage:
+    type: object
+    properties:
+      id:
+        type: string
+      sender:
+        type: string
+      recipient:
+        type: string
+      text:
+        type: string
+      encoding:
+        type: string
+      label:
+        type: string
+      parts:
+        type: integer
+      udh:
+        type: string
+      is_binary:
+        type: boolean
+      price:
+        type: number
+      channel:
+        type: string
+        enum:
+          - WA
+      success:
+        type: boolean
+      error:
+        type: string
+      error_text:
+        type: string
+  WabaErrorResponse:
+    type: object
+    properties:
+      error_code:
+        type: integer
+      error_message:
+        type: string
+  WabaEventsErrorResponse:
+    type: object
+    properties:
+      success:
+        type: boolean
+      error_code:
+        type: integer
+      error_message:
+        type: string
 securityDefinitions:
   oauth2_auth:
     authorizationUrl: https://oauth.seven.io/authorize
@@ -1980,6 +2266,7 @@ securityDefinitions:
       subaccounts: subaccounts
       validate_for_voice: validate_for_voice
       voice: voice
+      waba: waba
     tokenUrl: https://oauth.seven.io/token
     type: oauth2
 security:
@@ -2033,6 +2320,10 @@ tags:
     externalDocs:
       description: Endpoints regarding Rich Content Services.
       url: https://docs.seven.io/en/rest-api/endpoints/rcs
+  - name: WABA
+    externalDocs:
+      description: Endpoints for the WhatsApp Business API.
+      url: https://docs.seven.io/en/rest-api/endpoints/whatsapp
   - name: Journal
     externalDocs:
       description: Endpoints regarding insights for sent/received messages.
