@@ -2077,6 +2077,14 @@ tags:
     externalDocs:
       description: Account-specific endpoints.
       url: https://docs.seven.io/en/rest-api/endpoints/account
+  - name: RCS
+    externalDocs:
+      description: Endpoints regarding Rich Content Services.
+      url: https://docs.seven.io/en/rest-api/endpoints/rcs
+  - name: Journal
+    externalDocs:
+      description: Endpoints regarding insights for sent/received messages.
+      url: https://docs.seven.io/en/rest-api/endpoints/logbook
 externalDocs:
   description: Find out more about the seven.io SMS gateway.
   url: https://docs.seven.io/en/rest-api/first-steps
