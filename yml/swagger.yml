@@ -1167,6 +1167,146 @@ paths:
       summary: Get SMS Status
       description: Retrieves dispatch status for given SMS IDs
       operationId: Status
+  /subaccounts/list:
+    get:
+      tags: [subaccounts]
+      parameters:
+        - in: query
+          name: id
+          description: The ID of a subaccount. This will give you only the data for a specific subaccount.
+          required: false
+          type: string
+          x-ms-summary: ID
+      responses:
+        '200':
+          description: OK
+          examples:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/Subaccount'
+      summary: List Subaccounts
+      description: Request a list of all subaccounts of an account.
+      operationId: SubaccountsList
+  /subaccounts/create:
+    post:
+      tags: [subaccounts]
+      parameters:
+        - in: formData
+          name: name
+          description: Full first and last name of the account owner.
+          required: true
+          type: string
+          x-ms-summary: Name
+        - in: formData
+          name: email
+          description: Email address of the account.
+          required: true
+          type: string
+          x-ms-summary: Email
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              subaccount:
+                $ref: '#/definitions/Subaccount'
+              success:
+                type: boolean
+      summary: Create Subaccount
+      description: Creates a subaccount.
+      operationId: SubaccountsCreate
+  /subaccounts/update:
+    post:
+      tags: [subaccounts]
+      parameters:
+        - in: formData
+          name: id
+          description: The ID of the subaccount.
+          required: true
+          type: string
+          x-ms-summary: ID
+        - in: formData
+          name: threshold
+          description: The credit threshold, below which credit should be transferred.
+          required: true
+          type: number
+          x-ms-summary: Threshold
+        - in: formData
+          name: amount
+          description: The amount of credit that should be sent from the main account to the subaccount when threshold is reached.
+          required: true
+          type: number
+          x-ms-summary: Amount
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              success:
+                type: boolean
+      summary: Automatic Balance Transfer
+      description: With this API, you can configure the automatic credit transfer for a subaccount. This can transfer credit from the main account to the subaccount when a set threshold is reached. To deactivate, simply set amount to 0.
+      operationId: SubaccountsAutomaticBalanceTransfer
+  /subaccounts/transfer_credits:
+    post:
+      tags: [subaccounts]
+      parameters:
+        - in: formData
+          name: id
+          description: The ID of the subaccount.
+          required: true
+          type: string
+          x-ms-summary: ID
+        - in: formData
+          name: amount
+          description: Credit to be transferred.
+          required: true
+          type: number
+          x-ms-summary: Amount
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              success:
+                type: boolean
+      summary: Manual Credit Transfer
+      description: With this API, you can transfer credit from the main account to the subaccount once.
+      operationId: SubaccountsManualBalanceTransfer
+  /subaccounts/delete:
+    post:
+      tags: [subaccounts]
+      parameters:
+        - in: formData
+          name: id
+          description: The ID of the subaccount.
+          required: true
+          type: string
+          x-ms-summary: ID
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              success:
+                type: boolean
+      summary: Delete Subaccount
+      description: With this API, subaccounts can be deleted based on their ID.
+      operationId: SubaccountsDeleteSubaccount
   /validate_for_voice:
     post:
       tags:
@@ -1744,6 +1884,33 @@ definitions:
           type: string
       type: object
     type: array
+  Subaccount:
+    properties:
+      id:
+        type: string
+      username:
+        type: string
+      company:
+        type: string
+      balance:
+        type: string
+      total_usage:
+        type: string
+      auto_topup:
+        properties:
+          amount:
+            type: string
+          threshold:
+            type: string
+        type: object
+      contact:
+        properties:
+          email:
+            type: string
+          name:
+            type: string
+        type: object
+    type: object
 securityDefinitions:
   oauth2_auth:
     authorizationUrl: https://oauth.seven.io/authorize
@@ -1807,6 +1974,10 @@ tags:
     externalDocs:
       description: You can query, create, update and delete groups.
       url: https://docs.seven.io/en/rest-api/endpoints/groups
+  - name: subaccounts
+    externalDocs:
+      description: Create, delete, retrieve information, and transfer balance. Ideal for those who want to manage their account structure clearly and efficiently.
+      url: https://docs.seven.io/en/rest-api/endpoints/subaccounts
 externalDocs:
   description: Find out more about the seven.io SMS gateway.
   url: https://docs.seven.io/en/rest-api/first-steps
