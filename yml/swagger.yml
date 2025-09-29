@@ -29,7 +29,7 @@ produces:
 paths:
   /analytics/country:
     get:
-      tags: [ Analytics ]
+      tags: [ Account ]
       parameters:
         - $ref: '#/parameters/analyticsEnd'
         - $ref: '#/parameters/analyticsLabel'
@@ -55,7 +55,7 @@ paths:
       operationId: AnalyticsByCountry
   /analytics/date:
     get:
-      tags: [ Analytics ]
+      tags: [ Account ]
       parameters:
         - $ref: '#/parameters/analyticsEnd'
         - $ref: '#/parameters/analyticsLabel'
@@ -81,7 +81,7 @@ paths:
       operationId: AnalyticsByDate
   /analytics/label:
     get:
-      tags: [ Analytics ]
+      tags: [ Account ]
       parameters:
         - $ref: '#/parameters/analyticsEnd'
         - $ref: '#/parameters/analyticsLabel'
@@ -107,7 +107,7 @@ paths:
       operationId: AnalyticsByLabel
   /analytics/subaccount:
     get:
-      tags: [ Analytics ]
+      tags: [ Account ]
       parameters:
         - $ref: '#/parameters/analyticsEnd'
         - $ref: '#/parameters/analyticsLabel'
@@ -133,7 +133,7 @@ paths:
       operationId: AnalyticsBySubaccount
   /balance:
     get:
-      tags: [ Balance ]
+      tags: [ Account ]
       responses:
         '200':
           description: OK
@@ -975,7 +975,7 @@ paths:
       operationId: NumbersOrder
   /pricing:
     get:
-      tags: [ Pricing ]
+      tags: [ Account ]
       parameters:
         - in: query
           name: country
@@ -2037,14 +2037,6 @@ tags:
     externalDocs:
       description: Send one/multiple SMS
       url: https://docs.seven.io/en/rest-api/endpoints/sms
-  - name: balance
-    externalDocs:
-      description: Retrieve account balance
-      url: https://docs.seven.io/en/rest-api/endpoints/account#balance
-  - name: Pricing
-    externalDocs:
-      description: Retrieve pricing information
-      url: https://docs.seven.io/en/rest-api/endpoints/account#prices
   - name: Status
     externalDocs:
       description: Retrieve the status for a sent SMS with the given ID
@@ -2081,6 +2073,10 @@ tags:
     externalDocs:
       description: You can create, view and delete webhooks via this endpoint.
       url: https://docs.seven.io/en/rest-api/endpoints/webhooks
+  - name: Account
+    externalDocs:
+      description: Account-specific endpoints.
+      url: https://docs.seven.io/en/rest-api/endpoints/account
 externalDocs:
   description: Find out more about the seven.io SMS gateway.
   url: https://docs.seven.io/en/rest-api/first-steps
