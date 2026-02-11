@@ -2461,8 +2461,7 @@
                         "sticker",
                         "location",
                         "contacts",
-                        "interactive",
-                        "reaction"
+                        "interactive"
                     ],
                     "description": "The message type. Required for structured messages. Omit for simple freetext messages using the \"text\" parameter."
                 },
@@ -2503,7 +2502,131 @@
                     "default": false,
                     "description": "Enable performance tracking for found URLs."
                 },
-                "components": { "$ref": "#/definitions/WabaTemplateComponents" }
+                "components": { "$ref": "#/definitions/WabaTemplateComponents" },
+                "url": {
+                    "type": "string",
+                    "description": "Public URL of the media file. Required for image, video, audio, document, and sticker types."
+                },
+                "caption": {
+                    "type": "string",
+                    "description": "Caption for the media file. Optional for image, video, and document types."
+                },
+                "filename": {
+                    "type": "string",
+                    "description": "Filename for the document. Required when type is \"document\"."
+                },
+                "latitude": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Latitude of the location. Required when type is \"location\"."
+                },
+                "longitude": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Longitude of the location. Required when type is \"location\"."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the location. Optional when type is \"location\"."
+                },
+                "address": {
+                    "type": "string",
+                    "description": "Address of the location. Optional when type is \"location\"."
+                },
+                "contacts": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/WabaContact" },
+                    "description": "Contact cards to send. Required when type is \"contacts\"."
+                },
+                "interactive_type": {
+                    "type": "string",
+                    "enum": ["button", "list"],
+                    "description": "Sub-type for interactive messages. Required when type is \"interactive\"."
+                },
+                "body": {
+                    "type": "string",
+                    "description": "Body text for interactive messages."
+                },
+                "header": {
+                    "type": "string",
+                    "description": "Header text for interactive messages."
+                },
+                "footer": {
+                    "type": "string",
+                    "description": "Footer text for interactive messages."
+                },
+                "buttons": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/WabaInteractiveButton" },
+                    "description": "Buttons for interactive button messages. Max 3 buttons."
+                },
+                "button_text": {
+                    "type": "string",
+                    "description": "Button text for interactive list messages."
+                },
+                "sections": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/WabaListSection" },
+                    "description": "Sections for interactive list messages."
+                }
+            }
+        },
+        "WabaContact": {
+            "type": "object",
+            "required": ["name", "phones"],
+            "properties": {
+                "name": {
+                    "type": "object",
+                    "required": ["first_name"],
+                    "properties": {
+                        "first_name": { "type": "string" },
+                        "last_name": { "type": "string" }
+                    }
+                },
+                "phones": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": ["phone"],
+                        "properties": {
+                            "phone": { "type": "string" },
+                            "type": {
+                                "type": "string",
+                                "enum": ["cell", "main", "iphone", "home", "work"]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "WabaInteractiveButton": {
+            "type": "object",
+            "required": ["id", "title"],
+            "properties": {
+                "id": { "type": "string", "description": "Unique button identifier." },
+                "title": {
+                    "type": "string",
+                    "description": "Button display text. Max 20 characters."
+                }
+            }
+        },
+        "WabaListSection": {
+            "type": "object",
+            "required": ["title", "rows"],
+            "properties": {
+                "title": { "type": "string" },
+                "rows": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": ["id", "title"],
+                        "properties": {
+                            "id": { "type": "string" },
+                            "title": { "type": "string" },
+                            "description": { "type": "string" }
+                        }
+                    }
+                }
             }
         },
         "WabaTemplateComponents": {
@@ -2550,22 +2673,22 @@
         },
         "WabaEventRequest": {
             "type": "object",
-            "description": "At least one of \"to\" or \"msg_id\" must be provided to identify the target conversation or message.",
-            "required": ["from", "event"],
+            "description": "At least one of \"to\" or \"msg_id\" must be provided to identify the target conversation or message. For reaction events, only \"message_id\" and \"emoji\" are required.",
+            "required": ["event"],
             "properties": {
                 "from": {
                     "type": "string",
-                    "description": "The WhatsApp sender number.",
+                    "description": "The WhatsApp sender number. Not used for reaction events.",
                     "x-ms-summary": "From"
                 },
                 "to": {
                     "type": "string",
-                    "description": "The recipient phone number. At least one of \"to\" or \"msg_id\" must be provided.",
+                    "description": "The recipient phone number. Not used for reaction events. At least one of \"to\" or \"msg_id\" must be provided.",
                     "x-ms-summary": "To"
                 },
                 "event": {
                     "type": "string",
-                    "enum": ["read", "is_typing"],
+                    "enum": ["read", "is_typing", "reaction"],
                     "description": "The event type to trigger.",
                     "x-ms-summary": "Event"
                 },
@@ -2573,6 +2696,16 @@
                     "type": "string",
                     "description": "The ID of the message to which the event refers. At least one of \"to\" or \"msg_id\" must be provided.",
                     "x-ms-summary": "Message ID"
+                },
+                "message_id": {
+                    "type": "string",
+                    "description": "The ID of the message to react to. Required when event is \"reaction\".",
+                    "x-ms-summary": "Message ID for Reaction"
+                },
+                "emoji": {
+                    "type": "string",
+                    "description": "Emoji for the reaction. Required when event is \"reaction\".",
+                    "x-ms-summary": "Emoji"
                 }
             }
         },
