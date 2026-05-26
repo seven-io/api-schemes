@@ -30,14 +30,14 @@
     },
     "homepage": "https://github.com/seven-io/api-schemes#readme",
     "devDependencies": {
-        "@apidevtools/swagger-parser": "^12.0.0",
+        "@apidevtools/swagger-parser": "^12.1.0",
         "@types/node": "^20.19.17",
         "@types/swagger2openapi": "^7.0.4",
         "@types/yamljs": "^0.2.34",
         "husky": "^9.1.7",
-        "prettier": "^3.6.2",
+        "prettier": "^3.8.3",
         "swagger2openapi": "^7.0.8",
-        "tsx": "^4.20.6",
+        "tsx": "^4.22.3",
         "typescript": "^5.9.2",
         "yamljs": "^0.3.0"
     },
