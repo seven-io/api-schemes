@@ -38,7 +38,7 @@
         "prettier": "^3.6.2",
         "swagger2openapi": "^7.0.8",
         "tsx": "^4.20.6",
-        "typescript": "^5.9.2",
+        "typescript": "^6.0.3",
         "yamljs": "^0.3.0"
     },
     "type": "module"
